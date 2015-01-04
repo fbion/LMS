@@ -1,0 +1,64 @@
+﻿@charset "utf-8";
+/* CSS Document */
+/*初始化*/
+html{color:#000;background:#FFF;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}
+del,ins{text-decoration:none;}li{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content:'';}
+abbr,acronym{border:0;font-variant:normal;}
+sup{vertical-align:baseline;}
+sub{vertical-align:baseline;}
+legend{color:#000;}
+input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}
+input,button,textarea,select{font-size:100%;}
+img{border:0px;}
+
+/*网站基本定义*/
+html{margin:0;padding:0;}
+body{font-family:Arial, Helvetica, sans-serif; color:#294663; font-size:12px; margin:0;padding:0;line-height:1.6;  background:url(../images/bodybg.gif) repeat-x top ; background-color:#d2d1cf }
+/*p{text-align:justify;}*/
+strong{ font-weight:bold;}
+acronym{border-bottom:none;}
+a{color:#4d4d4d; text-decoration:none;}
+a:hover{ color:#005197; text-decoration:none;}
+
+ul li{ list-style:none; }
+.del_float{ clear:both; line-height:0px; height:0px;}
+.float_left{ float:left;}
+.float_right{ float:right;}
+.green{color:#00aa08;}
+.blue{color:#0287d3;}
+.red1{color:#cc0000;}
+.yellow{color:#ffb913;}
+.white{color:#fff;}
+.f20{font-size:20px;}
+.f18{font-size:18px;}
+#main{ width:960px; margin:0 auto;}
+
+.pd{margin-top:8px; margin-right:10px;}
+.navGrey{ color:#999999;}
+
+
+/*------------------------------------ 网站头部定义------------------------------------------------*/
+#main{width:960px; height:auto; margin:0 auto;}
+#headarea{height:123px; background:url(../images/logo.jpg) no-repeat top;}
+#banner{height:64px; background:url(../images/daodu.gif) no-repeat top;}
+.advantage{width:274px; height:340px;}
+.trial{width:682px; height:340px; vertical-align:top;}
+.trial_t{width:682px; height:42px; background:url(../images/trial_title.gif) no-repeat top;}
+.lessons_t{height:70px; background:url(../images/lessons.gif) no-repeat top;}
+.lessons_c{ width:960px; height:690px; background:url(../images/lessonsbg.gif) repeat-y top; text-align:center; overflow:hidden;}
+#footer{height:20px; background:url(../images/footerbg.gif) repeat-y top; padding-top:20px; color:#FFFFFF; text-align:center; overflow:hidden;}
+
+/* 课程列表 */
+.htd {
+    background-color:#EEDFD9;
+    height:19px;
+    color:#cc0000;
+}
+

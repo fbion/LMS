@@ -1,0 +1,30 @@
+﻿.help h2.title {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.help p.text {
+    font-size: 15px;
+    padding: 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    line-height: 25px;
+}
+
+.help p.img {
+    text-align: center;
+    padding: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+    .help p.img img {
+    }
+
+.help h3 {
+    padding: 5px;
+}
+
+.help .link {
+    font-size:15px;
+}

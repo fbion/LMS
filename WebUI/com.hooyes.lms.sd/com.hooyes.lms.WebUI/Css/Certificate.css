@@ -1,0 +1,100 @@
+﻿body {
+}
+
+.Container {
+    border: 2px dashed gray;
+}
+
+.Certificate {
+    width: 700px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+    .Certificate .title {
+        text-align: center;
+        color: red;
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        margin-top: 9px;
+    }
+
+    .Certificate .content {
+        line-height: 30px;
+    }
+
+        .Certificate .content .nick {
+            font-size: 26px;
+            font-weight: bold;
+            font-family: 楷体;
+        }
+
+        .Certificate .content p {
+            margin: 0;
+            padding: 0;
+        }
+
+    .Certificate .tb {
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+
+    .Certificate .foot {
+        height: 200px;
+    }
+
+        .Certificate .foot .signature {
+            float: right;
+            width: 200px;
+            height: 200px;
+            background-repeat: no-repeat;
+            padding-top: 10px;
+        }
+
+            .Certificate .foot .signature p {
+                text-align: center;
+                margin: 10px;
+            }
+
+.signature-stamp {
+    position: absolute;
+    text-align: center;
+    width: 180px;
+    height: 180px;
+    margin-top: -6px;
+    z-index: 998;
+}
+
+.signature-text {
+    position: absolute;
+    text-align: center;
+    width: 180px;
+    height: 180px;
+    z-index: 999;
+}
+
+.PrintDiv {
+    width: 200px;
+    height: 25px;
+    float: right;
+    text-align: right;
+    padding: 3px;
+}
+
+.PrintBtn {
+    border:none;
+    height:30px;
+    line-height:30px;
+    width:100px;
+    cursor:pointer;
+    background:url(../Img/print.png) no-repeat center;
+}
+.PrintBtnA {
+    border:none;
+    height:30px;
+    line-height:30px;
+    cursor:pointer;
+    background-color:#fff
+}

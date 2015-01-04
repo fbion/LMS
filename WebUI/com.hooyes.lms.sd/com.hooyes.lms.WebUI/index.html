@@ -1,0 +1,617 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>山东会计人员继续教育 -- 国家会计学院</title>
+    <link href="css/base.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            list-style: none;
+        }
+
+        body {
+            color: #333;
+            font-size: 12px;
+        }
+
+        #myFocus {
+            width: 682px;
+            height: 298px;
+            position: relative;
+            overflow: hidden;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+        }
+            /*焦点图大小，可按需要是否加边框*/
+            #myFocus .loading {
+                position: absolute;
+                z-index: 9999;
+                color: #fff;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                padding-top: 90px;
+                background: #666;
+            }
+            /*载入画面*/
+            #myFocus .pics ul {
+                width: 100%;
+                height: 268px;
+            }
+                /*图片高*/
+                #myFocus .pics ul li {
+                    position: absolute;
+                    width: 100%;
+                    height: 268px;
+                }
+
+                    #myFocus .pics ul li img {
+                        width: 100%;
+                        height: 100%;
+                    }
+
+            #myFocus .ts {
+                width: 682px;
+                height: 30px;
+                border: 1px solid #dedede;
+                overflow: hidden;
+                font-size: 14px;
+            }
+                /*文字宽高*/
+                #myFocus .ts ul {
+                    width: 682px;
+                    height: 30px;
+                    line-height: 29px;
+                }
+
+                    #myFocus .ts ul li {
+                        float: left;
+                        width: 338px;
+                        height: 30px;
+                        border-right: 1px solid #dedede;
+                        padding: 1px;
+                        overflow: hidden;
+                    }
+
+                        #myFocus .ts ul li a {
+                            display: block;
+                            padding-left: 10px;
+                            width: 338px;
+                            color: #333;
+                            text-decoration: none;
+                            background: #ff9d4e;
+                        }
+
+                            #myFocus .ts ul li a.current {
+                                background: #74b001;
+                                color: #fff;
+                                font-weight: bold;
+                            }
+        .auto-style1 {
+            height: 19px;
+        }
+        .auto-style2 {
+            height: 20px;
+        }
+        .auto-style3 {
+            width: 9%;
+        }
+        .auto-style4 {
+            height: 20px;
+            width: 9%;
+        }
+        .auto-style5 {
+            height: 19px;
+            width: 9%;
+        }
+    </style>
+    <script type="text/javascript">
+        /*design by koen @ 10nian5yue8ri*/
+        /*http://hi.baidu.com/koen_li*/
+        function setMyFocus(ID, t) {//主函数...
+            function $(id) { return document.getElementById(id); }
+            function $$(tag, obj) { return (typeof obj == 'object' ? obj : $(obj)).getElementsByTagName(tag); }
+            function opa(n) {//图片淡入淡出函数
+                var pics = $$('img', pic);
+                var setfade = function (obj, o) {
+                    if (document.all) obj.style.filter = "alpha(opacity=" + o + ")";
+                    else obj.style.opacity = (o / 100);
+                };
+                var getfade = function (obj) {
+                    return (document.all) ? ((obj.filters.alpha) ? obj.filters.alpha.opacity : false) : ((obj.style.opacity) ? obj.style.opacity * 100 : false);
+                }
+                var show = function () {
+                    if (pics[n].move) clearTimeout(pics[n].move);
+                    if (o1 >= 100) return true;
+                    o1 += 10;
+                    setfade(pics[n], o1);
+                    pics[n].move = setTimeout(show, 5);
+                };
+                var hide = function () {
+                    if (pics[N].move) clearTimeout(pics[N].move);
+                    if (o2 <= 0) { pics[N].style.display = 'none'; return true; }
+                    o2 -= 10;
+                    setfade(pics[N], o2);
+                    pics[N].move = setTimeout(hide, 5);
+                };
+                for (var i = 0; i < pics.length; i++) {
+                    if (!getfade(pics[i])) { setfade(pics[i], 0); pics[i].style.display = 'none'; }
+                    if (pics[i].name == 'out') var N = i;
+                }
+                if (!N && n == 0) {//开始载入...
+                    pics[n].name = 'out';
+                    pics[n].style.display = '';
+                    var o1 = getfade(pics[n]);
+                    show();
+                    return true;
+                }
+                if (N == n) return true;
+                pics[N].name = ''
+                pics[n].name = 'out';
+                pics[n].style.display = '';
+                var o1 = getfade(pics[n]);
+                var o2 = getfade(pics[N]);
+                hide();
+                show();
+            }
+            function classNormal() {//数字标签样式清除
+                var a = $$('a', tit);
+                for (var i = 0; i < a.length; i++) {
+                    a[i].className = '';
+                }
+            }
+            function autoFocusChange() {//自动运行
+                if (atuokey) return;
+                var a = $$('a', tit);
+                for (var i = 0; i < a.length; i++) {
+                    if (a[i].className == 'current') {
+                        var currentNum = i;
+                    }
+                }
+                if (currentNum < a.length - 1) {
+                    opa(currentNum + 1);
+                    classNormal();
+                    a[currentNum + 1].className = 'current';
+                } else if (currentNum == a.length - 1) {
+                    opa(0);
+                    classNormal();
+                    a[0].className = 'current';
+                }
+            }
+            function focusChange() {//交互切换
+                var a = $$('a', tit);
+                for (var i = 0; i < a.length; i++) {
+                    a[i].I = i;
+                    a[i].onmouseover = function () {
+                        opa(this.I);
+                        classNormal();
+                        a[this.I].className = 'current';
+                    }
+                }
+            }
+            function init() {//初始化
+                $(ID).removeChild($$('div', ID)[0]);
+                opa(0);
+                $$('a', tit)[0].className = 'current';
+                $(ID).onmouseover = function () {
+                    atuokey = true;
+                    clearInterval(auto);
+                }
+                $(ID).onmouseout = function () {
+                    atuokey = false;
+                    auto = setInterval(autoFocusChange, T);
+                }
+            }
+            var pic = $$('div', ID)[1];
+            var tit = $$('div', ID)[2];
+            var atuokey = '';
+            var auto = '';
+            var T = t * 1000;//每帧图片停留的时间，1000=1秒
+            init();
+            focusChange();
+            auto = setInterval(autoFocusChange, T);
+        }
+        window.onload = function () {
+            setMyFocus('myFocus', 3)
+        }
+    </script>
+
+
+</head>
+
+<body>
+    <div id="main">
+        <div id="headarea"></div>
+        <div id="banner"></div>
+        <table>
+            <tr class="advantage">
+                <td>
+                    <img src="images/teacher_1.gif" /><br />
+                    <img src="images/teacher_2.gif" /></td>
+                <td class="trial float_right">
+                    <p class="trial_t"></p>
+                    <p>
+                        <div id="myFocus">
+                            <div class="loading">请稍候...</div>
+                            <div class="pics">
+                                <ul>
+                                    <li><a href="http://www.e-nai.cn/index.php/CourseCenter/index" target="_blank">
+                                        <img src="images/trial_lesson_1.gif" alt="1" /></a></li>
+                                    <li><a href="http://www.e-nai.cn/index.php/CourseCenter/index" target="_blank">
+                                        <img src="images/trial_lesson_2.gif" alt="2" /></a></li>
+                                </ul>
+                            </div>
+                            <div class='ts'>
+                                <ul>
+                                    <li><a href="http://www.e-nai.cn/index.php/CourseCenter/index" target="_blank">1、小金库治理的政策与实务讲解</a></li>
+                                    <li><a href="http://www.e-nai.cn/index.php/CourseCenter/index" target="_blank">2、小企业会计准则系列课程</a></li>
+                                </ul>
+                            </div>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p class="lessons_t">
+            <a href="http://www.e-nai.cn/index.php/CourseCenter/index" target="_blank">
+                <img src="images/enter.gif" class="float_right pd" /></a>
+        </p>
+        <div class="lessons_c">
+            <table width="97%" style="margin: 0px auto; text-align: left;">
+                <tr>
+                    <td width="1%" height="20" align="center" class="bold">&nbsp;</td>
+                    <td width="28%" height="20" class="bold"><strong>课程名称</strong></td>
+                    <td width="10%" height="20" class="bold"><strong>主讲老师</strong></td>
+                    <td width="5%" height="20" class="bold"><strong>课时</strong></td>
+                    <td width="5" height="20"></td>
+                    <td width="5%" height="20" align="center" class="bold">&nbsp;</td>
+                    <td width="28%" height="20" class="bold"><strong>课程名称</strong></td>
+                    <td height="20" class="auto-style3"><strong>主讲老师</strong></td>
+                    <td width="5%" height="20" class="bold"><strong>课时</strong></td>
+                </tr>
+                <tr>
+                    <td align="center" bgcolor="#EEDFD9">&nbsp;</td>
+                    <td bgcolor="#EEDFD9" class="red1"><span>企业准则类</span></td>
+                    <td bgcolor="#EEDFD9">&nbsp;</td>
+                    <td bgcolor="#EEDFD9">&nbsp;</td>
+                    <td width="5"></td>
+                    <td align="center" bgcolor="#EEDFD9">&nbsp;</td>
+                    <td bgcolor="#EEDFD9" class="red1" colspan="3">企业内部控制规范及应用指南、应用指引、评价指引、审计指引</td>
+                </tr>
+                <tr>
+                    <td width="1%" align="center">&nbsp;</td>
+                    <td width="28%">企业会计准则解释第1-6号</td>
+                    <td width="10%">林芳</td>
+                    <td width="5%">8</td>
+                    <td width="5"></td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>企业内部控制规范体系之评价指引及应用指引第<span lang="EN-US">1</span>、<span lang="EN-US">2</span>、<span lang="EN-US">3</span>、<span lang="EN-US">4</span>、<span lang="EN-US">5</span>、<span lang="EN-US">13</span>号</span></td>
+                    <td class="auto-style3"><span>朱海林</span></td>
+                    <td width="5%">6</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>企业会计准则第<span lang="EN-US">2</span>号——长期股权投资</span></td>
+                    <td width="10%"><span>高志谦</span></td>
+                    <td width="5%">4</td>
+                    <td width="5"></td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>企业内部控制规范体系之应用指引第<span lang="EN-US">6</span>号</span></td>
+                    <td class="auto-style3"><span>周守华</span></td>
+                    <td width="5%">3</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>企业会计准则第<span lang="EN-US">9</span>号——职工薪酬</span></td>
+                    <td width="10%"><span>赵小鹿</span></td>
+                    <td width="5%">2</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>企业内部控制规范体系之应用指引第<span lang="EN-US">14</span>、<span lang="EN-US">15</span>、<span lang="EN-US">16</span>、<span lang="EN-US">17</span>号</span></td>
+                    <td class="auto-style3"><span>陆建桥</span></td>
+                    <td width="5%">6</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>企业会计准则第<span lang="EN-US">30</span>号——财务报表列报</span></td>
+                    <td width="10%"><span>于长春</span></td>
+                    <td width="5%">2.4</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%">企业内部控制规范体系之应用指引第7、8、9、12号及审计指引</td>
+                    <td class="auto-style3"><span>王宏</span></td>
+                    <td width="5%">6</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>企业会计准则第<span lang="EN-US">33</span>号——合并财务报表</span></td>
+                    <td width="10%"><span>高志谦</span></td>
+                    <td width="5%">4</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>企业内部控制规范体系之应用指引第<span lang="EN-US">10</span>、<span lang="EN-US">11</span>、<span lang="EN-US">18</span>号</span></td>
+                    <td class="auto-style3"><span>刘光忠</span></td>
+                    <td width="5%">4</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>企业会计准则第<span lang="EN-US">39</span>号——公充价值计量</span></td>
+                    <td width="10%"><span>赵小鹿</span></td>
+                    <td width="5%">3.5</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>企业内部控制规范体系之综述</span></td>
+                    <td class="auto-style3"><span>刘玉廷</span></td>
+                    <td width="5%">4</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>会计准则第<span lang="EN-US">40</span>号——合营安排</span></td>
+                    <td width="10%"><span>赵欣</span></td>
+                    <td width="5%">2.5</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%">&nbsp;</td>
+                    <td class="auto-style3">&nbsp;</td>
+                    <td width="5%">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>企业会计准则第<span lang="EN-US">41</span>号<span lang="EN-US">---</span>在其他主体中权益的披露</span></td>
+                    <td width="10%"><span>赵欣</span></td>
+                    <td width="5%">2</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%">&nbsp;</td>
+                    <td class="auto-style3">&nbsp;</td>
+                    <td width="5%">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="center" bgcolor="#EEDFD9">&nbsp;</td>
+                    <td bgcolor="#EEDFD9" class="red1" colspan="3">可扩展商业语言及企业会计准则通用分类标准基础知识</td>
+                    <td width="5"></td>
+                    <td align="center" bgcolor="#EEDFD9">&nbsp;</td>
+                    <td bgcolor="#EEDFD9" class="red1" colspan="3"><span>小企业会计准则</span></td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>可扩展商业报告语言在财务报告中的应用</span></td>
+                    <td width="10%"><span>张玉琳</span></td>
+                    <td width="5%">3</td>
+                    <td width="5"></td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>《小企业会计准则》讲解</span></td>
+                    <td class="auto-style3"><span>杨敏等</span></td>
+                    <td width="5%">18</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center" class="auto-style2">&nbsp;</td>
+                    <td width="28%" class="auto-style2"><span>《企业会计准则通用分类标准》讲解</span></td>
+                    <td width="10%" class="auto-style2"><span>杨辉</span></td>
+                    <td width="5%" class="auto-style2">3.5</td>
+                    <td width="5" class="auto-style2"></td>
+                    <td width="5%" align="center" class="auto-style2"></td>
+                    <td width="28%" class="auto-style2"></td>
+                    <td class="auto-style4"></td>
+                    <td width="5%" class="auto-style2"></td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center" class="auto-style1 htd"></td>
+                    <td width="28%" class="auto-style1 htd"><span>事业单位会计准则及制度</span></td>
+                    <td width="10%" class="auto-style1 htd"></td>
+                    <td width="5%" class="auto-style1 htd" ></td>
+                    <td width="5" class="auto-style1"></td>
+                    <td width="5%" align="center" class="auto-style1 htd"></td>
+                    <td width="28%" class="auto-style1 htd"><span>行政事业单位内部控制规范</span></td>
+                    <td class="auto-style5 htd"></td>
+                    <td width="5%" class="auto-style1 htd"></td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>最新事业单位会计准则讲解（<span lang="EN-US">2012</span>版）</span></td>
+                    <td width="10%"><span>常丽</span></td>
+                    <td width="5%">4.5</td>
+                    <td width="5"></td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>《行政事业单位内部控制基本规范》的出台背景</span></td>
+                    <td class="auto-style3"><span>张庆龙</span></td>
+                    <td width="5%">2.5</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>事业单位会计制度讲解（<span lang="EN-US">2012</span>版）</span></td>
+                    <td width="10%"><span>常丽</span></td>
+                    <td width="5%">6.5</td>
+                    <td width="5"></td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>行政事业单位内部控制风险评估与控制方法</span></td>
+                    <td class="auto-style3"><span>马雯</span></td>
+                    <td width="5%">6.5</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%">&nbsp;</td>
+                    <td width="10%">&nbsp;</td>
+                    <td width="5%">&nbsp;</td>
+                    <td width="5"></td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>行政事业单位内部控制建设</span></td>
+                    <td class="auto-style3"><span>张庆龙，马雯</span></td>
+                    <td width="5%">7</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%">&nbsp;</td>
+                    <td width="10%">&nbsp;</td>
+                    <td width="5%">&nbsp;</td>
+                    <td width="5"></td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>行政事业单位层面内部控制建设</span></td>
+                    <td class="auto-style3"><span>方周文</span></td>
+                    <td width="5%">3.5</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%">&nbsp;</td>
+                    <td width="10%">&nbsp;</td>
+                    <td width="5%">&nbsp;</td>
+                    <td width="5"></td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>行政事业单位内部控制评价</span></td>
+                    <td class="auto-style3"><span>唐庆艳</span></td>
+                    <td width="5%">3</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center" class="htd">&nbsp;</td>
+                    <td width="28%" class="htd"><span>企业、行政事业单位财务制度</span></td>
+                    <td width="10%" class="htd">&nbsp;</td>
+                    <td width="5%" class="htd">&nbsp;</td>
+                    <td width="5"></td>
+                    <td width="5%" align="center" class="htd">&nbsp;</td>
+                    <td width="28%" class="htd"><span>行业会计制度</span></td>
+                    <td class="auto-style3 htd">&nbsp;</td>
+                    <td width="5%" class="htd">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>事业单位财务规则</span></td>
+                    <td width="10%"><span>张新</span></td>
+                    <td width="5%">4</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>科学事业单位会计制度讲解</span></td>
+                    <td class="auto-style3"><span>杨辉</span></td>
+                    <td width="5%">3.5</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>新会计准则下的财务分析与管控应用</span></td>
+                    <td width="10%"><span>鲁桂华</span></td>
+                    <td width="5%">7.5</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>《医院会计制度》实务讲解与新旧会计制度衔接</span></td>
+                    <td class="auto-style3"><span>樊俊芝，刘辉</span></td>
+                    <td width="5%">7</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>企业集团资金管理</span></td>
+                    <td width="10%"><span>吕洪涵</span></td>
+                    <td width="5%">3</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>高校会计制度讲解</span></td>
+                    <td class="auto-style3"><span>杨松令</span></td>
+                    <td width="5%">6.5</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>企业财务管理经验谈</span></td>
+                    <td width="10%"><span>邹志英</span></td>
+                    <td width="5%">4</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%">&nbsp;</td>
+                    <td class="auto-style3">&nbsp;</td>
+                    <td width="5%">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center" class="htd">&nbsp;</td>
+                    <td width="28%" class="htd"><span>营改增专题</span></td>
+                    <td width="10%" class="htd">&nbsp;</td>
+                    <td width="5%" class="htd">&nbsp;</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center" class="htd">&nbsp;</td>
+                    <td width="28%" class="htd"><span>其他最新政策解读</span></td>
+                    <td class="auto-style3 htd">&nbsp;</td>
+                    <td width="5%" class="htd">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>“营改增”税制改革及其影响</span></td>
+                    <td width="10%"><span>李旭红</span></td>
+                    <td width="5%">3</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>《企业产品成本核算制度（试行）》</span></td>
+                    <td class="auto-style3"><span>王华</span></td>
+                    <td width="5%">5.5</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>最新税收政策解读</span></td>
+                    <td width="10%"><span>李旭红</span></td>
+                    <td width="5%">8</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>《会计信息化工作规范》讲解</span></td>
+                    <td class="auto-style3"><span>张玉琳</span></td>
+                    <td width="5%">4.5</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>营改增的背景内容及影响对策</span></td>
+                    <td width="10%"><span>王冬生</span></td>
+                    <td width="5%">3.5</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>我国财政货币政策解读及其发展趋势</span></td>
+                    <td class="auto-style3"><span>白景明</span></td>
+                    <td width="5%">8</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%">&nbsp;</td>
+                    <td width="10%">&nbsp;</td>
+                    <td width="5%">&nbsp;</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span lang="EN-US">2014</span><span>年宏观经济讲解</span></td>
+                    <td class="auto-style3"><span>范剑平</span></td>
+                    <td width="5%">5</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center" class="htd">&nbsp;</td>
+                    <td width="28%" class="htd"><span>山东特色课程</span></td>
+                    <td width="10%" class="htd">&nbsp;</td>
+                    <td width="5%" class="htd">&nbsp;</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%">&nbsp;</td>
+                    <td class="auto-style3">&nbsp;</td>
+                    <td width="5%">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>《山东省会计从业资格管理办法》解读</span></td>
+                    <td width="10%">&nbsp;</td>
+                    <td width="5%">&nbsp;</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%">&nbsp;</td>
+                    <td class="auto-style3">&nbsp;</td>
+                    <td width="5%">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%"><span>山东省营业税改征增值税重难点问题</span></td>
+                    <td width="10%">&nbsp;</td>
+                    <td width="5%">&nbsp;</td>
+                    <td width="5">&nbsp;</td>
+                    <td width="5%" align="center">&nbsp;</td>
+                    <td width="28%">&nbsp;</td>
+                    <td class="auto-style3">&nbsp;</td>
+                    <td width="5%">&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+        <p id="footer">
+            Copyright &copy 北京国家会计学院<br />
+            <!--京公网安备11011302000821号  &nbsp;京ICP备05004616号-1-->
+        </p>
+
+    </div>
+</body>
+</html>
