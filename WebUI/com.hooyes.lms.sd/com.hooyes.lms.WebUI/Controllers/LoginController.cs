@@ -56,6 +56,25 @@ namespace com.hooyes.lms.Controllers
             }
             return Json(r);
         }
+
+        [HttpPost]
+        public ActionResult CheckByApps(string ID, string PWD)
+        {
+            var r = new R();
+            r.Code = 101;
+            r.Message = string.Empty;
+            r = DAL.Login.CheckByApps(ID, PWD);
+            if (r.Code == 0)
+            {
+                r.SessionId = Session.SessionID;
+                U.SetLoginSession(r.Value);
+            }
+            else
+            {
+                MemCache.clear();
+            }
+            return Json(r);
+        }
         public void Logout()
         {
            

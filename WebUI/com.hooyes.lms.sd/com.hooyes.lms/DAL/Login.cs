@@ -39,12 +39,69 @@ namespace com.hooyes.lms.DAL
                 r.Code = Convert.ToInt32(param[1].Value);
                 r.Message = Convert.ToString(param[2].Value);
                 r.Value = Convert.ToInt32(param[0].Value);
+                /*
                 if (r.Code == 200)
                 {
                     r = CheckAPI(loginID, loginPWD);
                 }
+
+                */
                 //检查是否允许登录
-                r = Inspector(r);
+                //r = Inspector(r);
+            }
+            catch (Exception ex)
+            {
+                r.Code = 300;
+                r.Message = ex.Message;
+                r.Value = 0;
+                log.Fatal(ex.Message);
+                log.FatalException(ex.Message, ex);
+            }
+            return r;
+        }
+        /// <summary>
+        /// 移动端登录允许同时在线
+        /// </summary>
+        /// <param name="loginID"></param>
+        /// <param name="loginPWD"></param>
+        /// <returns></returns>
+        public static R CheckByApps(string loginID, string loginPWD)
+        {
+            R r = new R();
+            try
+            {
+                if (!string.IsNullOrEmpty(loginID))
+                {
+                    loginID = loginID.Trim();
+                }
+                if (!string.IsNullOrEmpty(loginPWD))
+                {
+                    loginPWD = loginPWD.Trim();
+                }
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@R",0),
+                    new SqlParameter("@Code",0),
+                    new SqlParameter("@Message",string.Empty),
+                    new SqlParameter("@LoginID",loginID),
+                    new SqlParameter("@LoginPWD",loginPWD)
+                };
+                param[0].Direction = ParameterDirection.ReturnValue;
+                param[1].Direction = ParameterDirection.Output;
+                param[2].Direction = ParameterDirection.Output;
+                int _r = SqlHelper.ExecuteNonQuery(C.conn, CommandType.StoredProcedure, "Check_Login", param);
+                r.Code = Convert.ToInt32(param[1].Value);
+                r.Message = Convert.ToString(param[2].Value);
+                r.Value = Convert.ToInt32(param[0].Value);
+                /*
+                if (r.Code == 200)
+                {
+                    r = CheckAPI(loginID, loginPWD);
+                }
+
+                */
+                //检查是否允许登录
+                //r = Inspector(r);
             }
             catch (Exception ex)
             {
