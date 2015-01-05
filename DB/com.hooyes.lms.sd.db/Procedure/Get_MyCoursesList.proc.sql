@@ -3,7 +3,7 @@ GO
 -- =============================================
 -- Author:		hooyes
 -- Create date: 2011-12-22
--- Update date: 2013-09-23
+-- Update date: 2015-01-05
 -- Desc:
 -- @Type 0 行政 1 企业
 -- Cate  0 选修 1 必修  
@@ -18,6 +18,7 @@ AS
     SELECT  *
     FROM    ( SELECT    c.CID ,
                         c.Name ,
+						c.CName,
                         c.Year ,
                         Minutes = ISNULL(myc.Minutes, 0) ,
                         Second = ISNULL(myc.Second, 0) ,

@@ -114,6 +114,7 @@ namespace com.hooyes.lms.DAL
                     var m = new MyCourses();
                     m.CID = Convert.ToInt32(dr["CID"]);
                     m.Name = Convert.ToString(dr["Name"]);
+                    m.CName = Convert.ToString(dr["CName"]);
                     m.Second = Convert.ToInt32(dr["Second"]);
                     m.Minutes = Convert.ToInt32(dr["Minutes"]);
                     m.Status = Convert.ToInt32(dr["Status"]);
