@@ -1,954 +1,1106 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<com.hooyes.lms.Client>" %>
+﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
-<asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
-    <div id="main">
-        <div id="left">
-            <div class="login">
-                <% Html.RenderPartial("LogOnUserControl"); %>
-            </div>
-            <div class="expl">
-                <h3>网络培训相关说明</h3>
-                <div class="con">
-                    <%-- <p style="margin:5px 0 5px 0;font-weight:bold">
-                        学员可以使用本网站网上银行支付学习费用，也可以购买学习卡。<br />
-                        山东学习卡购买地址，<a style="color:blue" href="/static/buy-card-addr.doc" target="_blank"> 点击这里。 </a>
-                    </p>--%>
-                    <p>
-                        根据《中华人民共和国会计法》、《会计人员继续教育规定》的要求， 山东会计人员继续教育采取网上学习，请登录网校系统进行学习。
-                    </p>
-                    <p>
-                        1、根据山东财政厅的相关规定，持有山东各级会计管理机构颁发的会计从业资格证书的会计人员，参加了网上继续教育并考试合格后，均可凭"山东会计人员网上继续教育合格证书"到发证机关办理继续教育登记。
-                    </p>
-                    <p>2、由于计算机浏览器、Flash等软件的版本差异，在学习完后如点击视频课件中的“退出”按钮无法正常退出，可以直接关闭该视频页面，此操作将不会影响您的学习时长累计。</p>
-                    <p>
-                        3、本系统的计时状态可能不会实时更新，但不影响系统后台的计时。
 
-                    </p>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="从业资格考试辅导, 在线考试, 在线会计实操系统, 注册会计师培训, 初级职称考试培训, 中级职称考试培训, 注册税务师考试培训,会计网校, 会计继续教育, 名师课件, 轻松过关, 辅导书" />
+    <meta name="description" content="北国会提供注册会计师考试培训,初级、中级会计职称考试培训,注册税务师考试培训,会计继续教育培训,从业资格考试辅导。另外提供各类考试真题,模拟试卷,名师课件,疑难解答,考前强化,考后成绩查询等考试信息。" />
+    <meta name="author" content="北国会" />
+    <title>北京国家会计学院会计从业资格考试考前辅导</title>
+    <!-- 
+	<link type="text/css"      rel="stylesheet" href="css/index.css"/> -->
+    <link type="text/css" rel="stylesheet" href="css/south.css" />
+    <!--所有的IE都起作用-->
+    <!--[if IE]><link rel="stylesheet" type="text/css" href="css/w_center_ie.css"/><![endif]-->
+    <!--IE以外的浏览器起作用-->
+    <!--[if !IE]><!-->
+    <link rel="stylesheet" type="text/css" href="css/w_center.css" />
+    <!--<![endif]-->
+    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>
+    <script type="text/javascript" src="js/artDialog.js?skin=default"></script>
+    <script src="js/jquery.slides.js"></script>
+    <script type="text/javascript" src="js/pop.js"></script>
+    <script type="text/javascript" src="js/goods/cart.js"></script>
+    <script type="text/javascript" src="js/goods/curriculumCenter.js"></script>
+    <script type="text/javascript" src="js/testcoach/learnCard.js"></script>
+    <script type="text/javascript" src="js/testcoach/pop.js"></script>
+    <%--<script type="text/javascript" src="js/testcoach/singletonUserLogin.js"></script>--%>
+    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/config.js" type="text/javascript"></script>
+    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/account.js?v=2014060101" type="text/javascript"></script>
+    <script type="text/javascript">
 
-                    <div class="line">
+        $().ready(function () {
+
+            ResetLink();
+            // Login Logic
+            //genRandomImage();
+            //$("#validImage").click(genRandomImage);
+
+            $('#username').val("用户名或注册邮箱");
+            $('#username').focus(defUserClear);
+            $('#username').blur(textUserDef);
+
+            $('#password').val("请输入密码");
+            $('#password').focus(defPwdClear);
+            /*
+            $('#validcode').val("验证码");
+            $('#validcode').focus(defValidCodeClear);
+            $('#validcode').blur(textValidCodeDef);
+            */
+            $('#login').click(function () {
+                Login();
+            });
+
+            $('input').keydown(function () {
+                var msg_id = this.id + '_msg';
+                $('#' + msg_id).val('');
+            });
+
+            //
+            /*
+            $.post('getHomePageNews.do', {}, function (datas) {
+
+                if (datas) {
+                    $('div.z_tab ul').empty();
+                    var boards = $.parseJSON(datas);
+                    var boardsLi = "";
+                    var newsCtx = "";
+                    var newsTop = "";
+                    $.each(boards, function (index) {
+                        if (index == 0) {
+                            boardsLi += "<li id='news" + boards[index].boardCode + "' name='news" + index + "' class='news_btn'>" + boards[index].boardName + "</li>";
+                        } else {
+                            boardsLi += "<li id='news" + boards[index].boardCode + "' name='news" + index + "'  >" + boards[index].boardName + "</li>";
+                        }
+                        if (index == 0) {
+                            newsCtx += "<div id='news" + boards[index].boardCode + "_ctx' name='news" + index + "'  class='ctx'><div class='z_news_c'><ul>";
+                        } else {
+                            newsCtx += "<div id='news" + boards[index].boardCode + "_ctx' name='news" + index + "'  class='ctx' style='display:none;'><div class='z_news_c'><ul>";
+                        }
+                        var newsLst = boards[index].newsLst;
+                        $.each(newsLst, function (i) {
+                            newsCtx += "<li><span>" + newsLst[i].newsTimeString + "</span>";
+                            //newsCtx += "<span class='clickRate'>["+ newsLst[i].clickRate +"点击]</span>";
+                            //newsCtx += "<span class='clickRate'>["+ newsLst[i].divisionName +"]</span>";
+                            //newsCtx += "<span class='division'>["+ newsLst[i].divisionName +"]</span>";
+                            if (newsLst[i].top == '1') {
+                                newsTop = "<img src='images/news/top.gif' />";
+                            } else {
+                                newsTop = "";
+                            }
+
+                            if (i < 4) {
+                                newsCtx += "<a  target='_blank' href='getNewsContent.do?newsId=" + newsLst[i].newsId + "&boardIndex=" + index + "&newsIndex=" + i + "'>" + newsLst[i].newsTitle.substring(0, 15) + "<img src='images/news/new20141124.gif' />" + newsTop + "</a></li>";
+                            } else {
+                                newsCtx += "<a  target='_blank' href='getNewsContent.do?newsId=" + newsLst[i].newsId + "&boardIndex=" + index + "&newsIndex=" + i + "'>" + newsLst[i].newsTitle.substring(0, 15) + " " + newsTop + "</a></li>";
+                            }
+                        });
+
+                        newsCtx += "</ul><div style='clear:both'></div></div></div>";
+                    });
+
+                    $('div.z_tab ul').html(boardsLi);
+                    $('div.z_news').html(newsCtx);
+
+                    var tagName = "news" + boards[0].boardCode;
+                    var newLiName = $('#' + tagName).attr('name');
+                    var boardId = tagName.replace("news", "");
+                    var baord_index = newLiName.replace("news", "");
+                    $("#moreNews").attr("href", "./moreNews.do?boardId=" + boardId + "&baord_index=" + baord_index);
+
+                    $('div.z_tab ul li').mouseover(function () {
+                        $('div.z_tab ul li').removeClass('news_btn');
+                        $(this).addClass('news_btn');
+                        var tagName = this.id;
+                        $('div[class=ctx]').hide();
+                        $('#' + tagName + '_ctx').show();
+
+                        var newLiName = $('#' + tagName).attr('name');
+                        var boardId = tagName.replace("news", "");
+                        var baord_index = newLiName.replace("news", "");
+                        $("#moreNews").attr("href", "./moreNews.do?boardId=" + boardId + "&baord_index=" + baord_index);
+                    });
+                }
+            });
+            */
+        });
+
+
+        function ResetLink() {
+            $("a").click(function () {
+                var orginUrl = $(this).attr("href");
+                var orginHost = "http://122.114.17.35/";
+                var finalUrl = orginHost + orginUrl;
+                $(this).attr("href", finalUrl);
+                return true;
+            });
+        }
+
+        function genRandomImage() {
+            var random = "";
+            for (var i = 0; i < 4; i++) random += Math.floor(Math.random() * 10);
+            $("#validImage").attr("src", "genVerifyCode.do?width=70&height=29&num=" + random + "&mode=" + 1);
+        }
+
+        function login() {
+
+            try {
+
+                var username = $('#username').val();
+                if (username == '' || username == '用户名或注册邮箱') {
+                    alert("请输入用户名！");
+                    return;
+                }
+
+                var password = $('#password').val();
+                if (password == '' || password == '请输入密码') {
+                    alert("请输入密码！");
+                    return;
+                }
+
+                var validcode = $('#validcode').val();
+                if (validcode == '') {
+                    alert("请输入验证码！");
+                    return;
+                }
+
+                var params = {};
+                params.username = username;
+                params.password = password;
+                params.validcode = validcode;
+
+                $.post('login.do', params, function (data) {
+                    var error = null;
+
+                    if (data != null) {
+                        error = $.parseJSON(data);
+
+                        if (error.code == -1) {
+                            alert(error.msg);
+                            genRandomImage();
+                        } else if (error.code == -3) {
+                            alert(error.msg);
+                            genRandomImage();
+                        } else if (error.code == -99) {
+                            keeponLogin();
+                        } else if (error.code == -90) {
+                            window.location = 'http://www.happyacc.com/ws/userdirect.php?passport=' + error.msg;
+                        } else {// 登录成功
+                            window.location.href = 'toHomePage.do';
+                        }
+                    }
+                });
+            } catch (e) {
+                alert(e.message);
+            }
+            return false;
+        }
+
+        function defUserClear() {
+            var username = $("#username").val();
+            if (username == '用户名或注册邮箱') {
+                $('#username').val('');
+            }
+        }
+
+        function textUserDef() {
+
+            var username = $("#username").val();
+            if (username == '') {
+                $('#username').val('用户名或注册邮箱');
+                $('#username_msg').val('');
+            }
+        }
+
+        function defPwdClear() {
+            var pwd = $("#password").val();
+            if (pwd == '请输入密码') {
+                $('#password').remove();
+                $('#pass').html("<input type='password' id='password' name='password'  class='txt'/>");
+                $('#password')[0].focus();
+                $('#password')[0].focus();
+                $('#password').blur(textPwdDef);
+            }
+
+        }
+
+        function textPwdDef() {
+            var pwd = $('#password').val();
+            if (pwd == '') {
+                $('#pass').html("<input type='text' id='password' name='password' class='txt'/>");
+                $('#password').val("请输入密码");
+                $('#password').focus(defPwdClear);
+            }
+
+        }
+
+        function defValidCodeClear() {
+            var validcode = $("#validcode").val();
+            if (validcode == '验证码') {
+                $('#validcode').val('');
+            }
+        }
+
+        function textValidCodeDef() {
+
+            var validcode = $("#validcode").val();
+            if (validcode == '') {
+                $('#validcode').val('验证码');
+                $('#validcode_msg').val('');
+            }
+        }
+        //弹出窗
+        function shwoalt() {
+            art.dialog({
+                opacity: 0.47,	// 透明度
+                title: false,
+                content: '<img src="images/gg/wzgg.jpg" >',
+                lock: true
+            });
+        }
+    </script>
+    <script type="text/javascript" src="js/myfocus-2.0.4.min.js"></script>
+    <style type="text/css">
+        #myFocus {
+            width: 760px;
+            height: 220px;
+            margin: 0 auto;
+            float: right;
+        }
+    </style>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        a, img {
+            border: 0;
+        }
+
+        body {
+            font: 12px/180% Arial, Helvetica, sans-serif,"宋体";
+        }
+
+        .scrolltitle {
+            height: 24px;
+            font-size: 14px;
+            width: 742px;
+            border-bottom: solid 1px #ddd;
+            margin: 20px auto 15px auto;
+        }
+
+        a.abtn {
+            display: block;
+            height: 120px;
+            width: 17px;
+            overflow: hidden;
+            background: url(images/arrow3.png) no-repeat 0px 50%;
+        }
+
+        a.aleft {
+            float: left;
+        }
+
+        a.agrayleft {
+            cursor: default;
+            background-position: -34px 50%;
+        }
+
+        a.aright {
+            float: right;
+            background-position: -17px 50%;
+        }
+
+        a.agrayright {
+            cursor: default;
+            background-position: -51px 50%;
+        }
+
+        .scrolllist {
+            width: 502px;
+            height: 118px;
+            margin: 0 auto;
+        }
+
+            .scrolllist .imglist_w {
+                width: 454px;
+                height: 118px;
+                overflow: hidden;
+                float: left;
+                position: relative; /*必要元素*/
+            }
+
+                .scrolllist .imglist_w ul {
+                    width: 20000px;
+                    position: absolute;
+                    left: 0px;
+                    top: 0px;
+                }
+
+                .scrolllist .imglist_w li {
+                    width: 96px;
+                    float: left;
+                    padding: 0 10px;
+                }
+
+                    .scrolllist .imglist_w li img {
+                        padding: 2px;
+                        border: solid 1px #ddd;
+                        width: 100px;
+                        height: 112px;
+                    }
+
+                    .scrolllist .imglist_w li a {
+                        color: #3366cc;
+                        text-decoration: none;
+                        float: left;
+                    }
+
+                        .scrolllist .imglist_w li a:hover img {
+                            filter: alpha(opacity=86);
+                            -moz-opacity: 0.86;
+                            opacity: 0.86;
+                        }
+
+                    .scrolllist .imglist_w li p {
+                        height: 48px;
+                        line-height: 24px;
+                        overflow: hidden;
+                        float: left;
+                    }
+    </style>
+    <script type="text/javascript">
+        //设置
+        myFocus.set({
+            id: 'myFocus',//焦点图盒子ID
+            time: 8,//切换时间间隔(秒)
+            pattern: 'mF_kdui',//风格应用的名称
+            txtHeight: '0'//文字层高度设置(像素),'default'为默认高度，0为隐藏
+        });
+    </script>
+
+</head>
+
+<body onload="findcartcount(0);">
+    <!--head开始-->
+    <%--<script type="text/javascript" src="js/artDialog.js?skin=default"></script>--%>
+    <%--<script type="text/javascript" src="js/testcoach/singletonUserLogin.js"></script>--%>
+    <!--登录层-->
+    <div id="popDiv" class="mydiv" style="display: none;">
+        <div class="close"><a href="javascript:closeDiv()">
+            <img src="images/testcoach/zdel.png" width="16" height="16" /></a></div>
+        <div class="popdl">
+            <div class="popdl_tit">请登录！并进行之后的操作...</div>
+            <dl>
+                <dt>账号：</dt>
+                <dd>
+                    <input name="" type="text" value="请输入账号" class="in" /></dd>
+                <dt>密码：</dt>
+                <dd>
+                    <input name="" type="text" value="请输入密码" class="in" /></dd>
+                <dt></dt>
+                <dd>
+                    <input name="" type="checkbox" value="" />
+                    记录我的登录状态
+          <div>
+              <a href="#" class="dl">登录</a>
+          </div>
+                    没有账号？
+          <a href="#" class="blue">注册</a>
+                    <a href="#" class="blue">忘记密码？</a>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div id="bg" class="bg" style="display: none; height: 100%;"></div>
+    <!--登录层结束-->
+
+    <!--top start-->
+    <div class="top">
+
+        <!--未登录-->
+        <div>
+            <div class="wid100">
+                <div class="wid21000">
+                    <div class="welcome">欢迎来到北京国家会计学院——会计从业资格考试考前辅导网站</div>
+                    <div class="loginxx">
+                        <a href="toLogon.do">登录</a>｜
+	            	<a href="toRegistration.do">注册</a>｜
+	            	<img src="images/testcoach/shopping_cart.gif" />
+                        <a href="#" onclick="javascript:showDiv()">购物车</a>
                     </div>
-
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="logos">
+                <div class="wid1000">
+                    <div class="imgs"><a href="toHomePage.do">
+                        <img src="images/testcoach/logo.gif" /></a></div>
+                    <!--导航开始-->
+                    <div class="nav">
+                        <ul>
+                            <li><a href="toHomePage.do" class="curr">
+                                <img src="images/menu01.gif" /><p>首&nbsp;&nbsp;页</p>
+                            </a></li>
+                            <li><a target="_blank" href="moreNews.do" class="">
+                                <img src="images/menu02.gif" /><p>新闻动态</p>
+                            </a></li>
+                            <li><a target="_blank" href="findCurricuumCenter.do" class="">
+                                <img src="images/menu03.gif" /><p>课程中心</p>
+                            </a></li>
+                            <li><a target="_blank" href="findGoodExamPage.do" class="">
+                                <img src="images/menu04.gif" /><p>在线模考</p>
+                            </a></li>
+                            <li><a target="_blank" href="findGoodChapter.do" class="">
+                                <img src="images/menu05.gif" /><p>章节练习</p>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <!--导航结束-->
+                    <!--搜索开始-->
+                    <div class="search">
+                        <input id="newsTitle" type="text" /><img src="images/findicon.jpg" align="absmiddle" onclick="javascript:seacher();" style="cursor: pointer;" /></div>
+                    <!--导航结束-->
+                    <div class="user"></div>
+                    <div style="clear: both;"></div>
                 </div>
             </div>
         </div>
+        <!--未登录结束-->
+        <!--已登陆-->
+        <!--已登陆结束-->
+
+    </div>
+    <form action="seachNews" method="post" id="formseach">
+        <input type="hidden" id="newsT" name="newsT" value="" />
+    </form>
+    <!--logos over-->
+    <script type="text/javascript">
+        var expire = "";
+        if (expire == "Y") {
+            validateUserExpire();
+        }
+
+        function seacher() {
+            $("#newsT").val($("#newsTitle").val());
+            if ($("#newsT").val() == "") {
+                art.dialog({
+                    title: '提示',
+                    lock: true,
+                    fixed: true,
+                    width: 230,
+                    height: 100,
+                    background: '#CDCDCD', // 背景色
+                    opacity: 0.47,	// 透明度
+                    content: '标题不可以为空，请输入标题！',
+                    icon: 'warning',
+                    button: [
+                              {
+                                  name: '确定',
+                                  callback: function () {
+
+                                  },
+                                  focus: true
+                              }
+                    ],
+                    cancelVal: '取消',
+                    cancel: true
+                });
+            } else {
+                $("#formseach").submit();
+            }
+
+        }
+
+        function seacher2() {
+            $("#newsT").val($("#newsTitle2").val());
+            if ($("#newsT").val() == "") {
+                art.dialog({
+                    title: '提示',
+                    lock: true,
+                    fixed: true,
+                    width: 230,
+                    height: 100,
+                    background: '#CDCDCD', // 背景色
+                    opacity: 0.47,	// 透明度
+                    content: '标题不可以为空，请输入标题！',
+                    icon: 'warning',
+                    button: [
+                              {
+                                  name: '确定',
+                                  callback: function () {
+
+                                  },
+                                  focus: true
+                              }
+                    ],
+                    cancelVal: '取消',
+                    cancel: true
+                });
+            } else {
+                $("#formseach").submit();
+            }
+
+        }
+    </script>
+    <form action="goCart.do" method="post" id="formgoCart">
+        <input type="hidden" id="userid" name="userid" value="0" />
+    </form>
+    <!--head结束-->
+    <!--center开始-->
+    <div id="center">
+        <!--left开始-->
+        <div id="left">
+            <!--登录开始-->
+            <div class="login">
+                <div class="bt">
+                    <img src="images/yhdl.jpg" />
+                </div>
+                <div id="userInfo" class="nr">
+                     <form class="login_form" id="login_form" action="" onsubmit="return Login()" method="post">
+        <input type="hidden" name="sid" id="sid" value="2013" />
+                    <table width="0" border="0" cellspacing="0" cellpadding="0" class="table">
+                        <tr>
+                            <td width="29%">用户名：</td>
+                            <td width="71%">
+                                <label>
+                                    <input name="ID" id="ID" type="text" class="txt" style="vertical-align: middle;" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>密&nbsp;&nbsp;&nbsp;码：</td>
+                            <td>
+                                <label id="pass">
+                                    <input name="PWD" id="PWD" type="text" class="txt" style="vertical-align: middle;" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr style="visibility:hidden">
+                            <td>验证码：</td>
+                            <td>
+                                <label>
+                                    <input id="validcode" name="validcode" type="text" class="txt01" style="vertical-align: middle;" />
+                                    <img id="validImage" style="width: 60px; height: 23px; vertical-align: middle;" alt="看不清？点击图片更换" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table width="0" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td align="center">
+                                            <%--<img id="login" src="images/dl.jpg" width="89" height="29" style="cursor: pointer;" />--%>
+                                            <input type="image" src="images/dl.jpg" />
+                                        </td>
+                                        <td align="center">
+                                            <a href="toRegistration.do">
+                                                <img src="images/zc.jpg" width="89" height="29" style="cursor: pointer;" /></a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                </div>
+            </div>
+            <!--登录结束-->
+            <!--小图标开始-->
+            <div class="icon">
+                <div class="focus-nav">
+                    <ul>
+                        <li><a id="menu_kc" target="_blank" href="findCurricuumCenter.do"></a></li>
+                        <li><a id="menu_mk" target="_blank" href="findGoodExamPage.do"></a></li>
+                        <li><a id="menu_lx" target="_blank" href="findGoodChapter.do"></a></li>
+                        <li><a id="menu_ty" target="_blank" href="./findExper.do"></a></li>
+                        <li><a id="menu_jh" target="_blank" href="toLearnCard.do"></a></li>
+                        <li><a id="menu_gk" href="javascript:jsz();"></a></li>
+                        <li><a id="menu_bz" target="_blank" href="help.do"></a></li>
+                        <li><a id="menu_dy" href="javascript:jsz();"></a></li>
+                        <li><a id="menu_yd" href="javascript:jsz();"></a></li>
+                        <li><a id="menu_lz" href="javascript:jsz();"></a></li>
+                        <li><a id="menu_lt" href="javascript:jsz();"></a></li>
+                        <li><a id="menu_zb" href="javascript:jsz();"></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--小图标结束-->
+            <!--学员心声开始-->
+            <div class="xyxs">
+                <div class="bt">
+                    <a href="#">
+                        <img src="images/xyxs.jpg" border="0" /></a>
+                </div>
+                <div class="nr">
+                    <table width="0" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <th><span>[2014-10-24 14:53:03]</span>zxf118168</th>
+                        </tr>
+                        <tr>
+                            <td>成绩出来啦，法规73，电算化88，会计基础91，第一时间来分享！上班族，就晚上看书，白天偷着看一点视频，
+								感谢北国会的安心、张黎群老师！讲课生动不知不觉中把知识点都学会了，太爱你们了！
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <!--学员心声结束-->
+        </div>
+        <!--left结束-->
+        <!--right开始-->
         <div id="right">
-            <div class="board">
-                <p>
-                    1）<b>山东省会计人员继续教育实施办法（试行）</b>
-                   <a href="static/1.html" target="_blank">>> 详情 </a>
-                </p>
-               <p>
-                   2）<b>北京国家会计学院关于开展泰安市2014年度会计人员继续教育的通知</b>
-                    <a href="static/2.html" target="_blank">>> 详情 </a>
-               </p>
-
-                <p>
-                   3）<b>进入“课程中心”后点击课程“详细内容”进行试听 </b> <a target="_blank" href="http://www.e-nai.cn/index.php/CourseCenter/index"> >> 详情</a>
-                </p>
-
-
-            </div>
-            <div class="flow">
-                <h3>学习流程</h3>
-                <div class="step step-1">
-                    <div class="text">登录</div>
+            <div id="myFocus">
+                <!--焦点图盒子-->
+                <div class="loading">
+                    <img src="images/loading.gif" alt="请稍候..." />
                 </div>
-                <div class="arrow"></div>
-                <div class="step step-3">
-                    <div class="text">修改信息</div>
-                </div>
-                <div class="arrow"></div>
-                <div class="step step-2">
-                    <div class="text">选课学习</div>
-                </div>
-                <div class="arrow"></div>
-                <div class="step step-5">
-                    <div class="text">网上考试</div>
-                </div>
-                <div class="arrow"></div>
-                <div class="step step-4">
-                    <div class="text">打印证书</div>
-                </div>
-                <div class="step call">
+                <!--载入画面(可删除)-->
+                <div class="pic">
+                    <!--图片列表-->
+                    <ul>
+                        <li><a href="#1">
+                            <img src="images/1.jpg" /></a></li>
+                        <li><a href="#2">
+                            <img src="images/2.jpg" /></a></li>
+                        <li><a href="#3">
+                            <img src="images/3.jpg" /></a></li>
+                        <li><a href="#4">
+                            <img src="images/4.jpg" /></a></li>
+                        <li><a target="_blank" href="goDls.do">
+                            <img src="images/5.jpg" /></a></li>
+                    </ul>
                 </div>
             </div>
-            <!-- 历年课表 Begin-->
-            <div class="lesson">
-                <div class="lesson2014">
-                    <h3>2014继续教育课表</h3>
-                    <table>
-                        <tbody>
-                            <tr>
-
-                                <th>课程名称
-                                </th>
-                                <th>主讲老师
-                                </th>
-                                <th>课时
-                                </th>
-                            </tr>
-                            <!-- All -->
-
-                            <tr>
-
-                                <td class="t_a_l">会计实务操作
-                                </td>
-                                <td>陈梅兰
-                                </td>
-                                <td>16.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">出纳实务操作
-                                </td>
-                                <td>陈梅兰
-                                </td>
-                                <td>11.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">政府采购法
-                                </td>
-                                <td>陈少强
-                                </td>
-                                <td>4.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">合同法政策解读
-                                </td>
-                                <td>陈志武
-                                </td>
-                                <td>5.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">中国宏观经济运行与宏观调控政策体系
-                                </td>
-                                <td>范剑平
-                                </td>
-                                <td>6.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">公务卡制度改革与实务
-                                </td>
-                                <td>冯源
-                                </td>
-                                <td>3.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">企业内部控制操作实务
-                                </td>
-                                <td>李春瑜
-                                </td>
-                                <td>5.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">衍生工具基础产品与产品案例
-                                </td>
-                                <td>李杰
-                                </td>
-                                <td>4.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">企业内部控制审计
-                                </td>
-                                <td>李杰
-                                </td>
-                                <td>4.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">十八大报告解读讲座
-                                </td>
-                                <td>李民
-                                </td>
-                                <td>3.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">会计秘书服务的业务拓展及其风险控制
-                                </td>
-                                <td>李晓慧
-                                </td>
-                                <td>4.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">最新税收政策解读
-                                </td>
-                                <td>李旭红
-                                </td>
-                                <td>8.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">企业会计准则解释1-6号
-                                </td>
-                                <td>林芳
-                                </td>
-                                <td>8.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">解读《财政支出绩效评价管理暂行办法》
-                                </td>
-                                <td>刘文军
-                                </td>
-                                <td>4.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">预算法
-                                </td>
-                                <td>马蔡琛
-                                </td>
-                                <td>4.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">会计从业资格管理办法
-                                </td>
-                                <td>马雯
-                                </td>
-                                <td>4.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">衍生金融工具的会计处理
-                                </td>
-                                <td>孟祥军
-                                </td>
-                                <td>4.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">excel在财务中的应用
-                                </td>
-                                <td>潘晓波
-                                </td>
-                                <td>4.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">行政单位会计处理实务
-                                </td>
-                                <td>王芳
-                                </td>
-                                <td>2.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">事业单位会计处理实务
-                                </td>
-                                <td>王芳
-                                </td>
-                                <td>3.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">《企业产品成本核算制度（试行）》课程
-                                </td>
-                                <td>王华
-                                </td>
-                                <td>5.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">企业重组与尽职调查
-                                </td>
-                                <td>王景江
-                                </td>
-                                <td>8.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">财务会计人员职业技能框架及职业发展规划
-                                </td>
-                                <td>谢志华
-                                </td>
-                                <td>6.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">所得税会计准则与实务
-                                </td>
-                                <td>于长春
-                                </td>
-                                <td>6.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">住房公积金会计核算办法
-                                </td>
-                                <td>张超
-                                </td>
-                                <td>2.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">工会会计制度
-                                </td>
-                                <td>张琦
-                                </td>
-                                <td>3.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">民间非营利组织会计制度
-                                </td>
-                                <td>张琦
-                                </td>
-                                <td>3.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">国际内部审计实务标杆案例
-                                </td>
-                                <td>张庆龙
-                                </td>
-                                <td>3.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">国库集中支付制度
-                                </td>
-                                <td>张洋
-                                </td>
-                                <td>3.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">企业财务管理经验谈
-                                </td>
-                                <td>邹志英
-                                </td>
-                                <td>4.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">小企业会计准则的新变化及其与税法的趋同
-                                </td>
-                                <td>陈敏
-                                </td>
-                                <td>4.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">提升企业领导力
-                                </td>
-                                <td>郭莹
-                                </td>
-                                <td>7.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">儒释道与企业管理
-                                </td>
-                                <td>李海彬
-                                </td>
-                                <td>5.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">全民中医养生教育
-                                </td>
-                                <td>尹志超
-                                </td>
-                                <td>3.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">《小企业会计准则》课程包
-                                </td>
-                                <td>财政部小企业会计制度授课组
-                                </td>
-                                <td>18.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">医院成本核算与财务分析
-                                </td>
-                                <td>程薇
-                                </td>
-                                <td>5.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">《医院会计制度》实务讲解与新旧会计制度衔接
-                                </td>
-                                <td>樊俊芝 刘辉
-                                </td>
-                                <td>7.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">基层医疗卫生机构财务制度要点与难点
-                                </td>
-                                <td>应亚珍
-                                </td>
-                                <td>4.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">新型农村合作医疗基金会计制度新解
-                                </td>
-                                <td>应亚珍
-                                </td>
-                                <td>2.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">新型农村合作医疗基金财务制度新解
-                                </td>
-                                <td>应亚珍
-                                </td>
-                                <td>3.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">最新事业单位会计准则讲解（2012版）
-                                </td>
-                                <td>常丽
-                                </td>
-                                <td>4.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">事业单位会计制度讲解（2012版）
-                                </td>
-                                <td>常丽
-                                </td>
-                                <td>6.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">基层医疗卫生机构财务制度要点与难点
-                                </td>
-                                <td>应亚珍
-                                </td>
-                                <td>4.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">《行政事业单位内部控制基本规范》的出台背景
-                                </td>
-                                <td>张庆龙 马雯
-                                </td>
-                                <td>2.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">行政事业单位内部控制风险评估与控制方法
-                                </td>
-                                <td>张庆龙 马雯
-                                </td>
-                                <td>6.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">事业单位财务规则讲解(2012版）
-                                </td>
-                                <td>张新
-                                </td>
-                                <td>4.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">上市公司年报披露情况及财务信息监管
-                                </td>
-                                <td>焦晓宁
-                                </td>
-                                <td>8.0
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="lesson2013">
-                    <h3>2013继续教育课表</h3>
-                    <table>
-                        <tbody>
-                            <tr>
-
-                                <th>课程名称
-                                </th>
-                                <th>主讲老师
-                                </th>
-                                <th>课时
-                                </th>
-                            </tr>
-                            <!-- All -->
-
-                            <tr>
-
-                                <td class="t_a_l">政府债务危机对我国经济的影响
-                                </td>
-                                <td>陈少强
-                                </td>
-                                <td>3.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">宏观经济形式分析暨“十二五”经济规划
-                                </td>
-                                <td>张鸿翔
-                                </td>
-                                <td>8.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">国际金融市场及其对我国经济的影响
-                                </td>
-                                <td>付鹏
-                                </td>
-                                <td>7.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">我国财政货币政策解读及其发展趋势
-                                </td>
-                                <td>白景明
-                                </td>
-                                <td>8.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">会计信息化管理
-                                </td>
-                                <td>冷冰
-                                </td>
-                                <td>3.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">会计基础工作规范
-                                </td>
-                                <td>张岩
-                                </td>
-                                <td>3.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">预防会计职务犯罪讲解
-                                </td>
-                                <td>孙娜
-                                </td>
-                                <td>3.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">事业单位财务规则讲解
-                                </td>
-                                <td>张新
-                                </td>
-                                <td>4.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">最新事业单位会计准则讲解（2012版）
-                                </td>
-                                <td>常丽
-                                </td>
-                                <td>4.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">事业单位会计制度讲解（2012版）
-                                </td>
-                                <td>常丽
-                                </td>
-                                <td>6.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">《行政事业单位内部控制基本规范》的出台背景
-                                </td>
-                                <td>张庆龙，马雯
-                                </td>
-                                <td>2.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">行政事业单位内部控制建设
-                                </td>
-                                <td>张庆龙，马雯
-                                </td>
-                                <td>7.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">行政事业单位内部控制风险评估与控制方法
-                                </td>
-                                <td>张庆龙，马雯
-                                </td>
-                                <td>6.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">小金库治理的政策与实务讲解
-                                </td>
-                                <td>田振刚
-                                </td>
-                                <td>5.5
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">预算的编制及执行
-                                </td>
-                                <td>李大雨
-                                </td>
-                                <td>3.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">公共资金的使用绩效及其评价
-                                </td>
-                                <td>马蔡琛
-                                </td>
-                                <td>6.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">《医院会计制度》实务讲解与新旧会计制度衔接
-                                </td>
-                                <td>樊俊芝
-刘辉
-                                </td>
-                                <td>7.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">医院成本核算与财务分析
-                                </td>
-                                <td>程薇
-                                </td>
-                                <td>5.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">基层医疗卫生机构财务制度要点与难点
-                                </td>
-                                <td>应亚珍
-                                </td>
-                                <td>4.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">新型农村合作医疗基金会计制度新解
-                                </td>
-                                <td>应亚珍
-                                </td>
-                                <td>2.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">新型农村合作医疗基金财务制度新解
-                                </td>
-                                <td>应亚珍
-                                </td>
-                                <td>3.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">农村集体经济组织财务会计制度
-                                </td>
-                                <td>师高康
-                                </td>
-                                <td>4.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">农民专业合作社财务会计制度（试行）
-                                </td>
-                                <td>师高康
-                                </td>
-                                <td>3.0
-                                </td>
-                            </tr>
-
-
-
-                            <tr>
-
-                                <td class="t_a_l">公允价值运用及其案例分析
-                                </td>
-                                <td>余海宗
-                                </td>
-                                <td>10.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">补充规定下长期股权投资准则热点难点解读
-                                </td>
-                                <td>马永义
-                                </td>
-                                <td>2.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">补充规定下资产减值准则热点难点解读
-                                </td>
-                                <td>马永义
-                                </td>
-                                <td>1.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">《企业合并准则》操作实务与合并报表编制要点
-                                </td>
-                                <td>马永义
-                                </td>
-                                <td>2.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">与金融工具相关的准则热点、难点问题解读
-                                </td>
-                                <td>马永义
-                                </td>
-                                <td>20.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">企业合并及合并报表理论与实务
-                                </td>
-                                <td>焦晓宁
-                                </td>
-                                <td>10.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">如何阅读财务报告获取有用决策信息
-                                </td>
-                                <td>马永义
-                                </td>
-                                <td>7.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">会计准则与所得税差异协调及相关纳税调整
-                                </td>
-                                <td>于长春
-                                </td>
-                                <td>20.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">企业税务风险控制点案例分析
-                                </td>
-                                <td>李旭红
-                                </td>
-                                <td>8.0
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td class="t_a_l">企业内部控制体系的实施与评价
-                                </td>
-                                <td>王志成
-                                </td>
-                                <td>7.0
-                                </td>
-                            </tr>
-                            <tr>
-
-                                <td class="t_a_l">《小企业会计准则》课程包
-                                </td>
-                                <td>财政部小企业会计准则授课组
-                                </td>
-                                <td>18.0
-                                </td>
-                            </tr>
-                            <tr>
-
-                                <td class="t_a_l">企业内部控制规范体系
-                                </td>
-                                <td>刘玉廷
-刘光忠
-王宏
-陆建桥
-周守华
-朱海林
-                                </td>
-                                <td>29.0
-                                </td>
-                            </tr>
-
-                            <%-- <tr>
-
-                                <td class="t_a_l">企业会计准则体系解读课程包
-                                </td>
-                                <td>于长春等
-                                </td>
-                                <td>38.0
-                                </td>
-                            </tr>--%>
-                        </tbody>
-                    </table>
+            <div class="clear"></div>
+            <!--焦点图盒子结束-->
+            <!--师资开始-->
+            <div class="szjs">
+                <div class="bt">
+                    <img src="images/szbt.jpg" onclick="javascript:location='findTeacherById.do?teacherCode=1'" style="" />
                 </div>
 
+                <div class="scrolllist" id="s1">
+                    <a class="abtn aleft" href="#left" title="左移"></a>
+                    <div class="imglist_w">
+                        <ul class="imglist">
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=4" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_qrs.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=5" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_ycc.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=6" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_cm.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=8" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_myy.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=9" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_zht.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=10" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_zql.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=11" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_zks.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=12" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_czj.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=13" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_ztl.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=14" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_hyq.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=15" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_wf.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=16" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_xjr.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=17" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_yzq.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=18" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_lxh.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=19" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_zxl.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=20" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_czw.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=21" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_lxl.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=22" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_jj.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=23" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_yyy.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=24" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_sn.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=25" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_yh.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=27" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_nxk.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=29" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_mw.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=30" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_hf.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=31" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_lhz.jpg" /></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="findTeacherById.do?teacherCode=32" title="">
+                                    <img width="150" height="150" alt="" src="images/teacher/teacher_zyy.jpg" /></a>
+                            </li>
+                        </ul>
+                        <!--imglist end-->
+                    </div>
+                    <a class="abtn aright" href="#right" title="右移"></a>
+                </div>
+                <!--scrolllist end-->
             </div>
-            <!-- 历年课表 End-->
-            <div class="clear">
+
+
+            <!--师资结束-->
+            <!--网站公告开始-->
+            <div class="wzgg">
+                <div class="bt">
+                    <a href="#">
+                        <img src="images/wzggbt.jpg" /></a>
+                </div>
+                <div class="nr">
+                    <ul>
+                        <li><a href="#">2014年11月10日网站维护通知</a></li>
+                        <li><a href="#">2014年10月10日网站维护通知</a></li>
+                        <li><a href="#">2014年 9月10日网站维护通知</a></li>
+                        <li><a href="#">2014年 8月10日网站维护通知</a></li>
+                        <li><a href="#">2014年7月北国会网站正式上线</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <!--网站公告结束-->
+            <div class="ad01">
+                <a href="findGoodExamPage.do">
+                    <img src="images/ad01.jpg" /></a>
+            </div>
+            <div class="clear"></div>
+            <!--tab新闻开始-->
+         <div class="tab">
+			  <div class="z_tab">
+			      <ul><li id="news001001" name="news0" class="">最新消息</li><li id="news001002" name="news1" class="">政策大纲</li><li id="news001003" name="news2" class="news_btn">考试报名</li><li id="news001004" name="news3" class="">报考指南</li></ul>
+			  	  <a target="_blank" href="./moreNews.do?boardId=001003&amp;baord_index=2" id="moreNews">更多&gt;&gt;</a>
+			  </div>
+		     <div class="z_news"><div id="news001001_ctx" name="news0" class="ctx" style="display: none;"><div class="z_news_c"><ul><li><span>2014-12-16</span><a target="_blank" href="getNewsContent.do?newsId=2329&amp;boardIndex=0&amp;newsIndex=0">2015年会计从业资格考试时间<img src="images/news/new20141124.gif"><img src="images/news/top.gif"></a></li><li><span>2014-12-09</span><a target="_blank" href="getNewsContent.do?newsId=2306&amp;boardIndex=0&amp;newsIndex=1">2014年11月份青海会计从业<img src="images/news/new20141124.gif"><img src="images/news/top.gif"></a></li><li><span>2014-11-28</span><a target="_blank" href="getNewsContent.do?newsId=2174&amp;boardIndex=0&amp;newsIndex=2">湖北省会计学会举办《女会计成才<img src="images/news/new20141124.gif"><img src="images/news/top.gif"></a></li><li><span>2015-01-13</span><a target="_blank" href="getNewsContent.do?newsId=2457&amp;boardIndex=0&amp;newsIndex=3">2015年全国各省市会计从业考<img src="images/news/new20141124.gif"></a></li><li><span>2015-01-12</span><a target="_blank" href="getNewsContent.do?newsId=2448&amp;boardIndex=0&amp;newsIndex=4">关于2015年天津会计从业资格 </a></li><li><span>2014-12-29</span><a target="_blank" href="getNewsContent.do?newsId=2436&amp;boardIndex=0&amp;newsIndex=5">宁波2015年上半年会计资格考 </a></li><li><span>2014-12-29</span><a target="_blank" href="getNewsContent.do?newsId=2434&amp;boardIndex=0&amp;newsIndex=6">福建2014第四季会计从业资格 </a></li><li><span>2014-12-29</span><a target="_blank" href="getNewsContent.do?newsId=2430&amp;boardIndex=0&amp;newsIndex=7">湖南2015年上半年会计从业资 </a></li><li><span>2014-12-26</span><a target="_blank" href="getNewsContent.do?newsId=2425&amp;boardIndex=0&amp;newsIndex=8">2015年会计从业资格考试报名 </a></li><li><span>2014-12-26</span><a target="_blank" href="getNewsContent.do?newsId=2424&amp;boardIndex=0&amp;newsIndex=9">南京市2014年下半会计从业资 </a></li></ul><div style="clear:both"></div></div></div><div id="news001002_ctx" name="news1" class="ctx" style="display: none;"><div class="z_news_c"><ul><li><span>2015-01-23</span><a target="_blank" href="getNewsContent.do?newsId=2348&amp;boardIndex=1&amp;newsIndex=0">2015年上海会计从业资格考试<img src="images/news/new20141124.gif"></a></li><li><span>2015-01-15</span><a target="_blank" href="getNewsContent.do?newsId=2463&amp;boardIndex=1&amp;newsIndex=1">浅谈2015年会计从业资格考试<img src="images/news/new20141124.gif"></a></li><li><span>2015-01-14</span><a target="_blank" href="getNewsContent.do?newsId=2461&amp;boardIndex=1&amp;newsIndex=2">陕西2015上半年会计从业资格<img src="images/news/new20141124.gif"></a></li><li><span>2015-01-14</span><a target="_blank" href="getNewsContent.do?newsId=2459&amp;boardIndex=1&amp;newsIndex=3">北京2015上半年会计从业资格<img src="images/news/new20141124.gif"></a></li><li><span>2015-01-14</span><a target="_blank" href="getNewsContent.do?newsId=2458&amp;boardIndex=1&amp;newsIndex=4">天津2015年会计从业资格考试 </a></li><li><span>2014-12-29</span><a target="_blank" href="getNewsContent.do?newsId=2432&amp;boardIndex=1&amp;newsIndex=5">关于辽宁会计事务管理系统新旧转 </a></li><li><span>2014-12-29</span><a target="_blank" href="getNewsContent.do?newsId=2431&amp;boardIndex=1&amp;newsIndex=6">福建2014年第四季会计从业资 </a></li><li><span>2014-12-26</span><a target="_blank" href="getNewsContent.do?newsId=2423&amp;boardIndex=1&amp;newsIndex=7">沈阳市第二批免试申领会计证审核 </a></li><li><span>2014-12-25</span><a target="_blank" href="getNewsContent.do?newsId=2418&amp;boardIndex=1&amp;newsIndex=8">黑龙江哈中省直单位会计人员调整 </a></li><li><span>2014-12-25</span><a target="_blank" href="getNewsContent.do?newsId=2416&amp;boardIndex=1&amp;newsIndex=9">中华人民共和国会计从业资格调转 </a></li></ul><div style="clear:both"></div></div></div><div id="news001003_ctx" name="news2" class="ctx" style="display: block;"><div class="z_news_c"><ul><li><span>2015-01-23</span><a target="_blank" href="getNewsContent.do?newsId=2474&amp;boardIndex=2&amp;newsIndex=0">2015福建第一季会计从业资格<img src="images/news/new20141124.gif"></a></li><li><span>2015-01-22</span><a target="_blank" href="getNewsContent.do?newsId=2472&amp;boardIndex=2&amp;newsIndex=1">2015青岛会计从业资格考试测<img src="images/news/new20141124.gif"></a></li><li><span>2015-01-20</span><a target="_blank" href="getNewsContent.do?newsId=2469&amp;boardIndex=2&amp;newsIndex=2">2015年湖北会计从业资格考试<img src="images/news/new20141124.gif"></a></li><li><span>2015-01-14</span><a target="_blank" href="getNewsContent.do?newsId=2460&amp;boardIndex=2&amp;newsIndex=3">2015年安徽会计从业资格考试<img src="images/news/new20141124.gif"></a></li><li><span>2015-01-13</span><a target="_blank" href="getNewsContent.do?newsId=2456&amp;boardIndex=2&amp;newsIndex=4">2015年上半年陕西会计从业资 </a></li><li><span>2015-01-13</span><a target="_blank" href="getNewsContent.do?newsId=2455&amp;boardIndex=2&amp;newsIndex=5">2015年海南会计从业资格考试 </a></li><li><span>2015-01-13</span><a target="_blank" href="getNewsContent.do?newsId=2454&amp;boardIndex=2&amp;newsIndex=6">2015年深圳会计从业资格考试 </a></li><li><span>2015-01-13</span><a target="_blank" href="getNewsContent.do?newsId=2453&amp;boardIndex=2&amp;newsIndex=7">2015年陕西会计从业资格考试 </a></li><li><span>2015-01-13</span><a target="_blank" href="getNewsContent.do?newsId=2452&amp;boardIndex=2&amp;newsIndex=8">2015年山东会计从业资格考试 </a></li><li><span>2015-01-12</span><a target="_blank" href="getNewsContent.do?newsId=2450&amp;boardIndex=2&amp;newsIndex=9">2015年河北会计从业资格考试 </a></li></ul><div style="clear:both"></div></div></div><div id="news001004_ctx" name="news3" class="ctx" style="display: none;"><div class="z_news_c"><ul><li><span>2015-01-23</span><a target="_blank" href="getNewsContent.do?newsId=2473&amp;boardIndex=3&amp;newsIndex=0">2015上半年宁夏会计从业资格<img src="images/news/new20141124.gif"></a></li><li><span>2015-01-20</span><a target="_blank" href="getNewsContent.do?newsId=2471&amp;boardIndex=3&amp;newsIndex=1">2015年第一季山东乳山会计从<img src="images/news/new20141124.gif"></a></li><li><span>2015-01-20</span><a target="_blank" href="getNewsContent.do?newsId=2470&amp;boardIndex=3&amp;newsIndex=2">2015年河北邯郸会计从业资格<img src="images/news/new20141124.gif"></a></li><li><span>2015-01-20</span><a target="_blank" href="getNewsContent.do?newsId=2468&amp;boardIndex=3&amp;newsIndex=3">2015年湖北会计从业资格考试<img src="images/news/new20141124.gif"></a></li><li><span>2015-01-14</span><a target="_blank" href="getNewsContent.do?newsId=2462&amp;boardIndex=3&amp;newsIndex=4">辽宁沈阳2015年新版会计从业 </a></li><li><span>2014-12-24</span><a target="_blank" href="getNewsContent.do?newsId=2410&amp;boardIndex=3&amp;newsIndex=5">如何备战2015会计从业资格无 </a></li><li><span>2014-12-17</span><a target="_blank" href="getNewsContent.do?newsId=2350&amp;boardIndex=3&amp;newsIndex=6">吉林会计从业资格考试报名条件 </a></li><li><span>2014-12-09</span><a target="_blank" href="getNewsContent.do?newsId=2311&amp;boardIndex=3&amp;newsIndex=7">2014年新版会计证换证 </a></li><li><span>2014-12-09</span><a target="_blank" href="getNewsContent.do?newsId=2310&amp;boardIndex=3&amp;newsIndex=8">会计从业资格证查询 </a></li><li><span>2014-12-09</span><a target="_blank" href="getNewsContent.do?newsId=2309&amp;boardIndex=3&amp;newsIndex=9">会计从业资格证书编号 </a></li></ul><div style="clear:both"></div></div></div></div>
+			</div>
+            <!--tab新闻结束-->
+        </div>
+        <div class="clear"></div>
+        <!--right结束-->
+        <div class="ad02">
+            <a href="findGoodChapter.do">
+                <img src="images/ad02.jpg" /></a>
+        </div>
+        <div class="spxx">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="btbody">
+            </table>
+
+            <table width="0" border="0" cellspacing="0" cellpadding="0" class="table">
+                <tr>
+                    <th style="border-left: 1px solid #dbdbdb;">商品名称</th>
+                    <th>套餐名称</th>
+                    <th>价格</th>
+                    <th>购买</th>
+                    <th>激活</th>
+                </tr>
+                <tr>
+                    <td valign="center" rowspan="3">2014年会计从业资格考试套餐E1（含会计电算化）</td>
+                    <td valign="top" nowrap="nowrap">《会计基础》（5套）</td>
+                    <td valign="center" rowspan="3">180元</td>
+                    <td valign="center" rowspan="3"><a href="javascript:addCart(2011,0);">
+                        <img src="images/gm.jpg" width="68" height="20" /><a /></td>
+                    <td valign="center" rowspan="3"><a href="javascript:showActivePad(0, 2011);">
+                        <img src="images/jh.jpg" width="68" height="20" /></a></td>
+                </tr>
+                <tr>
+                    <td valign="top" nowrap="nowrap">《财经法规与会计职业道德》（5套）</td>
+                </tr>
+                <tr>
+                    <td valign="top" nowrap="nowrap">《会计电算化》（5套）</td>
+                </tr>
+
+                <tr>
+                    <td valign="center" rowspan="3">2014年会计从业资格章节练习套餐p1（含会计电算化）</td>
+                    <td valign="top" nowrap="nowrap">《会计基础》</td>
+                    <td valign="center" rowspan="3">180元</td>
+                    <td valign="center" rowspan="3"><a href="javascript:addCart(3011,0);">
+                        <img src="images/gm.jpg" width="68" height="20" /></a></td>
+                    <td valign="center" rowspan="3"><a href="javascript:showActivePad(0, 3011);">
+                        <img src="images/jh.jpg" width="68" height="20" /></a></td>
+                </tr>
+                <tr>
+                    <td valign="top" nowrap="nowrap">《财经法规与会计职业道德》</td>
+                </tr>
+                <tr>
+                    <td valign="top" nowrap="nowrap">《会计电算化》</td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="ad02">
+            <a href="findCurricuumCenter.do">
+                <img src="images/ad03.jpg" /></a>
+        </div>
+        <div class="kczx">
+            <table width="0" border="0" cellspacing="0" cellpadding="0"
+                class="kctable">
+                <tr>
+                    <td width="33%">
+                        <table width="0" border="0" cellspacing="0" cellpadding="0" class="blue">
+                            <tr>
+                                <!-- "images/kc01.jpg"  -->
+                                <td align="center">
+                                    <img src="images/z_kjjc2.jpg" width="213" height="171" /></td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <table width="85%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <!-- 
+											<td class="red">￥180元</td> -->
+                                            <td class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td><a href="javascript:audition(101,1,1);">
+                                                <img src="images/st.jpg" width="45" height="23" /></a></td>
+                                            <td><a href="javascript:addCarts(1001,0,'2014年会计基础考前辅导视频');">
+                                                <img src="images/gm01.jpg" width="45" height="23" /></a></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">授课老师：<b>张黎群</b>(管理学博士)</td>
+                            </tr>
+                            <tr>
+                                <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;北京国家会计学院副教授，中国注册会计师；2012年获管理学（会计学专业）博士学位（清华大学）；1997年获经济...</td>
+                            </tr>
+
+                        </table>
+                    </td>
+                    <td width="33%">
+                        <table width="0" border="0" cellspacing="0" cellpadding="0" class="blue">
+                            <tr>
+                                <!-- "images/kc01.jpg"  -->
+                                <td align="center">
+                                    <img src="images/z_cjfg2.jpg" width="213" height="171" /></td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <table width="85%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <!-- 
+											<td class="red">￥180元</td> -->
+                                            <td class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td><a href="javascript:audition(102,1,1);">
+                                                <img src="images/st.jpg" width="45" height="23" /></a></td>
+                                            <td><a href="javascript:addCarts(1002,0,'2014年财经法规考前辅导视频');">
+                                                <img src="images/gm01.jpg" width="45" height="23" /></a></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">授课老师：<b>安  心</b>(经济学、教育心理学双硕士)</td>
+                            </tr>
+                            <tr>
+                                <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册会计师非执业会员，注册税务师，中国人民大学、中央财经大学外聘副教授，多年企事业单位培训经验，从事教育工作1...</td>
+                            </tr>
+
+                        </table>
+                    </td>
+                    <td width="33%">
+                        <table width="0" border="0" cellspacing="0" cellpadding="0" class="blue">
+                            <tr>
+                                <!-- "images/kc01.jpg"  -->
+                                <td align="center">
+                                    <img src="images/z_kjdsh2.jpg" width="213" height="171" /></td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <table width="85%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <!-- 
+											<td class="red">￥180元</td> -->
+                                            <td class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td><a href="javascript:audition(103,1,1);">
+                                                <img src="images/st.jpg" width="45" height="23" /></a></td>
+                                            <td><a href="javascript:addCarts(1003,0,'2014年会计电算化考前辅导视频');">
+                                                <img src="images/gm01.jpg" width="45" height="23" /></a></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">授课老师：<b>张玉琳</b>(管理学硕士)</td>
+                            </tr>
+                            <tr>
+                                <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;北京国家会计学院讲师，1999年获管理信息系统专业工学学士学位（清华大学）；2001年获管理科学与工程专业管理...</td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <!-- 购买课程跳转至学习卡页面 -->
+            <form action="toLearnCards.do" method="post" id="formtoLearnCards" target="_blank">
+                <input type="hidden" id="goodName" name="goodName" />
+                <input type="hidden" id="goodId" name="goodId" />
+            </form>
+            <!-- 试听需要提交表单 -->
+            <form action="player.do" method="post" id="formPlayer">
+                <input type="hidden" id="lessoncode" name="lessoncode" />
+                <input type="hidden" id="chaptercode" name="chaptercode" />
+                <input type="hidden" id="scount" name="scount" />
+                <input type="hidden" id="istry" name="istry" />
+            </form>
+        </div>
+        <!--首页名师开始-->
+        <div class="syms">
+            <div class="bt">
+                <a href="javascript:location='findTeacherById.do?teacherCode=1'">
+                    <img src="images/syms.jpg" /></a>
+            </div>
+            <div class="nr">
+                <table border="0" cellspacing="0" cellpadding="0" class="jstable">
+                    <tr>
+                        <td rowspan="2" valign="middle"><a target="_blank" href="findTeacherById.do?teacherCode=1">
+                            <img src="images/teacher_zlq.jpg" width="90" height="107" /></a></td>
+                        <th valign="middle">张黎群</th>
+                    </tr>
+                    <tr>
+                        <td valign="middle"><a target="_blank" href="findTeacherById.do?teacherCode=1">管理学博士<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;北京国家会计学院副教..<br />
+                        </a></td>
+                    </tr>
+                </table>
+                <table border="0" cellspacing="0" cellpadding="0" class="jstable">
+                    <tr>
+                        <td rowspan="2" valign="middle"><a target="_blank" href="findTeacherById.do?teacherCode=3">
+                            <img src="images/teacher_zyl.jpg" width="90" height="107" /></a></td>
+                        <th valign="middle">张玉琳</th>
+                    </tr>
+                    <tr>
+                        <td valign="middle"><a target="_blank" href="findTeacherById.do?teacherCode=3">管理学硕士<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;北京国家会计学院讲师..<br />
+                        </a></td>
+                    </tr>
+                </table>
             </div>
         </div>
-</asp:Content>
+        <!--首页名师结束-->
+        <!--center结束-->
+    </div>
+    <!--bottom开始-->
+    <div class="bottom">
+        <div class="bom1000">
+            <div class="logo-hui"></div>
+            <div class="right-txt">
+                <div class="llinks">
+                    <a href="./aboutus.do" id="aboutus">关于我们</a> | <a href="./telus.do" id="telus">联系我们</a>  | <a href="./websitmap.do" id="websitmap">网站地图</a>  | <a href="./userserver.do" id="userserver">客户服务</a>  | <a href="./websitabout.do" id="websitabout">网站声明</a>  | <a href="./help.do" id="websithelp">网站帮助</a>
+                    <div>
+                        版权所有:北京国家会计学院  京公网安备11011302000821号  京ICP备05004616号
+						<script type="text/javascript">
+						    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+						    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F867067f5734dc2e7a73ab99aeb4861f8' type='text/javascript'%3E%3C/script%3E"));
+                        </script>
+                        
+                        <script src="http://kefu.qycn.com/vclient/state.php?webid=94589" language="javascript" type="text/javascript"></script>
+                    </div>
+                    <div>5*8小时免费咨询热线：400-063-0318 <b><font color="blue"><%--(您是本网站第：330877位访问者)--%></font></b></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--bottom结束-->
+
+    <%--<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>--%>
+    <script type="text/javascript" src="js/slider.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //默认状态下左右滚动
+            $("#s1").xslider({
+                unitdisplayed: 4,
+                movelength: 1,
+                autoscroll: 3000
+            });
+        })
+
+        function tits() {
+            art.dialog({
+                title: '提示',
+                lock: true,
+                fixed: true,
+                width: 300,
+                height: 100,
+                background: '#CDCDCD', // 背景色
+                opacity: 0.47,	// 透明度
+                content: '体验区将2014年01月01日上线，敬请期待!',
+                icon: 'warning',
+                button: [
+                          {
+                              name: '确定',
+                              callback: function () {
+                              },
+                              focus: true
+                          }
+                ],
+                cancelVal: '取消',
+                cancel: true
+            });
+        }
+    </script>
+
+</body>
+</html>

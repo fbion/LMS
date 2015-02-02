@@ -16,6 +16,12 @@ namespace com.hooyes.lms.Controllers
         {
             return View();
         }
+
+        public ActionResult IndexOld()
+        {
+            return View();
+        }
+
         public ActionResult DynamicIndex()
         {
             return View();

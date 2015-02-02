@@ -94,7 +94,7 @@ a {
 .header {
     width: 960px;
     height: 200px;
-    background: url(../Img/header_img.jpg);
+    background: url(../Img/header_img.jpg?t=20150129);
     margin-bottom: 10px;
 }
 

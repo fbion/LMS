@@ -68,7 +68,7 @@
         <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/login/logout">【退出登录】</a></li>
     </ul>
     <p class="cert">
-        <b>会计证所属地：山东</b>
+        <b></b>
     </p>
 
 </div>

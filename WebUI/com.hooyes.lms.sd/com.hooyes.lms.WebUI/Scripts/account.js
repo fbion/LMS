@@ -40,12 +40,12 @@ function ValidateLoginForm() {
     var PWD = $("#PWD");
     var Captcha = $("#Captcha");
     if (ID.val() == "") {
-        alert("请输入\t身份证号");
+        alert("请输入\t用户名");
         ID.focus();
         return false;
     }
     if (PWD.val() == "") {
-        alert("请输入\t姓名");
+        alert("请输入\t密码");
         PWD.focus();
         return false;
     }
