@@ -1,0 +1,638 @@
+﻿html {
+    color: #444444;
+    background: #FFF;
+}
+
+body, div, img, p, h1, h2, h3, h4, h5, span, ul, li, th, td, form, b, dl, dd, dt {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+p, table, li, span, a, h4, h5, h6 {
+    font-size: 12px;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #3e3e3e;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+.none {
+    display: none;
+}
+
+.font_red {
+    color: #bc1a15;
+}
+
+.font_blue {
+    color: #055cbd;
+}
+
+.font_w {
+    font-weight: bold;
+}
+
+.t_a_c {
+    text-align: center;
+}
+
+.t_a_l {
+    text-align: left;
+}
+
+.f_l {
+    float: left;
+}
+
+.f_r {
+    float: right;
+}
+
+.m_l_20 {
+    margin-left: 20px;
+}
+
+.clear {
+    clear: both;
+}
+
+.dao2 {
+    margin: auto 6px auto 4px;
+}
+
+.input {
+    border: 1px solid #A09E99;
+    height: 18px;
+    line-height: 18px;
+}
+
+.status1 {
+    color: Red;
+}
+
+#wrapper {
+    width: 960px;
+    margin: 0 auto;
+}
+
+.header {
+    width: 960px;
+    height: 200px;
+    background: url(../Img/header_img.jpg);
+    margin-bottom: 10px;
+}
+
+#main {
+    margin: 0 auto;
+}
+
+#left {
+    width: 220px;
+    float: left;
+}
+
+    #left h3 {
+        background: #92B0DD;
+        padding: 6px 16px;
+        font-size: 14px;
+        color: #FFF;
+    }
+
+.expl {
+    width: 218px;
+    border: #92B0DD 1px solid;
+    margin-bottom: 10px;
+}
+
+    .expl .con {
+        padding: 10px;
+        line-height: 20px;
+    }
+
+    .expl .line {
+        border-bottom: #adadad 1px dashed;
+        margin: 10px 0;
+    }
+
+    .expl .hotline {
+        background: #FFF url(../Img/call.jpg) no-repeat right;
+        height: 79px;
+    }
+
+    .expl p {
+        text-indent: 24px;
+    }
+
+    .expl h3 {
+        background: #92B0DD url(../Img/note.png) no-repeat 10px center !important;
+        text-indent: 1em;
+    }
+
+    .expl h5 {
+        font-weight: normal;
+        text-indent: 24px;
+    }
+
+#right {
+    width: 730px;
+    float: right;
+}
+
+.board {
+    border: #92B0DD 1px solid;
+    background: #EFF7FF;
+    margin-bottom: 10px;
+    padding: 16px;
+}
+
+    .board p {
+        font-size: 12px;
+        line-height: 24px;
+        padding: 0 10px 10px 0;
+        text-indent: 24px;
+    }
+
+    .board h4 {
+        font-weight: normal;
+        line-height: 22px;
+    }
+
+.board {
+    font-size: 12px;
+}
+
+.flow {
+    border: #92B0DD 1px solid;
+    background: #FFF;
+    overflow: hidden;
+    margin-bottom: 10px;
+    height: 91px;
+}
+
+    .flow h3 {
+        width: 26px;
+        border-right: #92B0DD 1px solid;
+        font-size: 14px;
+        color: #751313;
+        text-align: center;
+        padding: 14px 0;
+        float: left;
+        margin-right: 10px;
+    }
+
+    .flow img {
+        padding: 10px 2px;
+        vertical-align: middle;
+    }
+
+    .flow .call {
+        padding: 1px auto 1px auto;
+        float: right;
+    }
+
+.lesson h3 {
+    height: 20px;
+    background: url(../Img/title2.jpg) no-repeat;
+    font-size: 14px;
+    padding: 7px 0 0 16px;
+    color: #FFF;
+}
+
+.lesson table {
+    border: #92B0DD 1px solid;
+    line-height: 27px;
+    width: 730px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+    .lesson table th {
+        border: #d3d3d3 1px solid;
+        color: #FFF;
+        background-color: #92B0DD;
+    }
+
+    .lesson table td {
+        border: #92B0DD 1px solid;
+        padding: 0 10px;
+    }
+
+.lesson .bg_orange {
+    background: #fffbf4;
+}
+
+.lesson table td .icon_listen {
+    vertical-align: middle;
+    display: block;
+    width: 36px;
+    height: 36px;
+    background: #FFF url('../Img/listen.png') no-repeat;
+}
+
+.footer {
+    clear: both;
+    border-top: #d0d0d0 1px solid;
+    text-align: center;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+    .footer span {
+        padding: 0 20px;
+    }
+
+/*登录样式：*/
+.login {
+    width: 218px;
+    border: #92B0DD 1px solid;
+    margin-bottom: 10px;
+}
+
+    .login img {
+        vertical-align: middle;
+    }
+
+    .login h3 {
+        background: #92B0DD url(../Img/lock.png) no-repeat 10px center !important;
+        text-indent: 1em;
+    }
+
+    .login .linkli {
+        margin-top: 10px;
+    }
+
+    .login a {
+        color: Blue;
+    }
+
+        .login a:hover {
+            text-decoration: underline;
+        }
+
+    .login .linkli2 {
+        height: 15px;
+    }
+
+.login_not {
+    padding: 10px;
+}
+
+    .login_not ul li {
+        margin: 5px auto 5px auto;
+    }
+
+    .login_not .login_p {
+        width: 120px;
+        height: 16px;
+        background: url(../Img/btn2.jpg) no-repeat;
+        text-align: center;
+        margin: 0 auto 10px auto;
+        font-weight: bold;
+        padding-top: 5px;
+    }
+
+        .login_not .login_p a {
+            color: #770221;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+    .login_not .w2 {
+        width: 130px;
+    }
+
+.login_info {
+    height: auto;
+}
+
+    .login_info ul {
+        margin: 0;
+        padding: 0;
+    }
+
+        .login_info ul li {
+            text-align: center;
+            height: 20px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+    .login_info p.cert {
+        text-align: center;
+        margin-top: 20px;
+        height: 40px;
+        line-height: 40px;
+        border: 1px dashed #96C2F1;
+        background-color: #EFF7FF;
+    }
+
+.login_tb {
+    border-collapse: collapse;
+}
+
+    .login_tb td {
+        height: 25px;
+    }
+
+#login_btn {
+    height: 25px;
+    width: 60px;
+}
+/*登录后样式：*/
+.logon_input_box {
+    padding-bottom: 10px;
+    border-bottom: #ccc 1px dashed;
+    margin: 0 auto;
+}
+
+    .logon_input_box dd {
+        line-height: 22px;
+        font-size: 12px;
+        padding: 0 8px;
+    }
+
+    .logon_input_box a {
+        margin-left: 20px;
+        color: #0256BF;
+    }
+
+    .logon_input_box span {
+        color: #A63139;
+        font-weight: bold;
+    }
+
+.login_notice_box {
+    text-align: center;
+}
+
+    .login_notice_box dd {
+        line-height: 22px;
+        font-size: 14px;
+        border-bottom: #CCC 1px dashed;
+        margin: 10px auto;
+        padding-bottom: 10px;
+    }
+
+    .login_notice_box dt a {
+        width: 80%;
+        background: #F3F3F3;
+        border: 1px solid #B6E5F7;
+        padding: 4px 0;
+        text-align: center;
+        display: block;
+        margin: 0 auto;
+    }
+
+/* Invoice */
+#invoicediv {
+    margin-bottom: 20px;
+}
+
+#invoicetb {
+    line-height: 27px;
+}
+
+    #invoicetb td {
+        border: 1px solid #92B0DD;
+        padding: 0 10px;
+    }
+
+.commondiv {
+    margin-bottom: 20px;
+}
+
+.commontb {
+    line-height: 27px;
+}
+
+    .commontb td {
+        border: 1px solid #92B0DD;
+        padding: 0 10px;
+    }
+
+    .commontb th {
+        border: 1px solid #92B0DD;
+        padding: 0 10px;
+    }
+
+/* papertb */
+#paperdiv {
+    margin-bottom: 20px;
+}
+
+#papertb {
+    line-height: 27px;
+}
+
+    #papertb td {
+        border: 1px solid #92B0DD;
+        padding: 0 10px;
+    }
+
+        #papertb td.title {
+            font-weight: bold;
+        }
+
+input.error {
+    border: 1px solid red;
+}
+
+select.error {
+    border: 1px solid red;
+}
+
+label.error {
+    color: Red;
+    padding-left: 5px;
+}
+
+.errorDiv {
+    height: 100px;
+    margin: 0px auto;
+    margin-bottom: 20px;
+    border: 1px solid #FFCC00;
+    background-color: #FFFFF7;
+}
+
+    .errorDiv h5 {
+        margin-left: 5px;
+        height: 25px;
+        line-height: 25px;
+    }
+
+    .errorDiv p {
+        margin-top: 10px;
+        margin-left: 5px;
+    }
+
+.LiTip {
+    margin: 10px auto 10px auto;
+    border: 1px solid #FFCC00;
+    background-color: #FFFFF7;
+    padding: 5px;
+    line-height: 25px;
+}
+
+.style16 {
+    width: 750px;
+    height: 25px;
+    background: none repeat scroll 0 0 #FFF6CF;
+    border: 1px solid #DEC694;
+    color: #733900;
+    font-size: 12px;
+    line-height: 25px;
+    margin: 5px auto;
+    text-indent: 2em;
+}
+
+.style17 {
+    width: 750px;
+    margin: 25px auto;
+}
+/* Survey */
+.Survey {
+    position: absolute;
+    width: 350px;
+    height: auto;
+    margin-left: 229px;
+    border: 1px solid #92B0DD;
+    background-color: #FFF;
+}
+
+    .Survey h3 {
+        background: #92B0DD url(../Img/help.png) no-repeat 10px center !important;
+    }
+
+.Survey-Item {
+    margin: 10px;
+}
+
+    .Survey-Item li {
+        margin-bottom: 10px;
+    }
+
+        .Survey-Item li.title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .Survey-Item li.other .text {
+            width: 300px;
+            height: 50px;
+        }
+
+.Survey .close-div {
+    position: absolute;
+    width: 350px;
+    text-align: right;
+}
+
+.Survey-Content {
+    width: 350px;
+}
+
+#SurveryMessageText {
+    margin-top: 5px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 25px;
+}
+
+#SurveryMessageBtn {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.help-div {
+    height: auto;
+}
+
+    .help-div ul {
+        height: 25px;
+    }
+
+        .help-div ul li {
+            display: block;
+            float: left;
+            width: 50px;
+            line-height: 22px;
+            /*border:1px dashed #92B0DD;*/
+            text-align: center;
+            margin-left: 5px;
+        }
+
+            .help-div ul li.a {
+                margin-left: 17px;
+            }
+
+            .help-div ul li.c {
+                width: 76px;
+            }
+
+    .help-div p {
+        padding: 2px;
+        text-align: center;
+        line-height: 22px;
+    }
+
+    .help-div ul li a {
+        color: red;
+    }
+
+.t_online_help {
+    color: red;
+}
+
+/*faq*/
+.faq-board {
+    height: 20px;
+    line-height: 20px;
+    padding: 5px;
+    padding-left: 10px;
+}
+
+.faq-ul {
+    font-family: 'Segoe UI';
+}
+
+    .faq-ul li {
+        margin-bottom: 2px;
+        line-height: 22px;
+    }
+
+        .faq-ul li.t {
+            font-weight: bold;
+            font-size: 15px;
+            color: #055cbd;
+        }
+
+        .faq-ul li.text {
+            font-size: 13px;
+            padding: 2px;
+            padding-left: 25px;
+        }
+.exlinksp {
+    display: block;
+}
+
+    .exlinksp a {
+        color: blue;
+    }
+.extip {
+    background-color: #f8f3f3
+}

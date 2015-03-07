@@ -1,0 +1,89 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+
+<%
+    string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
+    string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
+    string AuthBaseUrl = ConfigurationManager.AppSettings.Get("auth_url");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="keywords" content="会计硕士,会计远程教育,会计高端培训,会计学院,北京会计,高级财会人才,注册会计师" />
+    <meta name="description" content="北京国家会计学院是国务院于1998年7月20日批准成立的国务院事业单位，由财政部代管，教学管理依托清华大学。培训会计人才的后续教育培训基地。" />
+    <title>管理员 -- 国家会计学院</title>
+    <link href="<% = CDN_Private %>/Css/Master.Common.css?t=2015" rel="stylesheet" type="text/css" />
+    <link href="<% = CDN_Private %>/Css/Master.css" rel="stylesheet" type="text/css" />
+    <link href="<% = CDN_Private %>/favicon.ico" rel="Bookmark" />
+    <link href="<% = CDN_Private %>/favicon.ico" rel="Shortcut Icon" />
+    <script src="<% = CDN_Public %>/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="<% = CDN_Private %>/Scripts/config.cp.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="header">
+            <div class="header-text">河南省会计人员继续教育网  ----  管理人员后台</div>
+              <div class="header-nav">
+                切换专区后台
+                <select class="header-nav-select" id="header_nav_select">
+                    <option value="">*<%=ConfigurationManager.AppSettings.Get("web_title") %></option>
+                </select>
+            </div>
+        </div>
+        <div id="left">
+            <% if (com.hooyes.lms.Client.IsAdministrator)
+               { %>
+            <div class="adminMsg">
+                <h5></h5>
+                <div class="admin-text">您好：<%=com.hooyes.lms.Client.AdminLogin %></div>
+            </div>
+            <ul class="adminMenu">
+                <%-- <li><a href="Search">查找学员</a></li>
+                <li><a href="ListMember">学员列表</a></li>
+                <li><a href="ListInvoice">发票列表</a></li>
+                <li><a href="ListSurvey">学员提问</a></li>
+                <li><a href="UploadInvoice">导入发票</a></li>
+               
+                <%
+                   if (com.hooyes.lms.Client.CheckTag(4))
+                   {
+                %>
+                <li><a href="upload">批量处理</a></li>
+                <% 
+                   }
+                %>
+                <%
+                   if (com.hooyes.lms.Client.CheckTag(7))
+                   {
+                %>
+                <li><a href="UpdatePassword">修改密码</a></li>
+                <% 
+                   }
+                %>--%>
+                <% var LAdminMenu = com.hooyes.lms.DAL.M.Get.AdminMenu(com.hooyes.lms.Client.AID); %>
+                <% foreach (var m in LAdminMenu)
+                   { %>
+                <li><a href="<%=m.Url %>"><%=m.Item %></a></li>
+                <% }%>
+                <li><a href="../login/MasterLogout">退出登录</a></li>
+            </ul>
+            <%}%>
+        </div>
+        <div id="right">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        </div>
+        <div class="footer">
+            <span>河南省财政厅</span><span>技术支持：<a href="http://www.nai.edu.cn" target="_blank">北京国家会计学院</a>
+            </span>
+        </div>
+    </div>
+    <!-- hooyes 2013-11-12 -->
+    <div style="display: none">
+        <script type="text/javascript" src="http://js.users.51.la/15971645.js"></script>
+    </div>
+    <script src="<% = CDN_Private %>/Scripts/admin_nav.js" type="text/javascript"></script>
+    <script>
+        InitNavMenu("<% = AuthBaseUrl%>");
+    </script>
+</body>
+</html>

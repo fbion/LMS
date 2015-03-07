@@ -1,0 +1,289 @@
+﻿.odd {
+    border: 1px solid #BBE1F1;
+    background-color: #EEFAFF;
+}
+
+#left {
+    width: 18%;
+    min-width: 200px;
+    margin-left: 25px;
+    float: left;
+    margin-bottom: 15px;
+}
+
+#right {
+    width: 75%;
+    min-width: 700px;
+    float: left;
+    margin-left: 15px;
+    margin-bottom: 15px;
+}
+
+    #right h2 {
+        padding: 3px;
+        font-size: 16px;
+        margin: 0;
+        border-left: 8px solid #FFCC00;
+        margin-bottom: 3px;
+    }
+
+#SearchDiv {
+    margin-bottom: 10px;
+}
+
+.adminMenu {
+}
+
+    .adminMenu li {
+        height: 30px;
+        line-height: 30px;
+        border-bottom: 1px solid #A9C9E2;
+        text-align: center;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+        .adminMenu li:hover {
+            border-bottom: 1px solid #FFCC00;
+        }
+
+.adminMsg {
+    font-size: 12px;
+    height: 50px;
+    margin-bottom: 5px;
+    padding: 2px;
+    border: 1px solid #92B0DD;
+    background-color: #FFFFFF;
+}
+
+    .adminMsg h5 {
+        margin: 1px;
+        height: 22px;
+        line-height: 22px;
+        border-left: 8px solid #34495E;
+        padding-left: 2px;
+    }
+
+.commontb {
+    width: 100%;
+}
+
+.adminLoginTip li {
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #A9C9E2;
+    background-color: #E8F5FE;
+    text-align: center;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.Pager {
+    font-size: 14px;
+    text-align: right;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+    .Pager a {
+        font-size: 14px;
+    }
+
+.PagerJump {
+    position: absolute;
+    right: 0;
+    width: 205px;
+    text-align: center;
+    display: none;
+    font-family: "lucida Grande",Verdana;
+    color: #727D95;
+    border: 1px solid #CCCCCC;
+    background-color: #FAFCFD;
+    padding: 5px;
+}
+
+    .PagerJump input {
+        font-family: "lucida Grande",Verdana;
+        color: #727D95;
+    }
+
+.PositionHolder {
+    position: absolute;
+    width: 748px;
+    font-size: 14px;
+}
+
+.tipper {
+    position: absolute;
+    text-align: center;
+    padding-right: 5px;
+    background-color: #FFF;
+    border-right: 1px solid #92B0DD;
+    display: none;
+}
+
+.anone {
+    cursor: none;
+    text-decoration: none;
+}
+
+.btn1 {
+    width: 60px;
+    height: 50px;
+}
+
+.total {
+    width: 200px;
+    float: left;
+    text-align: left;
+}
+
+.shortinput, .MinutesInput {
+    width: 50px;
+}
+
+.selectyears {
+    width: 100px;
+    height: 100px;
+}
+
+.debug {
+    display: none;
+}
+
+.mod-sub-nav {
+    width: 695px;
+    height: 36px;
+    background: url(../img/mod_sub_nav.png?v=e10a9984.png) no-repeat 0 0;
+    margin: 30px 0 20px;
+    line-height: 36px;
+    color: #418dda;
+    font: 16px/36px \5fae\8f6f\96c5\9ed1,\9ed1\4f53;
+}
+
+    .mod-sub-nav li {
+        float: left;
+        padding-left: 40px;
+    }
+
+.mod-sub-list1 {
+    width: 190px;
+}
+
+.mod-sub-list2 {
+    width: 202px;
+}
+
+.mod-sub-nav li.list1-active {
+    background: url(../img/sub_nav_1.png?v=f12d4caa.png) no-repeat 0 0;
+    color: #fff;
+}
+
+.mod-sub-nav li.list2-active {
+    background: url(../img/sub_nav_2.png?v=ff65b5ce.png) no-repeat 0 0;
+    color: #fff;
+    margin-left: -16px;
+    padding-left: 56px;
+    width: 202px;
+}
+
+.mod-sub-nav li.list3-active {
+    background: url(../img/sub_nav_3.png?v=1e6d95ce.png) no-repeat 0 0;
+    color: #fff;
+    margin-left: -16px;
+    padding-left: 56px;
+    width: 183px;
+}
+
+.panel {
+    font-size: 14px;
+}
+
+.m-loginBtn {
+    width: 50px;
+    height: 30px;
+}
+
+#logindiv {
+    width: 1000px;
+    margin: 0 auto;
+    margin-top: 40px;
+    height: 500px;
+}
+
+.loginA {
+    float: left;
+    width: 475px;
+    background-color: #094ab2;
+}
+
+.loginB {
+    width: 400px;
+    float: left;
+    margin-left: 51px;
+}
+
+.loginA-top {
+    height: 340px;
+    width: 475px;
+}
+
+.loginA-bottom {
+    height: 100px;
+    background-color: #094ab2;
+    color: #FFF;
+    text-align: center;
+}
+
+    .loginA-bottom h1 {
+        margin-top: 20px;
+    }
+
+.m-login-form {
+    margin-top: 160px;
+}
+
+.m-input {
+    width: 200px;
+    height: 25px;
+    line-height: 25px;
+}
+
+.m-loing-tb tr {
+    height: 40px;
+}
+
+.m-loing-tb td {
+    border: none;
+    padding: 0 10px;
+}
+
+.m-loing-tb th {
+    border: none;
+    padding: 0 10px;
+}
+
+.search-input {
+    width: 200px;
+    height: 20px;
+    line-height: 20px;
+    vertical-align: middle;
+}
+
+.search-btn {
+    height: 30px;
+    width: 60px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.admin-text {
+    text-align: center;
+    
+}
+
+button.flatbtn {
+    border: 0px;
+    background-color: #FFF;
+    color: #2538cf;
+}
