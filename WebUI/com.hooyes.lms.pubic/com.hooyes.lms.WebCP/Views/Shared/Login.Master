@@ -1,0 +1,40 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="安徽省会计人员继续教育网,安徽省继续教育,会计继续教育" />
+    <meta name="keywords" content="会计硕士,会计远程教育,会计高端培训,会计学院,北京会计,高级财会人才,注册会计师" />
+    <meta name="description" content="北京国家会计学院是国务院于1998年7月20日批准成立的国务院事业单位，由财政部代管，教学管理依托清华大学。培训会计人才的后续教育培训基地。" />
+    <title>管理员 -- 国家会计学院</title>
+    <link href="<% = com.hooyes.lms.C.CDN %>/Css/Common.css" rel="stylesheet" type="text/css" />
+    <link href="<% = com.hooyes.lms.C.CDN %>/Css/Master.css" rel="stylesheet" type="text/css" />
+    <link href="<% = com.hooyes.lms.C.CDN %>/favicon.ico" rel="Bookmark" />
+    <link href="<% = com.hooyes.lms.C.CDN %>/favicon.ico" rel="Shortcut Icon" />
+    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/config.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="logindiv">
+            <div id="loginA" class="loginA" >
+                <div class="loginA-top">
+                    <img src="<% = com.hooyes.lms.C.CDN %>/Img/m-login.jpg" />
+                </div>
+                <div class="loginA-bottom">
+                    <h1>Welcome</h1>
+                </div>
+            </div>
+            <div id="loginB" class="loginB">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>安徽省财政厅</span><span>技术支持：<a href="http://www.nai.edu.cn" target="_blank">北京国家会计学院</a>
+            </span>
+        </div>
+    </div>
+    
+</body>
+</html>
