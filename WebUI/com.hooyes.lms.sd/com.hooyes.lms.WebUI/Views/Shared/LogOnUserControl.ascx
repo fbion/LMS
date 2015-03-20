@@ -63,8 +63,9 @@
 
         <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/Payment/Buy">【课程列表】</a></li>
         <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/Account/Profiles">【个人信息】</a></li>
-        <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/Account/Invoice">【申请发票】</a></li>
-        <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/Account/Certificate" target="_blank">【查看证书】</a></li>
+        <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/Account/UpdatePassword">【修改密码】</a></li>
+       <%-- <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/Account/Invoice">【申请发票】</a></li>
+        <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/Account/Certificate" target="_blank">【查看证书】</a></li>--%>
         <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/login/logout">【退出登录】</a></li>
     </ul>
     <p class="cert">

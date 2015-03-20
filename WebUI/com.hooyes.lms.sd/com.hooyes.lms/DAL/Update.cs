@@ -587,5 +587,33 @@ namespace com.hooyes.lms.DAL
             }
             return m;
         }
+        public static R Password(int MID, string Password)
+        {
+            var m = new R();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@R",0),
+                    new SqlParameter("@MID",MID),
+                    new SqlParameter("@Password",Password)
+                   
+                };
+                param[0].Direction = ParameterDirection.ReturnValue;
+                var r = SqlHelper.ExecuteNonQuery(C.conn, CommandType.StoredProcedure, "Update_Password", param);
+                m.Code = 0;
+                m.Value = Convert.ToInt32(param[0].Value);
+                m.Message = "success";
+            }
+            catch (Exception ex)
+            {
+                m.Code = 300;
+                m.Message = ex.Message;
+                log.Fatal(ex.Message);
+                log.FatalException(ex.Message, ex);
+            }
+
+            return m;
+        }
     }
 }

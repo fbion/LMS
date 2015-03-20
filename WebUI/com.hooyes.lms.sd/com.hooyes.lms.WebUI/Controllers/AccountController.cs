@@ -432,5 +432,39 @@ namespace com.hooyes.lms.Controllers
             string Url = C.APP + "/Account/Message?m=" + HttpUtility.UrlEncode(Message);
             Response.Redirect(Url);
         }
+
+        public ActionResult UpdatePassword()
+        {
+            //return Content(Client.Login);
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UpdatePassword(string NewPassword)
+        {
+            var r = new R();
+            if (Client.CanChangePassword)
+            {
+                r = DAL.Update.Password(Client.MID, NewPassword);
+                if (r.Code == 0)
+                {
+                    MemCache.Save("CanChangePassword", false);
+                }
+            }
+            else
+            {
+                r.Code = -1;
+                r.Message = "Please Check Old Password";
+            }
+            return Json(r);
+        }
+        public ActionResult VerifyPassword(string CurrentPassword)
+        {
+            var r = DAL.Login.Check(Client.Login, CurrentPassword);
+            if (r.Code == 0)
+            {
+                MemCache.Save("CanChangePassword", true);
+            }
+            return Json(r);
+        }
     }
 }

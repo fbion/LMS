@@ -30,7 +30,7 @@ namespace com.hooyes.lms
             var member = DAL.Get.Member(MID);
             if (member.Code == 0)
             {
-                MemCache.Save("login", "login");
+                MemCache.Save("login", member.Login);
                 MemCache.Save("MID", member.MID);
                 MemCache.Save("IDCard", member.IDCard);
                 MemCache.Save("IDSN", member.IDSN);

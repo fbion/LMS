@@ -44,10 +44,10 @@
                         </tr>
                         <tr>
                             <td class="t">会计从业资格证书检查登记地</td>
-                            <td>
-                                <select id="RegionCode_1" name="RegionCode" class="s-select required">
-                                    <option value="">请选择</option>
-                                    <option value="95100">银川市本级</option>
+                            <td>  默认
+                                 <%-- <select id="RegionCode_1" name="RegionCode" class="s-select required">
+                                    <option value="0">请选择</option>
+                                  <option value="95100">银川市本级</option>
                                     <option value="95101">兴庆区</option>
                                     <option value="95102">金凤区</option>
                                     <option value="95103">西夏区</option>
@@ -77,12 +77,13 @@
                                     <option value="95502">中宁县</option>
                                     <option value="95503">海原县</option>
                                 </select>
+                                --%>
                             </td>
                         </tr>
                         <tr class="tr-term">
                             <td class="t-term" colspan="2">
                                 <p class="t-p" style="width: 100%; border: none">
-                                    注：以上信息我方将报送山东财政厅，您所填信息将成为结业证书以及年检的依据。
+                                    注：以上信息我方将报送财政厅，您所填信息将成为结业证书以及年检的依据。
                                 <br />
                                     请如实填写，如填写有误，责任自负。
                                 </p>

@@ -18,7 +18,14 @@ namespace com.hooyes.lms
         {
             get
             {
-                return MemCache.Get<string>("login") == "login";
+                return !string.IsNullOrEmpty( MemCache.Get<string>("login"));
+            }
+        }
+        public static string Login
+        {
+            get
+            {
+                return MemCache.Get<string>("Login");
             }
         }
         public static int MID
@@ -38,6 +45,7 @@ namespace com.hooyes.lms
                 return MemCache.Get<int>("AID");
             }
         }
+       
         public static string IDCard
         {
             get
