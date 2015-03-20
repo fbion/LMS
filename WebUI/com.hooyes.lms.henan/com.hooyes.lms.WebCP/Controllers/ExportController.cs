@@ -226,5 +226,24 @@ namespace com.hooyes.lms.Controllers
             U.ExportCSV(CSV);
             return Content(string.Empty);
         }
+
+        public ActionResult SurveyFeedBack(int PageSize, int CurrentPage, Model.M.SurveyParams Params)
+        {
+            string Filter = U.BuildFilter(Params);
+            int Count = 0;
+            var TL = new List<Model.M.SurveyRecordsText>();
+            var L = DAL.M.Get.SurveyRecordsText(PageSize, CurrentPage, Filter, out Count);
+            foreach (var m in L)
+            {
+                TL.Add(m);
+            }
+            string CSV = U.ConvertToCSV<Model.M.SurveyRecordsText>(TL);
+            var sb = new StringBuilder();
+            sb.Append("\"序号\",\"UID\",\"ITEMID\",\"内容\",\"日期\"");
+            sb.AppendLine();
+            CSV = sb.ToString() + CSV;
+            U.ExportCSV(CSV);
+            return Content(string.Empty);
+        }
     }
 }

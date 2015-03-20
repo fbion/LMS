@@ -1,4 +1,8 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
+<%
+    string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
+    string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
+%>
 <div id="Survey" class="Survey none">
     <div id="closediv" class="close-div">
         <button class="btn_close closex">X</button>
@@ -60,7 +64,7 @@
         var ISLOGIN = false;
         <%}%>
     </script>
-    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="<% = CDN_Public %>/jquery-validate/1.9.0/jquery.validate.min.js" type="text/javascript"></script>
     <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/survey.js" type="text/javascript"></script>
 </div>
 <h3>学员登陆</h3>

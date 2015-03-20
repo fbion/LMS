@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Text;
-using System.Net;
-using System.IO;
 using com.hooyes.lms.Model;
 
 namespace com.hooyes.lms.Controllers
@@ -78,41 +74,6 @@ namespace com.hooyes.lms.Controllers
             Response.Redirect(Url);
             return Content(string.Empty);
         }
-        [IPRestrict]
-        [HttpPost]
-        public ActionResult MasterLogin(string uid, string pwd)
-        {
-            string Url = C.APP + "/Master/Workbench";
-            var r = DAL.Login.CheckAdmin(uid, pwd);
-            if (r.Code == 0)
-            {
-                MemCache.Save("admin", "admin");
-                MemCache.Save("AID", r.Value);
-                MemCache.Save("AdminLogin", uid);
-                MemCache.Save("Tag", r.Message);
-                //资源访问
-                System.Web.HttpCookie hc = new System.Web.HttpCookie("Resx", r.Value.ToString());
-                System.Web.HttpContext.Current.Response.SetCookie(hc);
-            }
-            else
-            {
-                Url = C.APP + "/login/masterlogin?Code="+r.Code.ToString();
-            }
-            Response.Redirect(Url);
-            return Content("");
-        }
-        public void MasterLogout()
-        {
-
-            MemCache.clear();
-            System.Web.HttpCookie hc = new System.Web.HttpCookie("Resx", string.Empty);
-            hc.Expires = DateTime.Now.AddDays(-20);
-            System.Web.HttpContext.Current.Response.SetCookie(hc);
-            string Url = C.APP + "/login/masterlogin";
-            Response.Redirect(Url);
-            
-        }
-
-
+   
     }
 }

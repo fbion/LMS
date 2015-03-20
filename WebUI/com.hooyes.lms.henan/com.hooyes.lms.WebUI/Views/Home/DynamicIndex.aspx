@@ -219,6 +219,150 @@
                         %>
                     </table>
                 </div>
+                <div class="lesson2015">
+                    <h3>
+                        2015 继续教育课表</h3>
+                    <table>
+                        <tr>
+                            <th colspan="2">
+                                类别
+                            </th>
+                            <th>
+                                课程名称
+                            </th>
+                             <th>
+                                课程介绍
+                            </th>
+                            <th>
+                                主讲老师
+                            </th>
+                            <th>
+                                课时
+                            </th>
+                        </tr>
+                        <!-- 行政 -->
+                        <%
+                                
+                             CL = com.hooyes.lms.DAL.Get.CoursesList(2015, 0);
+
+                             CateCount1 = CL.Count(n => n.Cate == 1);
+                             CateCount0 = CL.Count(n => n.Cate == 0);
+
+                             i = 0;
+                             Cate1 = 0;
+                             Cate0 = 0;
+                            foreach (var c in CL)
+                            {
+                                i++;
+                                if (c.Cate == 1)
+                                {
+                                    Cate1++;
+                                }
+                                if (c.Cate == 0)
+                                {
+                                    Cate0++;
+                                }
+
+                                
+                        %>
+                        <tr>
+                            <% if (i == 1)
+                               {
+                                   var TypeString = c.Type == 0 ? "行政事业类" : "企业类";
+                            %>
+                            <td rowspan="<%= CL.Count %>" class="font_w">
+                                <%= TypeString%>
+                            </td>
+                            <%}
+                               if (c.Cate == 1 && Cate1 == 1)
+                               {
+                            %>
+                            <td rowspan="<% = CateCount1 %>">
+                                必修
+                            </td>
+                            <%} if (c.Cate == 0 && Cate0 == 1)
+                               { %>
+                            <td rowspan="<% = CateCount0 %>">
+                                选修
+                            </td>
+                            <% } %>
+                            <td class="t_a_l">
+                                <% = c.Name %>
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                <%= c.Teacher %>
+                            </td>
+                            <td>
+                                <%= c.Length %>
+                            </td>
+                        </tr>
+                        <%
+                            } 
+                        %>
+                        <!-- 企业 -->
+                        <%
+                                
+                             CL = com.hooyes.lms.DAL.Get.CoursesList(2015, 1);
+
+                             CateCount1 = CL.Count(n => n.Cate == 1);
+                             CateCount0 = CL.Count(n => n.Cate == 0);
+
+                             i = 0;
+                             Cate1 = 0;
+                             Cate0 = 0;
+                            foreach (var c in CL)
+                            {
+                                i++;
+                                if (c.Cate == 1)
+                                {
+                                    Cate1++;
+                                }
+                                if (c.Cate == 0)
+                                {
+                                    Cate0++;
+                                }
+
+                                
+                        %>
+                        <tr>
+                            <% if (i == 1)
+                               {
+                                   var TypeString =( c.Type == 0 )? "行政事业类" : "企业类";
+                            %>
+                            <td rowspan="<%= CL.Count %>" class="font_w">
+                                <%= TypeString%>
+                            </td>
+                            <%}
+                               if (c.Cate == 1 && Cate1 == 1)
+                               {
+                            %>
+                            <td rowspan="<% = CateCount1 %>">
+                                必修
+                            </td>
+                            <%} if (c.Cate == 0 && Cate0 == 1)
+                               { %>
+                            <td rowspan="<% = CateCount0 %>">
+                                选修
+                            </td>
+                            <% } %>
+                            <td class="t_a_l">
+                                <% = c.Name %>
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                <%= c.Teacher %>
+                            </td>
+                            <td>
+                                <%= c.Length %>
+                            </td>
+                        </tr>
+                        <%
+                            } 
+                        %>
+                    </table>
+                </div>
+
                <div class="lesson2013">
                     <h3>
                         2013 继续教育课表</h3>

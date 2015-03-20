@@ -88,8 +88,8 @@ namespace com.hooyes.lms.DAL.M
                 var oCount = SqlHelper.ExecuteScalar(C.conn, CommandType.StoredProcedure, "M_Get_MemberListCount");
 
                 Count = Convert.ToInt32(oCount);
-               
-                
+
+
             }
             catch (Exception ex)
             {
@@ -211,7 +211,7 @@ namespace com.hooyes.lms.DAL.M
             }
             return l;
         }
-        public static List<M2> M2(int PageSize, int CurrentPage,string Filter, out int Count)
+        public static List<M2> M2(int PageSize, int CurrentPage, string Filter, out int Count)
         {
             var l = new List<M2>();
             try
@@ -331,6 +331,51 @@ namespace com.hooyes.lms.DAL.M
             }
             return l;
         }
+        public static List<Model.M.SurveyRecordsText> SurveyRecordsText(int PageSize, int CurrentPage, string Filter, out int Count)
+        {
+            var l = new List<Model.M.SurveyRecordsText>();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@PageSize",PageSize),
+                    new SqlParameter("@CurrentPage",CurrentPage),
+                    new SqlParameter("@Filter",Filter)
+                };
+                var dr = SqlHelper.ExecuteReader(C.conn, CommandType.StoredProcedure, "M_Get_SurveyFBList", param);
+                while (dr.Read())
+                {
+                    var m = new Model.M.SurveyRecordsText();
+
+                    m.ID = Convert.ToInt32(dr["ID"]);
+                    if (DBNull.Value != dr["UserID"])
+                        m.UserID = Convert.ToInt32(dr["UserID"]);
+                    if (DBNull.Value != dr["ItemID"])
+                        m.ItemID = Convert.ToInt32(dr["ItemID"]);
+                    if (DBNull.Value != dr["ItemValue"])
+                        m.ItemValue = Convert.ToString(dr["ItemValue"]);
+                    if (DBNull.Value != dr["CreateDate"])
+                        m.CreateDate = Convert.ToDateTime(dr["CreateDate"]);
+                    l.Add(m);
+                }
+
+                dr.Close();
+                //取总记录
+                SqlParameter[] param2 =
+                {
+                    new SqlParameter("@Filter",Filter)
+                };
+                var oCount = SqlHelper.ExecuteScalar(C.conn, CommandType.StoredProcedure, "M_Get_SurveyFBListCount", param2);
+
+                Count = Convert.ToInt32(oCount);
+            }
+            catch (Exception ex)
+            {
+                log.Fatal("{0},{1}", ex.Message, ex.Source);
+                Count = 0;
+            }
+            return l;
+        }
         public static List<Model.M.AdminMenu> AdminMenu(int AID)
         {
             var l = new List<Model.M.AdminMenu>();
@@ -394,6 +439,42 @@ namespace com.hooyes.lms.DAL.M
 
             }
             return r;
+        }
+
+        public static List<SurveySummary> SurveySummary(int SubjectID, int CateID, int ItemID)
+        {
+            var l = new List<SurveySummary>();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@SubjectID",SubjectID),
+                    new SqlParameter("@CateID",CateID),
+                    new SqlParameter("@ItemID",ItemID)
+                };
+
+                var dr = SqlHelper.ExecuteReader(C.conn, CommandType.StoredProcedure, "M_Get_SurveySummary", param);
+                while (dr.Read())
+                {
+                    var m = new SurveySummary();
+                    m.ItemID = Convert.ToInt32(dr["ItemID"]);
+                    m.CateID = Convert.ToInt32(dr["CateID"]);
+                    m.SubjectID = Convert.ToInt32(dr["SubjectID"]);
+                    m.ItemName = Convert.ToString(dr["ItemName"]);
+                    m.ItemValue = Convert.ToString(dr["ItemValue"]);
+                    m.ICount = Convert.ToInt32(dr["ICount"]);
+
+                    l.Add(m);
+                }
+
+                dr.Close();
+
+            }
+            catch (Exception ex)
+            {
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
+            }
+            return l;
         }
     }
 }

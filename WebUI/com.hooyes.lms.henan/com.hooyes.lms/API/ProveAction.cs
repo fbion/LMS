@@ -9,6 +9,7 @@ namespace com.hooyes.lms.API
         public string proveValue { get; set; }
         public string yearValue { get; set; }
         public string personName { get; set; }
+        public string telValue { get; set; }
     }
     public class AnnalAction
     {

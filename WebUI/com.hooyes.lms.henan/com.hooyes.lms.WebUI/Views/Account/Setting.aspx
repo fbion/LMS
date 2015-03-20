@@ -1,6 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+<%
+    string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
+    string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
+%>
     <div id="main">
         <div id="right" style="width: 100%">
             <div class="board board2">
@@ -32,7 +36,7 @@
                             <td>手机号
                             </td>
                             <td>
-                                <input id="Phone" name="Phone" type="text" maxlength="11" class="required" />
+                                <input id="Phone" name="Phone" type="text" maxlength="11" class="required" value="<%=com.hooyes.lms.Client.Phone %>" />
                             </td>
                         </tr>
                         <tr style="display: none">
@@ -53,7 +57,7 @@
             </div>
         </div>
     </div>
-    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="<% = CDN_Public %>/jquery-validate/1.9.0/jquery.validate.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         var cnmsg = {
             required: "请填写"

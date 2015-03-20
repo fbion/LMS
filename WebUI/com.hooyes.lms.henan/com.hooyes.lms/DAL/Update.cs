@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using com.hooyes.lms.Model;
@@ -110,13 +108,14 @@ namespace com.hooyes.lms.DAL
                     new SqlParameter("@IDSN",member.IDSN),
                     new SqlParameter("@Year",member.Year),
                     new SqlParameter("@Type",member.Type),
-                    new SqlParameter("@Level",member.Level)
+                    new SqlParameter("@Level",member.Level),
+                    new SqlParameter("@Phone",member.Phone)
                 };
                 param[0].Direction = ParameterDirection.InputOutput;
                 var r = SqlHelper.ExecuteNonQuery(C.conn, CommandType.StoredProcedure, "Update_Member", param);
                 m.Code = 0;
                 m.Value = Convert.ToInt32(param[0].Value);
-                m.Message = "sucess";
+                m.Message = "success";
             }
             catch (Exception ex)
             {
@@ -305,5 +304,60 @@ namespace com.hooyes.lms.DAL
             }
             return m;
         }
+        public static R Survey(SurveyRecordsInt p)
+        {
+            var m = new R();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@UserID",p.UserID),
+                    new SqlParameter("@ItemID",p.ItemID),
+                    new SqlParameter("@ItemValue",p.ItemValue)
+                   
+                };
+
+                var r = SqlHelper.ExecuteNonQuery(C.conn, CommandType.StoredProcedure, "Update_SurveyRecordsInt", param);
+                m.Code = 0;
+                m.Message = "success";
+
+            }
+            catch (Exception ex)
+            {
+                m.Code = 300;
+                m.Message = ex.Message;
+                log.Fatal(ex.Message);
+                log.FatalException(ex.Message, ex);
+            }
+            return m;
+        }
+        public static R Survey(SurveyRecordsText p)
+        {
+            var m = new R();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@UserID",p.UserID),
+                    new SqlParameter("@ItemID",p.ItemID),
+                    new SqlParameter("@ItemValue",p.ItemValue)
+                };
+
+                var r = SqlHelper.ExecuteNonQuery(C.conn, CommandType.StoredProcedure, "Update_SurveyRecordsText", param);
+                m.Code = 0;
+                m.Message = "success";
+
+            }
+            catch (Exception ex)
+            {
+                m.Code = 300;
+                m.Message = ex.Message;
+                log.Fatal(ex.Message);
+                log.FatalException(ex.Message, ex);
+            }
+            return m;
+        }
+
+
     }
 }

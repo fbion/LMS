@@ -84,7 +84,7 @@ namespace com.hooyes.lms.DAL
             }
             return l;
         }
-        public static List<MyCourses> MyCourses(int MID,int Year,int Type)
+        public static List<MyCourses> MyCourses(int MID, int Year, int Type)
         {
             var l = new List<MyCourses>();
             try
@@ -195,7 +195,7 @@ namespace com.hooyes.lms.DAL
                         m.Status = Convert.ToInt32(dr["Status"]);
                     if (DBNull.Value != dr["MIME"])
                         m.MIME = Convert.ToString(dr["MIME"]);
-                    
+
                     l.Add(m);
                 }
                 dr.Close();
@@ -207,7 +207,7 @@ namespace com.hooyes.lms.DAL
             }
             return l;
         }
-        public static List<Courses> CoursesList(int Year,int Type)
+        public static List<Courses> CoursesList(int Year, int Type)
         {
             var l = new List<Courses>();
             try
@@ -274,12 +274,12 @@ namespace com.hooyes.lms.DAL
                     m.Phone = Convert.ToString(dr["Phone"]);
                     l.Add(m);
                 }
-                
+
                 dr.Close();
             }
             catch (Exception ex)
             {
-               
+
                 log.Fatal(ex.Message);
                 log.FatalException(ex.Message, ex);
             }
@@ -319,7 +319,7 @@ namespace com.hooyes.lms.DAL
             }
             return m;
         }
-        public static Courses Courses(int CID,int MID,int Year,int Type)
+        public static Courses Courses(int CID, int MID, int Year, int Type)
         {
             var m = new Courses();
             try
@@ -403,7 +403,7 @@ namespace com.hooyes.lms.DAL
                     m.MID = MID;
                     if (DBNull.Value != dr["Score"])
                         m.Score = Convert.ToInt32(dr["Score"]);
-                    m.Compulsory =Convert.ToDecimal( dr["Compulsory"]);
+                    m.Compulsory = Convert.ToDecimal(dr["Compulsory"]);
                     m.Elective = Convert.ToDecimal(dr["Elective"]);
                     m.Status = Convert.ToInt32(dr["Status"]);
                     m.Memo = Convert.ToString(dr["Memo"]);
@@ -480,7 +480,7 @@ namespace com.hooyes.lms.DAL
                     if (DBNull.Value != dr["Tel"])
                         m.Tel = Convert.ToString(dr["Tel"]);
                     if (DBNull.Value != dr["Province"])
-                    m.Province = Convert.ToString(dr["Province"]);
+                        m.Province = Convert.ToString(dr["Province"]);
                     if (DBNull.Value != dr["City"])
                         m.City = Convert.ToString(dr["City"]);
                     if (DBNull.Value != dr["Address"])
@@ -500,7 +500,7 @@ namespace com.hooyes.lms.DAL
             return m;
         }
 
-        public static R CheckPhone(int MID,int Year, string Phone)
+        public static R CheckPhone(int MID, int Year, string Phone)
         {
             R r = new R();
             try
@@ -562,6 +562,40 @@ namespace com.hooyes.lms.DAL
                 log.FatalException(ex.Message, ex);
             }
             return r;
+        }
+
+        public static List<SurveyItem> SurveyItem(int SubjectID, int CateID)
+        {
+            var l = new List<SurveyItem>();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@SubjectID",SubjectID),
+                    new SqlParameter("@CateID",CateID)
+                    
+                };
+                var dr = SqlHelper.ExecuteReader(C.conn, CommandType.StoredProcedure, "Get_SurveyItem", param);
+                while (dr.Read())
+                {
+                    var m = new SurveyItem();
+                    m.ID = Convert.ToInt32(dr["ID"]);
+                    m.ItemID = Convert.ToInt32(dr["ItemID"]);
+                    m.CateID = Convert.ToInt32(dr["CateID"]);
+                    m.SubjectID = Convert.ToInt32(dr["SubjectID"]);
+                    m.ItemName = Convert.ToString(dr["ItemName"]);
+
+                    l.Add(m);
+                }
+                dr.Close();
+            }
+            catch (Exception ex)
+            {
+
+                log.Fatal(ex.Message);
+                log.FatalException(ex.Message, ex);
+            }
+            return l;
         }
     }
 }

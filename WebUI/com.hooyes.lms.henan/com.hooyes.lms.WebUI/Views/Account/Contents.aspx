@@ -1,5 +1,8 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<com.hooyes.lms.Client>" %>
-
+<%
+    string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
+    string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
+%>
 <%
     var cid = Convert.ToInt32(ViewData["CID"]);
     var Contents = (List<com.hooyes.lms.Model.MyConents>)ViewData["MyContents"];
@@ -11,7 +14,7 @@
 <html>
 <head>
     <title><%= MyCourses.Name%>  - 课程目录 </title>
-    <link href="<% = com.hooyes.lms.C.CDN %>/Css/Courseware.css" rel="stylesheet" type="text/css" />
+    <link href="<% = CDN_Private %>/Css/Courseware.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div id="wrapper">

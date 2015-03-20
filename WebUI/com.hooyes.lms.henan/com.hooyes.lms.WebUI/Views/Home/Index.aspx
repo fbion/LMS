@@ -58,14 +58,14 @@
                     <br />
                     2、凡当年度已缴费未完成学时的人员，学习时间延长至下个年度2月底。 下一年度3月1日起，需重新缴费听课。
                     <br />--%>
-                    <span><a style="color:blue;font-weight:bold;" target="_blank" href="http://www.hncz.gov.cn:8002/henancms/kjcygltz/279.jhtml">关于开展2014年度会计人员继续教育的通知</a></span><br />
+                    <span><a style="color:blue;font-weight:bold;" target="_blank" href="/html/notice-1.html">关于开展2015年度会计人员继续教育的通知</a></span><br />
                 </p>
                <p>
                     <span class="beta">如果学员已缴费还无法正常学习请点击 <a class="t_online_help" href="javascript:void(0)">“在线帮助”</a>，并填写真实信息，客服会尽快给您回复。</span>
 
                </p>
                <p>
-                   2014年度会计人员继续教育即将结束，请未结业的学员尽快登录网站学习，并在12月31日前结业。
+                   <a style="color:blue" href="/Survey" target="_blank">会计人员继续教育培训效果调查</a> <sup style="color:red">New</sup>
                </p>
             </div>
             <div class="flow">
@@ -82,7 +82,7 @@
                 <img src="<% = com.hooyes.lms.C.CDN %>/Img/Complete.jpg">
             </div>
             <div class="lesson">
-                <div class="lesson2014">
+                <div class="lesson2015">
                     <h3>
                         2015 继续教育课表</h3>
                     <table>
@@ -92,6 +92,9 @@
                             </th>
                             <th>
                                 课程名称
+                            </th>
+                             <th>
+                                课程介绍
                             </th>
                             <th>
                                 主讲老师
@@ -104,40 +107,7 @@
                         
                         <tr>
                             
-                            <td rowspan="2" class="font_w">
-                                企业类
-                            </td>
-                            
-                            <td rowspan="2">
-                                必修
-                            </td>
-                            
-                            <td class="t_a_l">
-                                企业会计信息化工作规范
-                            </td>
-                            <td>
-                                &nbsp;</td>
-                            <td>
-                                3.5
-                            </td>
-                        </tr>
-                        
-                        <tr>
-                            
-                            <td class="t_a_l">
-                                管理会计
-                            </td>
-                            <td>
-                                &nbsp;</td>
-                            <td>
-                                3.5 </td>
-                        </tr>
-                        
-                        <!-- 企业 -->
-                        
-                        <tr>
-                            
-                            <td rowspan="2" class="font_w">
+                            <td rowspan="14" class="font_w">
                                 行政事业类
                             </td>
                             
@@ -146,10 +116,114 @@
                             </td>
                             
                             <td class="t_a_l">
-                                新预算法
+                                《财政部关于全面推进管理会计体系建设的指导意见》解读
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                
                             </td>
                             <td>
-                                &nbsp;</td>
+                                3.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                新预算法
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                7.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td rowspan="12">
+                                选修
+                            </td>
+                            
+                            <td class="t_a_l">
+                                科学事业单位会计制度讲解
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                杨辉
+                            </td>
+                            <td>
+                                3.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                中小学会计制度讲解
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                聂兴凯
+                            </td>
+                            <td>
+                                6.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                行政事业单位运行经费管理与控制
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                马洪范
+                            </td>
+                            <td>
+                                4.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                行政事业单位资金使用的绩效与评价
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                马洪范
+                            </td>
+                            <td>
+                                4.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                政府与社会资本合作提供公共产品（PPP）研究
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                王朝才
+                            </td>
+                            <td>
+                                3.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                行政事业单位内部控制建设
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                张庆龙 马雯
+                            </td>
                             <td>
                                 7.0
                             </td>
@@ -158,12 +232,295 @@
                         <tr>
                             
                             <td class="t_a_l">
-                                管理会计
+                                行政事业单位国有资产管理
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                陈少强
                             </td>
                             <td>
-                                &nbsp;</td>
+                                4.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                行政事业单位审计概括与实践
+                            </td>
+                            <td>&nbsp;</td>
                             <td>
-                                3.5 </td>
+                                张庆龙
+                            </td>
+                            <td>
+                                4.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                医院成本核算与财务分析
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                程薇
+                            </td>
+                            <td>
+                                5.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                Excel在财务中的应用
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                潘晓波
+                            </td>
+                            <td>
+                                4.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                2014年宏观经济讲解
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                范剑平
+                            </td>
+                            <td>
+                                5.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                语言表达艺术
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                王煜
+                            </td>
+                            <td>
+                                3.5
+                            </td>
+                        </tr>
+                        
+                        <!-- 企业 -->
+                        
+                        <tr>
+                            
+                            <td rowspan="14" class="font_w">
+                                企业类
+                            </td>
+                            
+                            <td rowspan="2">
+                                必修
+                            </td>
+                            
+                            <td class="t_a_l">
+                                《财政部关于全面推进管理会计体系建设的指导意见》解读
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                3.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                企业会计信息化工作规范
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                3.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td rowspan="12">
+                                选修
+                            </td>
+                            
+                            <td class="t_a_l">
+                                租赁会计
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                栾甫贵
+                            </td>
+                            <td>
+                                4.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                企业会计准则2号——长期股权投资
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                高志谦
+                            </td>
+                            <td>
+                                4.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                企业会计准则9号——职工薪酬
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                赵小鹿
+                            </td>
+                            <td>
+                                2.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                企业会计准则30号——财务报表列报
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                于长春
+                            </td>
+                            <td>
+                                2.4
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                企业会计准则第39号--公允价值计量
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                赵小鹿
+                            </td>
+                            <td>
+                                3.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                企业会计准则40号——合营安排
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                赵欣
+                            </td>
+                            <td>
+                                2.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                税收政策与纳税实务
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                高允斌
+                            </td>
+                            <td>
+                                7.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                企业内部控制流程梳理与风险识别
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                张依林
+                            </td>
+                            <td>
+                                7.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                企业集团资金管理
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                吕洪涵
+                            </td>
+                            <td>
+                                3.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                上市前私募股权融资
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                姜军
+                            </td>
+                            <td>
+                                8.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                语言表达艺术
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                王煜
+                            </td>
+                            <td>
+                                3.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            
+                            <td class="t_a_l">
+                                2014年宏观经济讲解
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                范剑平
+                            </td>
+                            <td>
+                                5.0
+                            </td>
                         </tr>
                         
                     </tbody></table>

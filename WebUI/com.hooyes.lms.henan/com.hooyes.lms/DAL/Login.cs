@@ -73,6 +73,7 @@ namespace com.hooyes.lms.DAL
                 member.IDSN = loginID;
                 member.Level = -1;
                 member.Type = -1;
+                member.Phone = prove.telValue;
                 r = Update.Member(member);
             }
             else
