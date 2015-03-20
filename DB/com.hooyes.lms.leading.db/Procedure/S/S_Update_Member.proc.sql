@@ -1,21 +1,20 @@
-﻿-- DROP PROC [Update_Member]
+﻿-- DROP PROC [S_Update_Member]
 GO
 -- =============================================
--- Version: 1.0.0.2
 -- Author:		hooyes
--- Create date: 2012-02-02
--- Update date: 2015-03-07
+-- Create date: 2012-07-23
+-- Update date: 2012-07-23
 -- Desc:
 -- =============================================
-CREATE PROCEDURE [dbo].[Update_Member]
+CREATE PROCEDURE [dbo].[S_Update_Member]
 	 @MID int output 
 	,@Name varchar(50) = ''
 	,@IDCard varchar(20) 
 	,@IDSN varchar(30) 
-	,@Year int  = 2015
+	,@Year int  = 2012
 	,@Type int  = -1
 	,@Level int = -1
-	,@Phone varchar(50) = ''
+	,@Tag int = 100
 AS
 	IF @MID <= 0
 	BEGIN
@@ -38,8 +37,7 @@ AS
 			   ,[Year]
 			   ,[Type]
 			   ,[Level]
-			   ,[Phone]
-			   )
+			   ,[Tag])
 		 VALUES
 			   (@MID
 			   ,@Name
@@ -48,8 +46,7 @@ AS
 			   ,@Year
 			   ,@Type
 			   ,@Level
-			   ,@Phone
-			   )
+			   ,@Tag)
 	END
 	END
 	ELSE

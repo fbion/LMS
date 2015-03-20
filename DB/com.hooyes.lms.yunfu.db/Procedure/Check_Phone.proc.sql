@@ -1,10 +1,9 @@
 ﻿-- DROP PROC [Check_Phone]
 GO
 -- =============================================
--- Version: 1.0.0.1
 -- Author:		hooyes
 -- Create date: 2012-02-18
--- Update date: 2015-03-07
+-- Update date: 2012-02-18
 -- Desc:
 -- =============================================
 CREATE PROCEDURE [dbo].[Check_Phone]
@@ -14,7 +13,7 @@ CREATE PROCEDURE [dbo].[Check_Phone]
 	,@Code int = 0 output
 	,@Message varchar(200) = '' output
 AS
-	IF EXISTS( SELECT * FROM Member WHERE Year = @Year and Phone = @Phone AND MID ! = @MID)
+	IF EXISTS( SELECT * FROM Member WHERE Year = @Year and Phone = @Phone)
 	BEGIN
 		SET @Code = 205
 		SET @Message ='Phone Has been used'
