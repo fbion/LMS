@@ -1,0 +1,23 @@
+﻿<html>
+<head>
+    <title></title>
+    <style>
+        body {
+            background-color:#ffd800;
+            height:400px;
+            width:500px;
+        }
+    </style>
+</head>
+<body></body>
+</html>
+
+<iframe id="c_iframe" height="0" width="0" src="http://taizhou.s.hooyes.com/agent.html" style="display: none"></iframe>
+<script type="text/javascript">
+    (function autoHeight() {
+        var b_width = Math.max(document.body.scrollWidth, document.body.clientWidth);
+        var b_height = Math.max(document.body.scrollHeight, document.body.clientHeight);
+        var c_iframe = document.getElementById("c_iframe");
+        c_iframe.src = c_iframe.src + "#" + b_width + "|" + b_height;
+    })();
+</script>
