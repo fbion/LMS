@@ -1,0 +1,40 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<%
+    string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
+    string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="keywords" content="会计硕士,会计远程教育,会计高端培训,会计学院,北京会计,高级财会人才,注册会计师" />
+    <meta name="description" content="北京国家会计学院是国务院于1998年7月20日批准成立的国务院事业单位，由财政部代管，教学管理依托清华大学。培训会计人才的后续教育培训基地。" />
+    <title><%=ConfigurationManager.AppSettings.Get("web_title") %> -- 北京国家会计学院</title>
+    <link href="<% = CDN_Private %>/Css/Common.css?t=20150210" rel="stylesheet" type="text/css" />
+    <link href="<% = CDN_Private %>/Css/r/zhanjiang.css?t=20150210" rel="stylesheet" type="text/css" />
+    <link href="<% = CDN_Private %>/favicon.ico" rel="Bookmark" />
+    <link href="<% = CDN_Private %>/favicon.ico" rel="Shortcut Icon" />
+    <script src="<% = CDN_Public %>/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="<% = CDN_Private %>/Scripts/config.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="header">
+            <div class="header-inner"></div>
+        </div>
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        <div class="footer">
+            <span><a href="http://www.nai.edu.cn" target="_blank">北京国家会计学院</a>
+            </span>
+            <p style="margin-top: 8px;">
+                京公网安备11011302000821号  &nbsp;京ICP备05004616号
+            </p>
+        </div>
+    </div>
+    <script src="<% = CDN_Private %>/Scripts/header.js"></script>
+    <script>
+        HeaderShow.A();
+    </script>
+    <!-- hooyes 2015-02-15 Master -->
+</body>
+</html>
