@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using com.hooyes.lms.Model;
-using com.hooyes.lms.SMS;
 
 namespace com.hooyes.lms.Controllers
 {
@@ -22,9 +18,7 @@ namespace com.hooyes.lms.Controllers
             }
             var CLData = DAL.Get.MyCourses(Client.MID, id, Client.Type);
             var Report = DAL.Get.Report(Client.MID, id);
-
             var Product = DAL.Get.Products(Client.MID, id);
-
             //必修
             ViewData["MyCourses_1"] = CLData.FindAll(n => n.Cate == 1);
             //选修 
@@ -32,6 +26,7 @@ namespace com.hooyes.lms.Controllers
             ViewData["DisplayYear"] = id;
             ViewData["Report"] = Report;
             ViewData["Product"] = Product;
+            
             return View();
         }
 
@@ -79,30 +74,45 @@ namespace com.hooyes.lms.Controllers
         [HttpPost]
         public ActionResult Invoice(Invoice invoice)
         {
-            invoice.MID = Client.MID;
-            invoice.IDSN = Client.IDSN;
-            var r = DAL.Update.Invoice(invoice);
+            var r = new R();
+            var CashAmount = DAL.Get.AvailableInvoiceCash(Client.MID);
+            if (CashAmount.DecimalValue >= invoice.Amount)
+            {
+                invoice.MID = Client.MID;
+                invoice.IDSN = Client.IDSN;
+                r = DAL.Update.Invoice(invoice);
+            }
+            else
+            {
+                r.Code = 101;
+                r.Message = "申请金额超出可申请配额";
+            }
             return Json(r);
         }
-       
-        public ActionResult Paper(int id)
+
+        public ActionResult Paper(int id, int cid)
         {
             if (!U.IsActive(id))
             {
                 GoMessage(string.Format("您尚未开通{0}年度的课程", id));
             }
-            var Report = DAL.Get.Report(Client.MID, id);
-            if (Report.Minutes < 1080)
+            var MyCourses = DAL.Get.Courses(Client.MID, cid);
+            if (MyCourses.Status != 1)
             {
-                GoMessage(string.Format("请您学够本年度({0}年度)课时再来参加考试", id));
+                GoMessage(string.Format("请您学完本课《{0}》后再来参加考试", MyCourses.Name));
             }
-            var lt = DAL.Get.MyPaper(Client.MID, id, 0);
-            ViewData["DisplayYear"] = id;
+            var lt = DAL.Get.MyPaper(Client.MID, id, cid);
+            if (lt.Count == 0)
+            {
+                GoMessage(string.Format("暂无试卷"));
+            }
+            ViewData["MyCourses"] = MyCourses;
+            //ViewData["DisplayYear"] = id;
             ViewData["lt"] = lt;
             return View();
         }
         [HttpPost]
-        public ActionResult Paper(int id, FormCollection form)
+        public ActionResult Paper(int id, int cid, FormCollection form)
         {
             if (!U.IsActive(id))
             {
@@ -119,18 +129,20 @@ namespace com.hooyes.lms.Controllers
 
                 DAL.Update.MyQuestion(myQuestion);
             }
-            DAL.Task.EvalutePaper(Client.MID, id);
-            Response.Redirect(string.Format(C.APP + "/Account/PaperReport/{0}", id));
+            DAL.Task.EvalutePaper(Client.MID, id, cid);
+            Response.Redirect(string.Format(C.APP + "/Account/PaperReport/{0}/{1}", id, cid));
             return Content(string.Empty);
         }
-        public ActionResult PaperReport(int id)
+        public ActionResult PaperReport(int id, int cid)
         {
             if (!U.IsActive(id))
             {
                 GoMessage(string.Format("您尚未开通{0}年度的课程", id));
             }
-            var Report = DAL.Get.Report(Client.MID, id);
-            ViewData["Report"] = Report;
+            var MyCourses = DAL.Get.Courses(Client.MID, cid);
+            //var Report = DAL.Get.Report(Client.MID, id);
+            //ViewData["Report"] = Report;
+            ViewData["MyCourses"] = MyCourses;
             ViewData["DisplayYear"] = id;
             return View();
         }
@@ -295,27 +307,7 @@ namespace com.hooyes.lms.Controllers
         public ActionResult Certificate()
         {
             var report = DAL.Get.MyReport(Client.MID);
-            var reportFinish = report.FindAll(N => N.Minutes >= 1125);
-            var cert = DAL.Get.Certificate(Client.MID);
-            if (reportFinish.Count > 0 && cert.ID == 0)
-            {
-                DAL.Update.Certificate(Client.MID);
-                cert = DAL.Get.Certificate(Client.MID);
-            }
-            if (reportFinish.Count == 0)
-            {
-                GoMessage("您尚未获得合格证书，请继续学习。");
-            }
-            ViewData["report"] = reportFinish;
-            ViewData["cert"] = cert;
-
-            return View();
-        }
-
-        public ActionResult Certificatev2()
-        {
-            var report = DAL.Get.MyReport(Client.MID);
-            var reportFinish = report.FindAll(N => N.Minutes >= 1125);
+            var reportFinish = report.FindAll(N => N.Score >= 60 && N.Minutes >= 1080);
             var cert = DAL.Get.Certificate(Client.MID);
             if (reportFinish.Count > 0 && cert.ID == 0)
             {

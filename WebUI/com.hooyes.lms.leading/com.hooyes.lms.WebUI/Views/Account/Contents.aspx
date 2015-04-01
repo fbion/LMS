@@ -1,5 +1,8 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<com.hooyes.lms.Client>" %>
-
+<%
+    string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
+    string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
+%>
 <%
     var cid = Convert.ToInt32(ViewData["CID"]);
     var Contents = (List<com.hooyes.lms.Model.MyConents>)ViewData["MyContents"];
@@ -7,16 +10,11 @@
     MyCourses.Minutes = (MyCourses.Minutes > MyCourses.Length * 45) ? MyCourses.Length * 45 : MyCourses.Minutes;
     MyCourses.Minutes = (MyCourses.Status == 1) ? MyCourses.Length * 45 : MyCourses.Minutes;
 %>
-
-<%
-    string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
-    string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
-%>
 <!DOCTYPE html>
 <html>
 <head>
     <title><%= MyCourses.Name%>  - 课程目录 </title>
-    <link href="<% = CDN_Private %>/Css/Courseware.css" rel="stylesheet" type="text/css" />
+    <link href="<% = com.hooyes.lms.C.CDN %>/Css/Courseware.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div id="wrapper">
@@ -68,11 +66,11 @@
     </div>
     <script type="text/javascript">
         function ViewCourse(cid, ccid) {
-            var url = "<% = com.hooyes.lms.C.APP %>/Account/Player?cid=" + cid + "&ccid=" + ccid;
+            var url = "<% = com.hooyes.lms.C.APP %>/Account/Player/v/" + cid + "/" + ccid;
             var w = window.open(url, "CourseWindow");
             w.focus();
         }
     </script>
-
+   
 </body>
 </html>

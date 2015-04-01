@@ -36,9 +36,10 @@
             </td>
             <td>课时
             </td>
-            <td>考试
-            </td>
-
+         <%--   <td>考试
+            </td>--%>
+            <td>专区代码</td>
+            <td style="background-color:#d1f673">所属专区</td>
         </tr>
         <% 
                 int odd = 0;
@@ -83,14 +84,19 @@
                 <%= YearString%>
             </td>
             <td>
-                <a href="ViewCourses?MID=<%= m.MID%>&year=<% = m.Year %>&type=<% = m.Type %>" target="_blank">
+                <a href="ViewCourses?MID=<%= m.MID%>&year=<% = m.PID %>&type=<% = m.Type %>" target="_blank">
                     <%= Math.Round(m.Minutes,0) %>
                     分钟 </a>
             </td>
-            <td>
+           <%-- <td>
                 <%= m.Score %>
+            </td>--%>
+            <td>
+                <%=m.RegionCode %>
             </td>
-
+            <td>
+                <%= m.RegionName %>
+            </td>
         </tr>
         <%} %>
        

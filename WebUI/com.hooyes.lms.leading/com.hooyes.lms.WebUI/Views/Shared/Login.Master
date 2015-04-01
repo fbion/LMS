@@ -35,6 +35,18 @@
             </span>
         </div>
     </div>
-    
+    <!-- hooyes 2013-05-14 -->
+    <div style="display: none">
+        <script type="text/javascript">
+            (function () {
+                var ia = document.createElement('script'); ia.type = 'text/javascript'; ia.async = true;
+                ia.src = 'http://tajs.qq.com/stats?sId=21994982';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ia, s);
+            })();
+        </script>
+                <script type="text/javascript" src="http://js.users.51.la/15971645.js"></script>
+        <noscript><a href="http://www.51.la/?15971645" target="_blank">
+            <img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/15971645.asp" style="border: none" /></a></noscript>
+    </div>
 </body>
 </html>

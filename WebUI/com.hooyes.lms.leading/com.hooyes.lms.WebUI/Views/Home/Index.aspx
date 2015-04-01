@@ -92,16 +92,17 @@
                             <%-- <a href="/index.php/Index/forget" target="_blank">忘记密码?</a>--%>
                         </div>
                         <div class="loginInt" id="passWord">
-                            <input type="text" value="" placeholder="姓名" class="loginInput" id="PWD" name="PWD" tabindex="2" />
+                            <input type="text" value="" placeholder="密码" class="loginInput" id="PWD" name="PWD" tabindex="2" />
                         </div>
                          <p style='font-size: 13px;'>
                             请输入<span style='color: red; font-size: 13px; font-weight: bold;'>
                                 身份证号
-                            </span>和<span style='color: red; font-size: 13px; font-weight: bold;'> 姓名 </span>登录
+                            </span>和<span style='color: red; font-size: 13px; font-weight: bold;'> 密码 </span>登录<br />
+                             领军人才密码为身份证后六位
                         </p>
                         <div class="loginBtn">
                             <input type="submit" id="login_btn" value="登 录" />
-                            <span class="lfBtnReg"><a href="/signup" title="">注 册</a></span>
+                            <span class="lfBtnReg" style="display:none"><a href="/signup" title="">注 册</a></span>
                         </div>
                         <%--<div class="loginFormConf" style="margin-bottom: 5px;">
                             <div class="loginFormVer">

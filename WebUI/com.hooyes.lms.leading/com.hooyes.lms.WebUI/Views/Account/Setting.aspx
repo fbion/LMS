@@ -1,10 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <%
-        string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
-        string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
-    %>
     <div id="main">
         <div id="right" style="width: 100%">
             <div class="board board2">
@@ -21,11 +17,9 @@
                             <td>学员类别
                             </td>
                             <td>
-                                <% if (com.hooyes.lms.Client.Year == 2013)
-                                   { %>
+                                <% if(com.hooyes.lms.Client.Year==2013){ %>
                                 <input id="Radio3" type="radio" value="2" name="Type" class="required" />
-                                <label for="Radio3">行政事业类 (部分事业单位 ) </label>
-                                <br />
+                                <label for="Radio3">行政事业类 (部分事业单位 ) </label><br />
                                 <% }%>
                                 <input id="Radio1" type="radio" value="0" name="Type" class="required" />
                                 <label for="Radio2">行政事业类 (行政及其他事业单位)</label><br />
@@ -59,7 +53,7 @@
             </div>
         </div>
     </div>
-    <script src="<% = CDN_Public %>/jquery-validate/1.9.0/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/jquery.validate.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         var cnmsg = {
             required: "请填写"

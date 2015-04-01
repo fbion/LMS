@@ -11,7 +11,7 @@
                     网络培训相关说明</h3>
                 <div class="con">
                     <p>
-                        根据《中华人民共和国会计法》、《会计人员继续教育规定》的要求， 我省会计人员继续教育采取网上学习
+                        根据《中华人民共和国会计法》、《会计人员继续教育规定》的要求， 我省会计人员继续教育采取网上学习。
                     </p>
                     <div class="line">
                     </div>
@@ -20,24 +20,35 @@
             </div>
         </div>
         <div id="right">
-           <%-- <div class="board">
+            <div class="board">
                 <p>
-                    会计人员参加网上学习，系统自动记录学习时间，正式开课后每10分钟网校与学员互动，弹出回答问题窗口，不回答的即停止计时，原计时有效，可以在一个年度内累计。请牢记报名序号及学习网址，二次及以后学习请直接登录本网站进行学习。网上考试合格、学完24学时，稍后可登陆本省会计信息管理系统查询教育情况，如果查询结果不符请与本网校联系
+                    公告
                 </p>
-            </div>--%>
-            <div class="flow">
-                <h3>
-                    学习流程</h3>
-                <img src="<% = com.hooyes.lms.C.CDN %>/Img/call.jpg" class="call">
-                <img src="<% = com.hooyes.lms.C.CDN %>/Img/registration.jpg"></a><img src="<% = com.hooyes.lms.C.CDN %>/Img/dao2.gif"
-                    class="dao2">
-                <img src="<% = com.hooyes.lms.C.CDN %>/Img/learning.jpg"></a><img src="<% = com.hooyes.lms.C.CDN %>/Img/dao2.gif"
-                    class="dao2">
-                <img src="<% = com.hooyes.lms.C.CDN %>/Img/Learning finish.jpg"></a><img src="<% = com.hooyes.lms.C.CDN %>/Img/dao2.gif"
-                    class="dao2">
-                <img src="<% = com.hooyes.lms.C.CDN %>/Img/Exam.jpg"></a><img src="<% = com.hooyes.lms.C.CDN %>/Img/dao2.gif"
-                    class="dao2">
-                <img src="<% = com.hooyes.lms.C.CDN %>/Img/Complete.jpg"></a>
+            </div>
+           <div class="flow">
+                <h3>学习流程</h3>
+                 <div class="step step-1">
+                    <div class="text">登录缴费</div>
+                </div>
+                 <div class="arrow"></div>
+                 <div class="step step-2">
+                    <div class="text">网上学习</div>
+                </div>
+                 <div class="arrow"></div>
+                 <div class="step step-3">
+                    <div class="text">网上考试</div>
+                </div>
+                 <div class="arrow"></div>
+                 <div class="step step-4">
+                    <div class="text">打印证书</div>
+                </div>
+                 <div class="arrow"></div>
+                 <div class="step step-5">
+                    <div class="text">持证办理</div>
+                </div>
+                 <div class="step call">
+                    
+                </div>
             </div>
             <!-- 历年课表 Begin-->
             <div class="lesson">

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Text;
-using System.Net;
-using System.IO;
 using com.hooyes.lms.Model;
 using System.Configuration;
 
@@ -58,7 +54,7 @@ namespace com.hooyes.lms.Controllers
         }
         public void Logout()
         {
-
+           
             MemCache.clear();
             System.Web.HttpCookie hc = new System.Web.HttpCookie("Resx", string.Empty);
             hc.Expires = DateTime.Now.AddDays(-20);
@@ -103,7 +99,7 @@ namespace com.hooyes.lms.Controllers
             }
             else
             {
-                Url = C.APP + "/login/masterlogin?Code=" + r.Code.ToString();
+                Url = C.APP + "/login/masterlogin?Code="+r.Code.ToString();
             }
             Response.Redirect(Url);
             return Content("");
@@ -117,9 +113,8 @@ namespace com.hooyes.lms.Controllers
             System.Web.HttpContext.Current.Response.SetCookie(hc);
             string Url = C.APP + "/login/masterlogin";
             Response.Redirect(Url);
-
+            
         }
-
 
         public ActionResult Callback(int AID, int status, string sign)
         {
@@ -131,7 +126,7 @@ namespace com.hooyes.lms.Controllers
             if (status == 1 && Localsign == sign)
             {
 
-                var admin = DAL.M.Get.Admin(AID);
+                var admin = DAL.M.BaseGet.Admin(AID);
 
                 if (admin.AID > 0 && admin.Level >= 0)
                 {
@@ -147,6 +142,7 @@ namespace com.hooyes.lms.Controllers
             }
             return Content("Nothing");
         }
+
 
     }
 }

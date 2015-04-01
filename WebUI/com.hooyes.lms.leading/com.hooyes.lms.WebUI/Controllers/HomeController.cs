@@ -10,6 +10,8 @@ namespace com.hooyes.lms.Controllers
         {
             return View();
         }
+
+        [NonAction]
         public ActionResult DynamicIndex()
         {
             return View();
@@ -20,10 +22,15 @@ namespace com.hooyes.lms.Controllers
             string IP = Request.UserHostAddress;
             return Content(IP);
         }
+
+        [NonAction]
+        public ActionResult Help()
+        {
+            return View();
+        }
         public ActionResult DatePicker()
         {
             return View();
         }
-
     }
 }

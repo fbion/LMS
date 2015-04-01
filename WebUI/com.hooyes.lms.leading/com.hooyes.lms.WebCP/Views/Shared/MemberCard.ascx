@@ -19,7 +19,7 @@
             </td>
             <td>身份证号
             </td>
-            <td>年份
+            <td>专区代码
             </td>
             <td>已学课时</td>
             <td style="text-align: center">考试

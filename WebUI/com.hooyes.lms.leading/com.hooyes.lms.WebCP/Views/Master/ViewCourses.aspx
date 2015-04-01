@@ -15,15 +15,18 @@
     <% Html.RenderPartial("MemberCard"); %>
     <form id="f1" action="CreditCourses" method="post" onsubmit="return xConfirm()">
         <input type="hidden" name="MID" value="<%=MID %>" />
-        <div class="nav-h">
-           <h2> 必修课程</h2>
+        <div class="nav-h" style="margin-top:15px">
+            <h2>必修课程</h2>
         </div>
         <table class="commontb">
             <tr>
                 <%if (CanCredit)
-                  { %><th></th>
+                  { %><th style="text-align: left">
+
+                      <input id="checkall" type="checkbox" value="0" />
+                  </th>
                 <%} %>
-                <th>课程名称
+                <th style="width:35%">课程名称
                 </th>
                 <th>主讲老师
                 </th>
@@ -33,6 +36,7 @@
                 </th>
                 <th>已学时长
                 </th>
+                <th>成绩</th>
             </tr>
             <%
                 decimal Total_Minutes = 0;
@@ -48,7 +52,7 @@
                 <%if (CanCredit)
                   { %>
                 <td>
-                    <input name="CID" type="checkbox" value="<%= c.CID %>" />
+                    <input name="CID" type="checkbox" value="<%= c.CID %>" class="checkbox" />
                 </td>
                 <%} %>
                 <td class="t_a_l">
@@ -67,6 +71,12 @@
                     <% = c.Minutes.ToString("0.#")%>
                 分钟
                 </td>
+                <td>
+
+                    <input name="CID_Score_<%= c.CID %>" type="text" size="3" maxlength="3" value="<%= c.Score %>" />
+                    <input name="CID_Score" type="hidden" value="<%= c.CID %>" />
+
+                </td>
             </tr>
             <%
                 } 
@@ -75,30 +85,45 @@
                 <%if (CanCredit)
                   {%>
                 <td colspan="2">
-                    <input id="Submit1" type="submit" value="确定" />
+                    <input id="Submit1" type="button" onclick="xSubmit('#f1')" value="确定" />
                 </td>
                 <%}
                   else
                   { %>
                 <td></td>
                 <%} %>
-                <td colspan="3">总学时长
+                <td colspan="3">必修总时长
                 </td>
                 <td>
                     <% = Total_Minutes.ToString("0.#")%>
                 分钟
                 </td>
+                <td>
+                    <%
+                        if (com.hooyes.lms.Client.CheckTag(10))
+                        { %>
+                    <input id="Submit2" type="button" onclick="ySubmit('#f1')" value="修改成绩" />
+                    <br />
+                    *课程学完后才可以改成绩
+                    <%} %>
+                </td>
             </tr>
         </table>
-        <div class="nav-h" style="margin-top:10px">
-           <h2> 选修课程</h2>
+    </form>
+    <form id="f0" action="CreditCourses" method="post" onsubmit="return xConfirm()">
+        <input type="hidden" name="MID" value="<%=MID %>" />
+        <div class="nav-h" style="margin-top:15px">
+            <h2>选修课程</h2>
         </div>
         <table class="commontb">
             <tr>
                 <%if (CanCredit)
-                  { %><th></th>
+                  { %><th style="text-align: left">
+
+                      <input id="checkall_0" type="checkbox" value="0" />
+                  </th>
                 <%} %>
-                <th>课程名称
+                <th style="width:35%">课程名称
                 </th>
                 <th>主讲老师
                 </th>
@@ -108,6 +133,7 @@
                 </th>
                 <th>已学时长
                 </th>
+                <th>成绩</th>
             </tr>
             <%
                 Total_Minutes = 0;
@@ -123,7 +149,7 @@
                 <%if (CanCredit)
                   { %>
                 <td>
-                    <input name="CID" type="checkbox" value="<%= c.CID %>" />
+                    <input name="CID" type="checkbox" value="<%= c.CID %>" class="checkbox_0" />
                 </td>
                 <%} %>
                 <td class="t_a_l">
@@ -142,6 +168,12 @@
                     <% = c.Minutes.ToString("0.#")%>
                 分钟
                 </td>
+                <td>
+
+                    <input name="CID_Score_<%= c.CID %>" type="text" size="3" maxlength="3" value="<%= c.Score %>" />
+                    <input name="CID_Score" type="hidden" value="<%= c.CID %>" />
+
+                </td>
             </tr>
             <%
                 } 
@@ -150,46 +182,32 @@
                 <%if (CanCredit)
                   {%>
                 <td colspan="2">
-                    <input id="Submit3" type="submit" value="确定" />
+                    <input id="Button1" type="button" onclick="xSubmit('#f0')" value="确定" />
                 </td>
                 <%}
                   else
                   { %>
                 <td></td>
                 <%} %>
-                <td colspan="3">总学时长
+                <td colspan="3">选修总时长
                 </td>
                 <td>
                     <% = Total_Minutes.ToString("0.#")%>
                 分钟
                 </td>
-            </tr>
-        </table>
-    </form>
-    <%
-        if (com.hooyes.lms.Client.CheckTag(10))
-        { %>
-
-    <form action="CreditScore" method="post" onsubmit="return yConfirm()">
-        <input type="hidden" name="MID" value="<%=MID %>" />
-        <input type="hidden" name="Year" value="<%=Year %>" />
-        <table class="commontb" style="margin-top: 10px">
-            <tr>
-                <td style="width: 40px">考试</td>
-                <td style="width: 50px">
-                    <input id="Score" name="Score" type="text" size="4" maxlength="3" />
-                </td>
                 <td>
-                    <input id="Submit2" type="submit" value="确定" />
+                    <%
+                        if (com.hooyes.lms.Client.CheckTag(10))
+                        { %>
+                    <input id="Button2" type="button" onclick="ySubmit('#f0')" value="修改成绩" />
+                    <br />
+                    *课程学完后才可以改成绩
+                    <%} %>
                 </td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
             </tr>
         </table>
     </form>
-    <%} %>
+
     <script type="text/javascript">
         function xConfirm() {
             return confirm("确定?");
@@ -197,5 +215,31 @@
         function yConfirm() {
             return confirm("确定?");
         }
+        function xSubmit(id) {
+            $(id).attr("action", "CreditCourses");
+            $(id).submit();
+        }
+        function ySubmit(id) {
+            $(id).attr("action", "CreditSingleScore");
+            $(id).submit();
+        }
+
+        $(function () {
+            $("#checkall").click(function () {
+                if ($(this).is(":checked")) {
+                    $(".checkbox").attr("checked", "checked");
+                } else {
+                    $(".checkbox").removeAttr("checked");
+                }
+            });
+
+            $("#checkall_0").click(function () {
+                if ($(this).is(":checked")) {
+                    $(".checkbox_0").attr("checked", "checked");
+                } else {
+                    $(".checkbox_0").removeAttr("checked");
+                }
+            });
+        });
     </script>
 </asp:Content>

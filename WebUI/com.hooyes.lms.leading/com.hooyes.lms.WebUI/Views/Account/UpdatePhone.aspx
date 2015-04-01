@@ -1,10 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <%
-        string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
-        string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
-    %>
     <div id="main">
         <div id="right" style="width: 100%">
             <div class="board board2">
@@ -12,47 +8,51 @@
             </div>
             <div id="settingdiv">
                 <form id="settingform" action="" onsubmit="return ApplySubmit()" method="post">
-                    <table id="invoicetb" style="width: 100%">
-                        <tr>
-                            <td>学员姓名
-                            </td>
-                            <td>
-                                <%=com.hooyes.lms.Client.Name %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>当前手机号
-                            </td>
-                            <td>
-                                <%=com.hooyes.lms.Client.Phone %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>新手机号
-                            </td>
-                            <td>
-                                <input id="Phone" name="Phone" type="text" maxlength="11" class="required" />
-                            </td>
-                        </tr>
-                        <tr style="display: none">
-                            <td>手机验证码
-                            </td>
-                            <td>
-                                <input id="PhoneCode" name="PhoneCode" type="text" maxlength="11" class="" />
-                                <input id="Button3" type="button" value="点击获取验证码" onclick="ReSendCode(this)" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <input id="setting_btn" type="submit" value="提交修改" />
-                            </td>
-                        </tr>
-                    </table>
+                <table id="invoicetb" style="width: 100%">
+                    <tr>
+                        <td>
+                            学员姓名
+                        </td>
+                        <td>
+                            <%=com.hooyes.lms.Client.Name %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            当前手机号
+                        </td>
+                        <td>
+                            <%=com.hooyes.lms.Client.Phone %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            新手机号
+                        </td>
+                        <td>
+                            <input id="Phone" name="Phone" type="text" maxlength="11" class="required" />
+                        </td>
+                    </tr>
+                    <tr style="display:none">
+                        <td>
+                            手机验证码
+                        </td>
+                        <td>
+                            <input id="PhoneCode" name="PhoneCode" type="text" maxlength="11" class="" />
+                            <input id="Button3" type="button" value="点击获取验证码" onclick="ReSendCode(this)" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input id="setting_btn" type="submit" value="提交修改" />
+                        </td>
+                    </tr>
+                </table>
                 </form>
             </div>
         </div>
     </div>
-    <script src="<% = CDN_Public %>/jquery-validate/1.9.0/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/jquery.validate.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         var cnmsg = {
             required: "请填写"

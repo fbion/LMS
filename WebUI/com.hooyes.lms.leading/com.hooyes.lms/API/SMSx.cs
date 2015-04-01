@@ -16,7 +16,7 @@ namespace com.hooyes.lms.API
             {
                 sysPhoneCode = GenerateCheckCode();
                 log.Info("sysPhoneCode:{0},MID:{1}", sysPhoneCode,Client.MID);
-                string text = "您的验证码是 {0} ，请您在10分钟内完成验证。[江西省会计人员继续教育网]";
+                string text = "您的验证码是 {0} ，请您在10分钟内完成验证。[安徽省会计人员继续教育网]";
                 text = string.Format(text,sysPhoneCode);
                 PushToPhone(phone, text);
                 MemCache.Save("sms_phonecode", sysPhoneCode);

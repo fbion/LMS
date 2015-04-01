@@ -11,7 +11,7 @@ using System.Web.Script.Serialization;
 
 namespace com.hooyes.lms
 {
-    public class U
+    public class U : Utility
     {
         public static bool ExtValid(string ext)
         {
@@ -265,7 +265,6 @@ namespace com.hooyes.lms
                 //        sb.AppendFormat(" and Year in({0})", m2params.Years);
                 //    }
                 //}
-
                 //ID下限
                 if (m2params.MinID != 0)
                 {
@@ -361,19 +360,6 @@ namespace com.hooyes.lms
             return r;
         }
 
-        public static string GetMD5(string str)
-        {
-            MD5CryptoServiceProvider md5Hasher = new MD5CryptoServiceProvider();
-            byte[] hashedDataBytes;
-            hashedDataBytes = md5Hasher.ComputeHash(Encoding.Unicode.GetBytes(str));
-            StringBuilder tmp = new StringBuilder();
-            foreach (byte i in hashedDataBytes)
-            {
-                tmp.Append(i.ToString("x2"));
-            }
-
-            return tmp.ToString();
-
-        }
+        
     }
 }

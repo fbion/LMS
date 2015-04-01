@@ -49,22 +49,16 @@
                     <td style="width: 80px">年份
                     </td>
                     <td>
-                        <select id="Years" name="years" multiple="multiple" class="selectyears" style="width:200px;height:120px;">
+                        <select id="Years" name="years" multiple="multiple" class="selectyears" style="margin-top:5px;" >
                             <option value="-1">不限</option>
-                            <%--  <% 
-            int StartYear = 2013;
-            int CurrentYear = DateTime.Now.Year;
-            for (int i = CurrentYear; i >= StartYear; i--)
-            {
+                            <% 
+                                int StartYear = 2013;
+                                int CurrentYear = DateTime.Now.Year;
+                                for (int i = CurrentYear; i >= StartYear; i--)
+                                {
                             %>
-                            <option value="<%=i %>"><%=i %></option>
-                            <% }%>--%>
-                            <option value="20141">2014年（行政事业类）</option>
-                            <option value="20142">2014年（小企业类）</option>
-                            <option value="20143">2014年（大中企业类）</option>
-                            <option value="20131">2013年（行政事业类）</option>
-                            <option value="20132">2013年（小企业类）</option>
-                            <option value="20133">2013年（大中企业类）</option>
+                                  <option value="<%=i %>"><%=i %></option>
+                            <% }%>
                         </select>
                         按住 Ctrl 键 可多选
                     </td>
@@ -127,14 +121,28 @@
                         </select>
                     </td>
                 </tr>--%>
-                <tr style="display: none">
-                    <td>区域
+                <tr>
+                    <td>专区
                     </td>
                     <td>
-                        <select id="RegionCodes" name="RegionCodes" multiple="multiple" class="selectyears">
+                        <select id="RegionCodes" name="RegionCodes" multiple="multiple" class="selectyears" style="width: 360px; height: 160px;margin-top:5px;">
                             <option value="-1">不限</option>
-
-
+                            <option value="1001">2014级全日制研究生</option>
+                            <option value="1002">甘肃领军人才培训第二届专区</option>
+                            <option value="1003">甘肃领军人才培训第一届专区</option>
+                            <option value="1004">国家卫生计生委员会卫生计生行业第一届经济管理</option>
+                            <option value="1005">海南领军第3次集训CPA专区</option>
+                            <option value="1006">海南领军第3次集训非CPA专区</option>
+                            <option value="1007">河南第三届会计领军人才第三次培训CPA专区</option>
+                            <option value="1008">河南第三届会计领军人才第三次培训非CPA专区</option>
+                            <option value="1009">河南省第四期领军人才第一次集训</option>
+                            <option value="1010">黑龙江第一届第三次集训</option>
+                            <option value="1011">黑龙江领军行政第二期第二次集训</option>
+                            <option value="1012">黑龙江省第三届会计领军人才行政事业类专区</option>
+                            <option value="1013">黑龙江省第三届会计领军人才企业类专区</option>
+                            <option value="1014">吉林省首期行政事业类会计领军（后备）人才培训班第四次集训</option>
+                            <option value="1015">浸会八期班名单-远程教育中心</option>
+                            <option value="1016">全国中医领军第一届第二次集训</option>
                         </select>
                     </td>
                 </tr>
@@ -188,9 +196,10 @@
             </td>
             <td>课时
             </td>
-            <td>考试成绩
-            </td>
-            <td>区域代码</td>
+           <%-- <td>考试成绩
+            </td>--%>
+            <td>专区代码</td>
+            <td style="background-color:#d1f673;max-width:260px">所属专区</td>
         </tr>
         <% 
             int odd = 0;
@@ -209,6 +218,7 @@
                     odd = 1;
                     oddClass = "";
                 }
+               
                
         %>
         <tr class="<%=oddClass %>">
@@ -231,14 +241,15 @@
                 <%= m.Year%>
             </td>
             <td>
-                <a href="ViewCourses?MID=<%= m.MID%>&year=<% = m.Year %>&type=<% = m.Type %>" target="_blank">
+                <a href="ViewCourses?MID=<%= m.MID%>&year=<% = m.PID %>&type=<% = m.Type %>" target="_blank">
                     <%= m.Minutes.ToString("0.#") %>
                     分钟 </a>
             </td>
-            <td>
+            <%--<td>
                 <%= m.Score %>
-            </td>
+            </td>--%>
             <td><%=m.RegionCode %></td>
+            <td><%=m.RegionName %></td>
         </tr>
         <%
             }
@@ -344,13 +355,11 @@
                     $("#Years").val(-1);
                 }
 
-
                 if (data.RegionCodes != null && data.RegionCodes != "") {
                     $("#RegionCodes").val(data.RegionCodes.split(","));
                 } else {
                     $("#RegionCodes").val(-1);
                 }
-
 
                 $("#RegMinDate").val(data.RegMinDate.toCustomDate());
                 $("#RegMaxDate").val(data.RegMaxDate.toCustomDate());

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Web.Script.Serialization;
+using System.Configuration;
+using com.hooyes.lms.Model;
 
 namespace com.hooyes.lms.API
 {
@@ -80,6 +82,71 @@ namespace com.hooyes.lms.API
             catch (Exception ex)
             {
                 log.Warn(ex.Message);
+            }
+            return r;
+        }
+
+        /// <summary>
+        /// UploadEduAmount
+        /// </summary>
+        /// <param name="seq_num"></param>
+        /// <param name="pay_data">YYYY-MM-DD</param>
+        /// <param name="pay_amount"></param>
+        /// <returns></returns>
+        public static R UploadEduAmount(string seq_num, string pay_data, string pay_amount)
+        {
+            var r = new R();
+            r.Code = -1;
+            try
+            {
+                string api_url = ConfigurationManager.AppSettings.Get("Ah_Url_uploadEduAmount");
+                string data = "seq_num={0}&pay_data={1}&pay_amount={2}";
+                data = string.Format(data, seq_num, pay_data, pay_amount);
+                r.Message = http.Send(data, api_url);
+                if (r.Message.Substring(0, 1) == "1")
+                {
+                    r.Code = 0; //success;
+                }
+                else
+                {
+                    r.Code = 300;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Warn("{0},{1}", ex.Message, ex.StackTrace);
+            }
+            return r;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="seq_num"></param>
+        /// <param name="training_hours"> >=24学时</param>
+        /// <param name="edu_content">存考试合格的所有课程名如：会计准则/小企业制度/职业道德 以“/”分割</param>
+        /// <param name="training_end_date">YYYY-MM-DD</param>
+        /// <returns></returns>
+        public static R UploadEduInfo(string seq_num, decimal training_hours, string edu_content, string training_end_date)
+        {
+            var r = new R();
+            try
+            {
+                string api_url = ConfigurationManager.AppSettings.Get("Ah_Url_uploadEduInfo");
+                string data = "seq_num={0}&training_hours={1}&edu_content={2}&training_end_date={3}";
+                data = string.Format(data, seq_num, training_hours, edu_content, training_end_date);
+                r.Message = http.Send(data, api_url);
+                if (r.Message.Substring(0, 1) == "1" || r.Message.IndexOf("无需再次接收") != -1)
+                {
+                    r.Code = 0; //success;
+                }
+                else
+                {
+                    r.Code = 300;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Warn("{0},{1}", ex.Message, ex.StackTrace);
             }
             return r;
         }

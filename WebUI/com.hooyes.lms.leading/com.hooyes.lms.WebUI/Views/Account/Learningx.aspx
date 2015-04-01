@@ -8,8 +8,8 @@
         var DisplayYear = (int)ViewData["DisplayYear"];
         var Product = (com.hooyes.lms.Model.Products)ViewData["Product"];
         decimal ExamMin = 0;
+        decimal Total_Minutes = 0;
     %>
-
     <div id="main">
         <div id="left">
             <div class="login">
@@ -21,11 +21,14 @@
             </div>
         </div>
         <div id="right">
-
+            <!-- 必修 -->
+            <% if(CL.Count>0){ %>
             <div class="lesson">
                 <div class="lesson2011">
+                    <div class="icons icons-star">
+                    </div>
                     <h3>
-                       <%=Product.Name %></h3>
+                        <%=Product.Name %> &nbsp;&nbsp;必修</h3>
                     <table>
                         <tr>
                             <th>课程名称
@@ -40,9 +43,10 @@
                             </th>
                             <th>听课
                             </th>
+                            <th>成绩</th>
                         </tr>
                         <%
-                            decimal Total_Minutes = 0;
+                            Total_Minutes = 0;
                             foreach (var c in CL)
                             {
                                 c.Minutes = (c.Minutes > c.Length * 45) ? c.Length * 45 : c.Minutes;
@@ -62,10 +66,9 @@
                                 <%= c.Length.ToString("0.#")%>
                             </td>
 
-
                             <%if (!string.IsNullOrEmpty(c.Tag) && c.Tag.StartsWith("Package"))
                               { %>
-                            <td colspan="3">
+                            <td colspan="4">
                                 <span id="sp_1_<%=c.CID %>" onclick="show_package(<%=c.CID %>)" class="ctrl-1">【展开】</span>
                                 <span id="sp_2_<%=c.CID %>" onclick="hide_package(<%=c.CID %>)" class="none ctrl-1-1">【收起】</span>
                             </td>
@@ -74,19 +77,30 @@
                               { %>
 
                             <td>
-                                <span class="ctrl-2"><%= status%> </span>
+                                <%= status%>
                             </td>
                             <td>
-                                <span class="ctrl-3"><% = c.Minutes.ToString("0.#")%> 分钟 </span>
+                                <% = c.Minutes.ToString("0.#")%> 分钟
                             </td>
                             <td>
-
-                                <a href="<%=com.hooyes.lms.C.APP %>/Account/Contents/<%= c.CID %>" target="_blank">
-                                    <span class="icon_listen"></span>
-                                </a>
-
+                                <a href="<%=com.hooyes.lms.C.APP %>/Account/Contents/<%= c.CID %>" target="_blank"><span class="icon_listen"></span></a>
                             </td>
-
+                            <td>
+                                <%if (c.Score >= 60)
+                                  { %>
+                                <%=c.Score%> 分
+                                <%}
+                                  else if (c.Score > 0 && c.Score < 60)
+                                  { %>
+                                <%=c.Score%> 分 |
+                                <% 
+                                  }
+                                  if (c.Score < 60)
+                                  { %>
+                                <a class="on" href="<%=com.hooyes.lms.C.APP %>/Account/Paper/<%=DisplayYear %>/<%= c.CID %>" target="_blank">进入考试</a>
+                                <%}%>
+                                
+                            </td>
                             <%} %>
                         </tr>
                         <%
@@ -99,47 +113,19 @@
                             }
                         %>
                         <tr style="">
-                            <td colspan="5">必修总学时长
+                            <td colspan="5">本年度必修总学时长
                             </td>
                             <td>
-                                <% = ExamMin.ToString("0.#")%> 分钟
+                                <% = Total_Minutes.ToString("0.#")%> 分钟
                             </td>
+                            <td>-</td>
                         </tr>
-                        <%--<tr>
-                            <td colspan="5">考试成绩  
-
-                               <span class="exlinksp">
-                                   <%
-                                       if (Report.Score < 60)
-                                       {
-                                           // 考试及格后，不再显示考试按钮
-                                           if (ExamMin >= 1080)
-                                           { %>
-                                   <a class="on" href="<%=com.hooyes.lms.C.APP %>/Account/Paper/<%=DisplayYear %>" target="_blank">[进入考试]</a>
-                                   <%}
-                                           else
-                                           { %>
-                                   <script type="text/javascript">
-                                       function msg_for_exam() {
-                                           alert("您需要完成至少1080分钟的学习后，才可以进入考试，\n请继续学习。");
-                                       }
-                                   </script>
-                                   <a class="off" onclick="msg_for_exam()">[进入考试]</a>
-                                   <% }
-                                       }
-                                   %>
-                               </span>
-                            </td>
-                            <td>
-                                <%=Report.Score %>
-                                                                                            
-                            </td>
-                        </tr>--%>
+                        
                         <tr>
                             <td colspan="5">本年度结业状态
                             </td>
                             <td>
-                                <% if (Report.Minutes >= 1125)
+                                <% if (Report.Minutes >= 1080 && Report.Score >= 60)
                                    {
                                 %>
                                 已结业
@@ -149,22 +135,27 @@
                                 未结业
                                 <%} %>
                             </td>
+                            <td>-</td>
                         </tr>
-                        <tr style="background-color: #f8f3f3;display:none">
-                            <td colspan="6" style="text-align: left">* 学满必修课1125分钟（25课时) 后可打印本年度证书。</td>
-                        </tr>
+
+                      <%--  <tr style="background-color: #f8f3f3">
+                            <td colspan="7" style="text-align: left">* 结业条件：学满24学时，并通过所学科目考试，学完一门课后才可以参加该门课程的单科考试</td>
+                        </tr>--%>
                     </table>
 
                 </div>
             </div>
-
+            <%} %>
+            <!-- 必修 -->
 
             <!-- 选修 -->
-
-            <div class="lesson" style="display:none">
+            <% if(CL_0.Count>0){ %>
+            <div class="lesson">
                 <div class="lesson2011">
+                    <div class="icons icons-star">
+                    </div>
                     <h3>
-                      <%=Product.Name %> 选修课</h3>
+                        <%=Product.Name %> &nbsp;&nbsp;选修</h3>
                     <table>
                         <tr>
                             <th>课程名称
@@ -179,6 +170,7 @@
                             </th>
                             <th>听课
                             </th>
+                            <th>成绩</th>
                         </tr>
                         <%
                             Total_Minutes = 0;
@@ -201,61 +193,92 @@
                                 <%= c.Length.ToString("0.#")%>
                             </td>
 
-
                             <%if (!string.IsNullOrEmpty(c.Tag) && c.Tag.StartsWith("Package"))
                               { %>
-                            <td colspan="3">
-                                <span id="Span1" onclick="show_package(<%=c.CID %>)" class="ctrl-1">【展开】</span>
-                                <span id="Span2" onclick="hide_package(<%=c.CID %>)" class="none ctrl-1-1">【收起】</span>
+                            <td colspan="4">
+                                <span id="sp_1_<%=c.CID %>" onclick="show_package(<%=c.CID %>)" class="ctrl-1">【展开】</span>
+                                <span id="sp_2_<%=c.CID %>" onclick="hide_package(<%=c.CID %>)" class="none ctrl-1-1">【收起】</span>
                             </td>
                             <%}
                               else
                               { %>
 
                             <td>
-                                <span class="ctrl-2"><%= status%> </span>
+                                <%= status%>
                             </td>
                             <td>
-                                <span class="ctrl-3"><% = c.Minutes.ToString("0.#")%> 分钟 </span>
+                                <% = c.Minutes.ToString("0.#")%> 分钟
                             </td>
                             <td>
-
-                                <a href="<%=com.hooyes.lms.C.APP %>/Account/Contents/<%= c.CID %>" target="_blank">
-                                    <span class="icon_listen"></span>
-                                </a>
-
+                                <a href="<%=com.hooyes.lms.C.APP %>/Account/Contents/<%= c.CID %>" target="_blank"><span class="icon_listen"></span></a>
                             </td>
-
+                            <td>
+                                <%if (c.Score >= 60)
+                                  { %>
+                                <%=c.Score%> 分
+                                <%}
+                                  else if (c.Score > 0 && c.Score < 60)
+                                  { %>
+                                <%=c.Score%> 分 |
+                                <% 
+                                  }
+                                  if (c.Score < 60)
+                                  { %>
+                                <a class="on" href="<%=com.hooyes.lms.C.APP %>/Account/Paper/<%=DisplayYear %>/<%= c.CID %>" target="_blank">进入考试</a>
+                                <%}%>
+                                
+                            </td>
                             <%} %>
                         </tr>
                         <%
                             }
 
                             ExamMin = Total_Minutes;
-                           
+                            if (ExamMin < Report.Minutes)
+                            {
+                                ExamMin = Report.Minutes;
+                            }
                         %>
                         <tr style="">
-                            <td colspan="5">选修总学时长
+                            <td colspan="5">本年度选修总学时长
                             </td>
                             <td>
-                                <% = ExamMin.ToString("0.#")%> 分钟
+                                <% = Total_Minutes.ToString("0.#")%> 分钟
                             </td>
+                            <td>-</td>
                         </tr>
 
+                        <%--<tr>
+                            <td colspan="5">本年度结业状态
+                            </td>
+                            <td>
+                                <% if (Report.Minutes >= 1080 && Report.Score >= 60)
+                                   {
+                                %>
+                                已结业
+                                <%}
+                                   else
+                                   { %>
+                                未结业
+                                <%} %>
+                            </td>
+                            <td>-</td>
+                        </tr>--%>
+
+                        <tr style="background-color: #f8f3f3">
+                            <td colspan="7" style="text-align: left"></td>
+                        </tr>
                     </table>
 
                 </div>
             </div>
-
+            <%} %>
             <!-- 选修 -->
-
-
         </div>
         <div class="clear">
         </div>
 
     </div>
-
     <script>
 
         function show_package(id) {

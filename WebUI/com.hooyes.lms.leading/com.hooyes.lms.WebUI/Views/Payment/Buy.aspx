@@ -22,7 +22,7 @@
                { %>
             <table id="Table1" class="commontb paymenttb" style="width: 100%">
                 <tr class="title">
-                    <td colspan="3">已购买的课程</td>
+                    <td colspan="3">已开通的课程</td>
                 </tr>
                 <%
                    foreach (var p in My_Products)

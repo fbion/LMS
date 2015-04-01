@@ -37,7 +37,7 @@
                     <td colspan="2">
                         按条件查询
                     </td>
-                    <td rowspan="4">
+                    <td rowspan="3">
                         <input id="Button1" type="submit" class="btn1" value="查询" />
                         <br />
                         <a href="javascript:void(0);" onclick="ResetSearchForm()">清空查询条件</a>
@@ -133,15 +133,7 @@
                    odd = 1;
                    oddClass = "";
                }
-               var tystring = "未定";
-               if (m.Type == 0)
-               {
-                   tystring = "行政";
-               }
-               if (m.Type == 1)
-               {
-                   tystring = "企业";
-               }
+
                
         %>
         <tr class="<%=oddClass %>">

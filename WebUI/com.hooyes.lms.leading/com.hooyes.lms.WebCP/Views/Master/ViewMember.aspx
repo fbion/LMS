@@ -42,11 +42,11 @@
             <tr>
                 <td>密码
                 </td>
-                <td>********* (默认为 姓名)
+                <td>********* (默认为姓名)
                 </td>
             </tr>
            
-           <tr>
+            <tr>
                 <td colspan="2">
                     <button class="flatbtn" id="edit_btn_1" type="button">修改</button>
                 </td>
@@ -57,7 +57,7 @@
     <div id="editdiv" class="none">
         <form id="form1" action="" method="post">
             <input type="hidden" value="<%=member.MID %>" name="MID" />
-            <input id="Text_Login" name="Login" type="hidden" class="required" value="<%= member.Login %>" />
+            <%--<input id="Text_Login" name="Login" type="hidden" class="required" value="<%= member.Login %>" />--%>
             <%--<input id="Text_Password" name="Password" type="hidden" class="required" value="<%= member.Name %>" />--%>
             <table id="Table2" class="commontb">
                 <tr>
@@ -86,7 +86,7 @@
                     <td>用户名
                     </td>
                     <td>
-                        <input id="Text_Login_1" type="text" maxlength="20" class="required" disabled="disabled" value="<%= member.Login %>" />
+                        <input id="Text_Login" name="Login" type="text" maxlength="20" class="required"  value="<%= member.Login %>" />
                         (默认为身份证号)
                     </td>
                 </tr>
@@ -95,7 +95,7 @@
                     </td>
                     <td>
                         <input id="Text_Password" name="Password" type="text" maxlength="15" class="" value="" />
-                        (默认为000000，若不修改请留空)
+                        (默认为姓名，若不修改请留空)
                     </td>
                 </tr>
                 
@@ -208,7 +208,7 @@
             <tr>
                 <td>订单编号</td>
                 <td>订单金额</td>
-                <td>余额支付(激活卡)</td>
+                <td>余额支付(充值卡)</td>
                 <td>网银支付</td>
                 <td>状态</td>
             </tr>

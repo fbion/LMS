@@ -11,7 +11,7 @@ namespace com.hooyes.lms.DAL
     public class Task
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
-        public static R EvalutePaper(int MID,int Year)
+        public static R EvalutePaper(int MID, int Year, int CID)
         {
             var m = new R();
             try
@@ -19,7 +19,8 @@ namespace com.hooyes.lms.DAL
                 SqlParameter[] param =
                 {
                     new SqlParameter("@MID",MID),
-                    new SqlParameter("@Year",Year)
+                    new SqlParameter("@Year",Year),
+                    new SqlParameter("@CID",CID)
                 };
                 var r = SqlHelper.ExecuteNonQuery(C.conn, CommandType.StoredProcedure, "Task_EvalutePaper", param);
                 m.Code = 0;

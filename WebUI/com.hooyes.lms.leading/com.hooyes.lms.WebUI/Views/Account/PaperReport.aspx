@@ -2,16 +2,23 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <%
-        var Report = (com.hooyes.lms.Model.Report)ViewData["Report"];
+        //var Report = (com.hooyes.lms.Model.Report)ViewData["Report"];
+        var MyCourses = (com.hooyes.lms.Model.MyCourses)ViewData["MyCourses"];
         var DisplayYear = (int)ViewData["DisplayYear"];
     %>
     <div id="main">
         <div id="right" style="width: 100%">
             <div class="board board2" style="text-align: center; font-weight: bold">
-               <%=DisplayYear %>年会计人员继续教育考试题
+                 <%=MyCourses.Name %>  考试题 
             </div>
-            <div id="paperdiv">
-             <div class="score">你的考试成绩是：<b><%= Report.Score %></b> 分</div>
+            <div id="paperdiv scorediv">
+                <div class="score">
+                    考试成绩：<b style="font-size:28px;"><%= MyCourses.Score %></b> 分
+                <%if (MyCourses.Score < 60)
+                  { %>
+                    <a href="<%=com.hooyes.lms.C.APP %>/Account/Paper/<%=DisplayYear %>/<%=MyCourses.CID %>">再考一次</a>
+                    <%} %>
+                </div>
             </div>
         </div>
     </div>

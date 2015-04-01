@@ -2,11 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <%
-        string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
-        string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
-    %>
-    <%
-        var cid = Convert.ToInt32(ViewData["CID"]);
+    var cid = Convert.ToInt32(ViewData["CID"]);
     %>
     <div id="main">
         <div id="right" style="width: 100%">
@@ -15,37 +11,39 @@
             </div>
             <div id="settingdiv">
                 <form id="settingform" action="" onsubmit="return ApplySubmit()" method="post">
-                    <input id="phone" name="phone" type="hidden" value="<% =com.hooyes.lms.Client.Phone %>" />
-                    <input id="cid" name="cid" type="hidden" value="<% =cid %>" />
-                    <table id="invoicetb" style="width: 100%">
-                        <tr>
-                            <td style="width: 20%">您的手机号码：
-                            </td>
-                            <td>
-                                <% =com.hooyes.lms.Client.Phone %> [<a href="UpdatePhone">修改</a>]
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>请输入验证码：
-                            </td>
-                            <td>
-                                <input id="phonecode" name="phonecode" type="text" class="required" maxlength="6" />
-                                <input id="Button3" type="button" value="点击获取验证码" onclick="ReSendCode(this)" />
-                                <%--请在10分钟内填写完成，如果未收到，请点 
+                <input id="phone" name="phone" type="hidden" value="<% =com.hooyes.lms.Client.Phone %>" />
+                <input id="cid" name="cid" type="hidden" value="<% =cid %>" />
+                <table id="invoicetb" style="width: 100%">
+                    <tr>
+                        <td style="width: 20%">
+                            您的手机号码：
+                        </td>
+                        <td>
+                            <% =com.hooyes.lms.Client.Phone %> [<a href="UpdatePhone">修改</a>]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            请输入验证码：
+                        </td>
+                        <td>
+                            <input id="phonecode" name="phonecode" type="text" class="required" maxlength="6" />
+                            <input id="Button3" type="button" value="点击获取验证码" onclick="ReSendCode(this)" />
+                            <%--请在10分钟内填写完成，如果未收到，请点 
                             <input id="Button2" type="button" value="重新获取" onclick="ReSendCode()" />--%>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <input id="Button1" type="submit" value="进入课程" />
-                            </td>
-                        </tr>
-                    </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input id="Button1" type="submit" value="进入课程" />
+                        </td>
+                    </tr>
+                </table>
                 </form>
             </div>
         </div>
     </div>
-    <script src="<% = CDN_Public %>/jquery-validate/1.9.0/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/jquery.validate.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         function ApplySetting() {
             $.ajax({

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Text.RegularExpressions;
@@ -7,6 +8,7 @@ using com.hooyes.lms.Model;
 
 namespace com.hooyes.lms.WebUI.Controllers
 {
+    
     public class SignupController : Controller
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
@@ -28,7 +30,7 @@ namespace com.hooyes.lms.WebUI.Controllers
                     return Json(r);
                 }
 
-                if (!Regex.IsMatch(member.Phone, @"^1[3|4|5|7|8][0-9]\d{8}$"))
+                if (!Regex.IsMatch(member.Phone, @"^1[3|4|5|8][0-9]\d{8}$"))
                 {
                     r.Code = 102;
                     r.Message = "Phone Error";
@@ -45,10 +47,7 @@ namespace com.hooyes.lms.WebUI.Controllers
                 if (r.Code == 0)
                 {
                     member.Login = member.IDCard;
-                    if (string.IsNullOrEmpty(member.Password))
-                    {
-                        member.Password = member.Name;
-                    }
+                    member.Password = member.Name;
                     r = DAL.Update.Member(member);
                 }
             }
@@ -61,7 +60,7 @@ namespace com.hooyes.lms.WebUI.Controllers
             return Json(r);
         }
 
-        [HttpPost]
+        [NonAction]
         private bool IsCanSignup(string LoginID)
         {
             var r = DAL.Login.Check(LoginID);

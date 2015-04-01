@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using com.hooyes.lms.Model.M;
 
@@ -35,7 +33,7 @@ namespace com.hooyes.lms.Controllers
             TM.CreateDate = "申请时间";
             TL.Add(TM);
             //数据行
-            var L = DAL.M.Get.M2(PageSize, CurrentPage, Filter, out Count);
+            var L = DAL.M.BaseGet.M2(PageSize, CurrentPage, Filter, out Count);
             foreach (var m in L)
             {
                 TM = new Invoice();
@@ -85,7 +83,7 @@ namespace com.hooyes.lms.Controllers
             TM.RegionCode = "区域代码";
             TL.Add(TM);
             //数据行
-            var L = DAL.M.Get.M1(PageSize, CurrentPage, Filter, out Count);
+            var L = DAL.M.BaseGet.M1(PageSize, CurrentPage, Filter, out Count);
             foreach (var m in L)
             {
                 TM = new Member();
@@ -121,7 +119,7 @@ namespace com.hooyes.lms.Controllers
             int Count = 0;
             //List<Incomes> TL = new List<Model.M.Incomes>();
             //数据行
-            var L = DAL.M.Get.Incomes(PageSize, CurrentPage, Filter, out Count);
+            var L = DAL.M.BaseGet.Incomes(PageSize, CurrentPage, Filter, out Count);
             string CSV = U.ConvertToCSV<Incomes>(L);
             U.ExportCSV(CSV);
             return Content(string.Empty);

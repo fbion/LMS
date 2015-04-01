@@ -2,11 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <%
-        string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
-        string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
-    %>
-
-    <%
         var lt = (List<com.hooyes.lms.Model.Invoice>)ViewData["invoice"];
         var invoice = new com.hooyes.lms.Model.Invoice();
         //if (lt.Count > 0)
@@ -56,7 +51,7 @@
                                     }
                                 %>
                                 <input id="Text2" name="Title" class="input required" type="text" maxlength="100"
-                                    value="<% = invoice.Title %>" />
+                                    value="<% = invoice.Title %>" readonly="readonly" />
                             </td>
                         </tr>
                         <tr>
@@ -110,7 +105,7 @@
             <div id="invoicediv_1">
                 <% foreach (var invoice2 in lt)
                    { %>
-                <table class="commontb" style="width: 100%; margin-bottom: 10px;">
+                <table class="commontb" style="width: 100%; margin-bottom:10px;">
                     <tr>
                         <td style="width: 20%;">发票金额：
                         </td>
@@ -161,7 +156,7 @@
             </div>
             <% } %>
 
-            <script src="<% = CDN_Public %>/jquery-validate/1.9.0/jquery.validate.min.js" type="text/javascript"></script>
+            <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/jquery.validate.min.js" type="text/javascript"></script>
             <script type="text/javascript">
                 function ApplyInvoice() {
                     $.ajax({
@@ -174,8 +169,10 @@
                                 $("#IID").val(data.Value);
                                 alert("提交成功");
                                 window.location = AccountController + "Invoice?show";
+                            } else if (data.Code == 101) {
+                                window.location = AccountController + "Invoice?show2";
                             } else {
-                                alert("请重试");
+                                alert("提交出现错误，请刷新网页后重试");
                             }
                         },
                         error: function () {
@@ -189,8 +186,11 @@
                 $.extend($.validator.messages, cnmsg);
                 $("#invoiceform").validate();
                 $("#invoice_btn").click(function () {
+                    $("#invoice_btn").attr("disabled", "disabled");
                     if ($("#invoiceform").valid()) {
                         ApplyInvoice();
+                    } else {
+                        $("#invoice_btn").removeAttr("disabled");
                     }
                 });
             </script>

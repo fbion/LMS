@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
+﻿using com.hooyes.lms.DAL;
 using com.hooyes.lms.Model;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using com.hooyes.lms.DAL;
+using System.Web.Mvc;
 
 
 namespace com.hooyes.lms.Controllers
@@ -19,7 +17,7 @@ namespace com.hooyes.lms.Controllers
         public ActionResult ListMember(Model.M.M1Params m1params)
         {
             m1params.Years = Request.QueryString.Get("Years"); //Years 多条
-            m1params.RegionCodes = Request.QueryString.Get("RegionCodes");
+            m1params.RegionCodes = Request.QueryString.Get("RegionCodes"); 
             ViewData["Filter"] = U.BuildFilter(m1params);
             ViewData["JsonStr"] = U.BuildJSON(m1params);
             return View();
@@ -46,9 +44,9 @@ namespace com.hooyes.lms.Controllers
         {
             return View();
         }
-        public ActionResult ViewCourses(int MID, int Year)
+        public ActionResult ViewCourses(int MID,int Year)
         {
-            var r = DAL.Task.EvaluteCourses(MID, Year);
+            var r = DAL.Task.EvaluteCourses(MID, Year); 
             return View();
         }
         public ActionResult ViewInvoice()
@@ -60,7 +58,7 @@ namespace com.hooyes.lms.Controllers
             string rx = string.Empty;
             try
             {
-                var r = DAL.M.Update.Courses(MID, CID);
+                var r = DAL.M.BaseUpdate.Courses(MID, CID);
                 var r2 = DAL.Task.EvaluteCourses(MID);
                 string referrer = Request.UrlReferrer.ToString();
                 Response.Redirect(referrer);
@@ -83,7 +81,7 @@ namespace com.hooyes.lms.Controllers
                 foreach (var CIDi in CIDa)
                 {
                     int CID = Convert.ToInt32(CIDi);
-                    var r = DAL.M.Update.Courses(MID, CID);
+                    var r = DAL.M.BaseUpdate.Courses(MID, CID);
                 }
             }
             var r2 = DAL.Task.EvaluteCourses(MID);
@@ -106,7 +104,7 @@ namespace com.hooyes.lms.Controllers
                 }
             }
 
-            return Json(new { Code = 0, Message = "success" });
+            return Json(new { Code = 0,Message ="success" });
         }
         [HttpPost]
         public ActionResult CreditScore(int MID, int Year, int Score)
@@ -126,6 +124,37 @@ namespace com.hooyes.lms.Controllers
             return Content(r.Message);
         }
 
+        [HttpPost]
+        public ActionResult CreditSingleScore(int MID)
+        {
+            string referrer = Request.UrlReferrer.ToString();
+            string CIDs = Request.Form["CID_Score"];
+            if (!string.IsNullOrEmpty(CIDs))
+            {
+                string[] CIDa = CIDs.Split(',');
+
+                foreach (var CIDi in CIDa)
+                {
+                    try
+                    {
+                        int CID = Convert.ToInt32(CIDi);
+                        int Score = Convert.ToInt32(Request.Form[string.Format("CID_Score_{0}", CID)]);
+                        if (Score > 0 && Score<=100)
+                        {
+                            DAL.M.Update.MyCourses(MID, CID, Score);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Warn("{0},{1}", ex.Message,ex.StackTrace);
+                    }
+                }
+            }
+           
+            Response.Redirect(referrer);
+            return Content(CIDs);
+        }
+
         [RequiredTag(Tag = 4)]
         public ActionResult ImportMember()
         {
@@ -137,7 +166,7 @@ namespace com.hooyes.lms.Controllers
         #region MemberCredit Controller
 
         [RequiredTag(Tag = 4)]
-        public ActionResult ImportMemberCredit(string fileName, decimal SN)
+        public ActionResult ImportMemberCredit(string fileName,decimal SN)
         {
             string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
             var r = DAL.Import.MemberCredit(FilePath, SN);
@@ -159,53 +188,6 @@ namespace com.hooyes.lms.Controllers
         {
             return View();
         }
-
-        [RequiredTag(Tag = 18)]
-        public ActionResult UploadQuestion()
-        {
-            return View();
-        }
-        [RequiredTag(Tag = 18)]
-        public ActionResult UploadQuestionPreview(string fileName, string SN, string Tag)
-        {
-            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
-            var ds = DAL.Import.PreviewQuestion(FilePath);
-            ViewData["data"] = ds;
-            ViewData["fileName"] = fileName;
-            ViewData["SN"] = SN;
-            ViewData["Tag"] = Tag;
-            return View();
-        }
-        [RequiredTag(Tag = 18)]
-        [HttpPost]
-        public ActionResult UploadQuestionCommit(string fileName, string SN, string Tag)
-        {
-            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
-            var r = DAL.Import.Question(FilePath);
-            string message = "";
-            if (r.Code == 0)
-            {
-                message = "导入成功";
-            }
-            else
-            {
-                message = r.Message;
-            }
-            ViewData["Message"] = message;
-            string sUrl = string.Format("UploadQuestionCommit?message={0}", message);
-            Response.Redirect(sUrl);
-            return View();
-        }
-        [HttpGet]
-        public ActionResult UploadQuestionCommit(string Message)
-        {
-
-            ViewData["Message"] = Message;
-
-            return View();
-        }
-
-
 
         #endregion
 
@@ -236,11 +218,11 @@ namespace com.hooyes.lms.Controllers
         [HttpPost]
         public ActionResult Invoice(Invoice invoice)
         {
-            var r = DAL.M.Update.Invoice(invoice);
+            var r = DAL.M.BaseUpdate.Invoice(invoice);
             return Json(r);
         }
 
-        #endregion
+        #endregion 
 
         [RequiredTag(Tag = 7)]
         public ActionResult UpdatePassword()
@@ -265,7 +247,7 @@ namespace com.hooyes.lms.Controllers
             var r = new R();
             if (Client.CanChangePassword)
             {
-                r = DAL.M.Update.Password(Client.AID, NewPassword);
+                r = DAL.M.BaseUpdate.Password(Client.AID, NewPassword);
                 if (r.Code == 0)
                 {
                     MemCache.Save("CanChangePassword", false);
@@ -325,7 +307,7 @@ namespace com.hooyes.lms.Controllers
                 DAL.Update.Certificate(MID);
                 Cert = DAL.Get.Certificate(MID);
             }
-
+            
             ViewData["member"] = member;
             ViewData["Invoices"] = invoices;
             ViewData["Orders"] = Orders;
@@ -371,10 +353,57 @@ namespace com.hooyes.lms.Controllers
             }
             return Json(rl);
         }
-
+        
         public ActionResult ImportCs()
         {
             return View();
         }
+
+
+        [RequiredTag(Tag = 18)]
+        public ActionResult UploadQuestion()
+        {
+            return View();
+        }
+        [RequiredTag(Tag = 18)]
+        public ActionResult UploadQuestionPreview(string fileName, string SN, string Tag)
+        {
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
+            var ds = DAL.Import.PreviewQuestion(FilePath);
+            ViewData["data"] = ds;
+            ViewData["fileName"] = fileName;
+            ViewData["SN"] = SN;
+            ViewData["Tag"] = Tag;
+            return View();
+        }
+        [RequiredTag(Tag = 18)]
+        [HttpPost]
+        public ActionResult UploadQuestionCommit(string fileName, string SN, string Tag)
+        {
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
+            var r = DAL.Import.Question(FilePath);
+            string message = "";
+            if (r.Code == 0)
+            {
+                message = "导入成功";
+            }
+            else
+            {
+                message = r.Message;
+            }
+            ViewData["Message"] = message;
+            string sUrl = string.Format("UploadQuestionCommit?message={0}", message);
+            Response.Redirect(sUrl);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult UploadQuestionCommit(string Message)
+        {
+
+            ViewData["Message"] = Message;
+
+            return View();
+        }
+
     }
 }

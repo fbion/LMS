@@ -65,7 +65,7 @@
         <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/login/logout">【退出登录】</a></li>
     </ul>
     <p class="cert">
-        <b>会计证所属地：<%=ConfigurationManager.AppSettings.Get("web_region") %></b>
+        <%--<b>会计证所属地：<%=ConfigurationManager.AppSettings.Get("web_region") %></b>--%>
     </p>
     
 </div>
