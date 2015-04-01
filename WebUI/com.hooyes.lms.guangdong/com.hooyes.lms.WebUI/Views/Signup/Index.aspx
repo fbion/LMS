@@ -6,6 +6,7 @@
         </div>
         <div id="signup_div">
             <form id="signup_form">
+                <input id="Text4" name="City" type="hidden"  value="广州市" />
                 <table class="commontb signup-tb">
                     <tr>
                         <td class="t">身份证号码 </td>
@@ -97,7 +98,7 @@
                 <tr class="tr-btn">
                     <td class="t-btn" colspan="2">
                         <p class="singup-success-tip">
-                            注册成功！请您使用身份证号和密码登录系统。
+                            注册成功！请您使用身份证号和姓名登录系统。
                            <br />
                             <a class="signup-link" href="/">转到登录</a>
                         </p>
@@ -109,7 +110,7 @@
                         <label class="signup-l-a" id="l_IDCard"></label>
                     </td>
                 </tr>
-                <tr style="display: none">
+                <tr>
                     <td class="t">姓名</td>
                     <td>
                         <label class="signup-l-b" id="l_Name"></label>
