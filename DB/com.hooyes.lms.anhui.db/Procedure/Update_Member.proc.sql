@@ -17,7 +17,8 @@ CREATE PROCEDURE [dbo].[Update_Member]
     @Level INT = 0 ,
     @Phone VARCHAR(20) = '' ,
     @Flag INT = 0 ,
-    @RegionCode INT = 0
+    @RegionCode INT = 0,
+	@RegionName varchar(50)=''
 AS 
     IF @MID <= 0 
         BEGIN
@@ -50,7 +51,8 @@ AS
                               [Level] ,
                               [Phone] ,
                               [Flag] ,
-                              [RegionCode]
+                              [RegionCode],
+							  [RegionName]
                             )
                     VALUES  ( @MID ,
                               @Login ,
@@ -63,7 +65,8 @@ AS
                               @Level ,
 							  @Phone ,
                               @Flag ,
-                              @RegionCode
+                              @RegionCode,
+							  @RegionName
                             )
                 END
         END

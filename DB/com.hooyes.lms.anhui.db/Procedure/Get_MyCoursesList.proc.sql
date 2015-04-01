@@ -1,10 +1,10 @@
 ﻿-- DROP PROC [Get_MyCoursesList]
 GO
 -- =============================================
--- Version: 1.0.0.2
+-- Version: 1.0.0.3
 -- Author:		hooyes
 -- Create date: 2011-12-22
--- Update date: 2013-12-11
+-- Update date: 2015-03-25
 -- Desc:
 -- =============================================
 CREATE PROCEDURE [dbo].[Get_MyCoursesList]
@@ -26,7 +26,9 @@ AS
                         Cate = c.Cate ,
                         oCate = c.Cate,
 						myc.Validate,
-						myc.Score
+						myc.Score,
+						c.Tag,
+						c.Memo
               FROM      Courses c
                         INNER JOIN My_Products myp ON c.YEAR = myp.PID
                                                       AND myp.MID = @MID

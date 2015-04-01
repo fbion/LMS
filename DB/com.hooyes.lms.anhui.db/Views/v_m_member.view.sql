@@ -1,8 +1,8 @@
 ﻿-- =============================================
--- Version:     1.0.0.4
+-- Version:     1.0.0.5
 -- Author:		hooyes
 -- Create date: 2012-04-21
--- Update date: 2013-12-20
+-- Update date: 2015-03-30
 -- Desc:
 -- =============================================
 CREATE VIEW [dbo].[v_m_member]
@@ -16,15 +16,17 @@ AS
             M.[Name] ,
             M.[IDCard] ,
             M.[IDSN] ,
-            [Year] = ISNULL(myp.PID, 0) ,
+            [Year] = ISNULL(P.Year, 0) ,
             M.[Type] ,
             M.[Level] ,
             M.[Phone] ,
             M.[RegDate] ,
 			M.RegionCode ,
-            R.CommitDate
+            R.CommitDate,
+			P.PID
     FROM    Member M
             INNER JOIN dbo.My_Products myp ON myp.MID = M.MID
+			INNER JOIN Products P ON P.PID = myp.PID
             LEFT OUTER JOIN Report R ON R.MID = M.MID
                                         AND myp.PID = R.Year
     WHERE  M.Tag = 0
