@@ -42,6 +42,13 @@ namespace com.hooyes.lms.WebUI.Controllers
                     return Json(r);
                 }
 
+                if (!IsApiCheck(member))
+                {
+                    r.Code = 104;
+                    r.Message = " ZT001";
+                    return Json(r);
+                }
+
                 if (r.Code == 0)
                 {
                     member.Login = member.IDCard;
@@ -61,7 +68,7 @@ namespace com.hooyes.lms.WebUI.Controllers
             return Json(r);
         }
 
-        [HttpPost]
+       
         private bool IsCanSignup(string LoginID)
         {
             var r = DAL.Login.Check(LoginID);
@@ -74,5 +81,26 @@ namespace com.hooyes.lms.WebUI.Controllers
                 return false;
             }
         }
+
+        private bool IsApiCheck(Member member)
+        {
+            var param = new API.GuangdongParams1();
+            param.cardNumber = member.IDCard;
+            param.compId = member.IDCert;
+            param.compName = member.Name;
+            param.areaName = member.City;
+
+            var r = API.Guangdong.compProve(param);
+            if (r.ResponseCode == "ZT000")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
     }
 }

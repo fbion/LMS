@@ -11,7 +11,7 @@ namespace com.hooyes.lms
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
         public static string Send(string data, string url)
         {
-            log.Info("{0},{1}", data, url);
+            log.Info("{0}?{1}", url, data);
             // return Send(Encoding.GetEncoding("UTF-8").GetBytes(data), url);
             /* GET  */
             string sUrl = string.Format("{0}?{1}", url, data);
