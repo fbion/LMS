@@ -142,7 +142,7 @@ namespace com.hooyes.lms.DAL
                 {
                     var m = new Question();
                     m.QID = Convert.ToInt32(dr["QID"]);
-                    m.CID = Convert.ToInt32(dr["CID"]);
+                    m.CName = Convert.ToString(dr["CName"]);
                     m.Subject = Convert.ToString(dr["Subject"]);
                     m.Answer = Convert.ToString(dr["Answer"]);
                     m.Score = Convert.ToInt32(dr["Score"]);

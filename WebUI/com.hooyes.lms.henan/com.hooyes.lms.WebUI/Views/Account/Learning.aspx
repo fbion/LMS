@@ -33,15 +33,15 @@
                             </th>
                             <th>课程名称
                             </th>
-                            <th>主讲老师
+                            <th style="width:100px">主讲老师
                             </th>
                             <th>课时
                             </th>
                             <th>听课
                             </th>
-                            <th>状态
+                            <th style="width:60px">状态
                             </th>
-                            <th>已学时长
+                            <th style="width:60px">已学时长
                             </th>
                         </tr>
                         <%

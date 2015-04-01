@@ -20,7 +20,7 @@ namespace com.hooyes.lms
                 }
                 else
                 {
-                    filterContext.HttpContext.Response.Redirect(C.APP);
+                    filterContext.HttpContext.Response.Redirect(C.APP+"/");
                 }
             }
 

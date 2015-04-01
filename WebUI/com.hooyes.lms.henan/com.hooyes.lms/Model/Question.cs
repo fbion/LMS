@@ -8,6 +8,7 @@ namespace com.hooyes.lms.Model
     {
         public int QID { get; set; }
         public int CID { get; set; }
+        public string CName { get; set; }
         public string Subject { get; set; }
         public string A { get; set; }
         public string B { get; set; }

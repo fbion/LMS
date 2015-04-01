@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using System.Configuration;
 using com.hooyes.lms.Model;
@@ -327,7 +325,50 @@ namespace com.hooyes.lms.Controllers
             return View();
         }
 
+        [RequiredTag(Tag = 18)]
+        public ActionResult UploadQuestion()
+        {
+            return View();
+        }
+        [RequiredTag(Tag = 18)]
+        public ActionResult UploadQuestionPreview(string fileName, string SN, string Tag)
+        {
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
+            var ds = DAL.Import.PreviewQuestion(FilePath);
+            ViewData["data"] = ds;
+            ViewData["fileName"] = fileName;
+            ViewData["SN"] = SN;
+            ViewData["Tag"] = Tag;
+            return View();
+        }
+        [RequiredTag(Tag = 18)]
+        [HttpPost]
+        public ActionResult UploadQuestionCommit(string fileName, string SN, string Tag)
+        {
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
+            var r = DAL.Import.Question(FilePath);
+            string message = "";
+            if (r.Code == 0)
+            {
+                message = "导入成功";
+            }
+            else
+            {
+                message = r.Message;
+            }
+            ViewData["Message"] = message;
+            string sUrl = string.Format("UploadQuestionCommit?message={0}", message);
+            Response.Redirect(sUrl);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult UploadQuestionCommit(string Message)
+        {
 
+            ViewData["Message"] = Message;
+
+            return View();
+        }
 
     }
 }

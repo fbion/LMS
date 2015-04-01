@@ -11,6 +11,9 @@
             </div>
             <div id="paperdiv">
              <div class="score">你的考试成绩是：<b><%= Report.Score %></b> 分</div>
+            <div>
+                <a href="Learning">继续学习</a>
+            </div>
             </div>
         </div>
     </div>

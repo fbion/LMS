@@ -493,5 +493,59 @@ namespace com.hooyes.lms.DAL
             return m;
         }
 
+        public static DataSet PreviewQuestion(string excelPath)
+        {
+            var ds = new DataSet();
+            try
+            {
+
+                string SQL = @"SELECT
+                               [CName]
+                              ,[Subject]
+                              ,[A]
+                              ,[B]
+                              ,[C]
+                              ,[D]
+                              ,[Answer]
+                              ,[Score]
+                              ,[Cate]
+                          FROM [Final$]";
+
+                ds = excel.ExcuteDataset(excelPath, SQL);
+
+            }
+            catch (Exception ex)
+            {
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
+            }
+            return ds;
+        }
+
+        public static R Question(string excelPath)
+        {
+            var r = new R();
+
+            var ds = PreviewQuestion(excelPath);
+
+            var dt = ds.Tables[0];
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                var info = new Question();
+                info.CName = Convert.ToString(dr["CName"]);
+                info.Subject = Convert.ToString(dr["Subject"]);
+                info.A = Convert.ToString(dr["A"]);
+                info.B = Convert.ToString(dr["B"]);
+                info.C = Convert.ToString(dr["C"]);
+                info.D = Convert.ToString(dr["D"]);
+                info.Answer = Convert.ToString(dr["Answer"]);
+                info.Score = Convert.ToInt32(dr["Score"]);
+                info.Cate = Convert.ToInt32(dr["Cate"]);
+                DAL.M.Update.Question(info);
+            }
+
+            return r;
+        }
+
     }
 }
