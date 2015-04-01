@@ -2,6 +2,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <%
+        string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
+        string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
+    %>
+    <%
         var Order = (com.hooyes.lms.Model.Order)ViewData["Order"];
         var Balance = (com.hooyes.lms.Model.Balance)ViewData["Balance"];
     %>
@@ -48,9 +52,9 @@
                         <td colspan="2">订单金额：￥<span id="orderamout" class="orderamount"><%=Math.Round(Order.Amount, 2)%></span></td>
 
                     </tr>
-                    <tr>
+                    <tr class="none">
                         <td colspan="2">账户余额：￥<span id="balance" class="amount"><%=Math.Round(Balance.Amount, 2)%></span>
-                            <span id="guidcard" class="guidcard"><a id="aguidcard" href="javascript:void(0)">使用充值卡,充值</a></span>
+                            <span id="guidcard" class="guidcard none"><a id="aguidcard" href="javascript:void(0)">使用充值卡,充值</a></span>
                         </td>
 
                     </tr>
@@ -63,11 +67,22 @@
                 </table>
                 <div class="board board3 paybanner paybanner2">
                     <ul class="paydetail">
-                        <li>账户余额支付：￥  <span id="creditamout" class="amount"><%=Math.Round(Order.Credit, 2)%></span></li>
+                        <li class="none">账户余额支付：￥  <span id="creditamout" class="amount"><%=Math.Round(Order.Credit, 2)%></span></li>
                         <li>网上银行支付：￥  <span id="cashamount" class="amount"><%=Math.Round(Order.Cash, 2)%> </span></li>
                     </ul>
+                    <div class="payplatform">
+                        <div class="paylogo">
+                            <img src="<%=CDN_Private %>/Img/chinapay2.jpg" />
+                        </div>
+                    </div>
                     <div class="next nextpay">
-                        <button type="submit">提交确认支付</button>
+                        <button id="pay_btn_2" onclick="Pay2()" type="button">快捷支付(无需开通网银)</button>
+                    </div>
+                    <div class="next nextpay">
+                        <button type="submit">网上银行付款</button>
+                    </div>
+                    <div class="next blancepay none">
+                        <button type="submit">账户余额付款</button>
                     </div>
                 </div>
             </form>
@@ -76,4 +91,12 @@
         </div>
     </div>
     <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/payment.js"></script>
+    <script type="text/javascript">
+        function Pay2() {
+            var newAction = "<% = com.hooyes.lms.C.APP %>/Payment/Pay2";
+            $("#OrderForm").attr("action", newAction);
+            $("#OrderForm").submit();
+        }
+        SwithPaymentBtn(<%=Order.Cash%>);
+    </script>
 </asp:Content>

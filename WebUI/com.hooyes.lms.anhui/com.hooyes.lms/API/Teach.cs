@@ -93,15 +93,15 @@ namespace com.hooyes.lms.API
         /// <param name="pay_data">YYYY-MM-DD</param>
         /// <param name="pay_amount"></param>
         /// <returns></returns>
-        public static R UploadEduAmount(string seq_num, string pay_data, string pay_amount)
+        public static R UploadEduAmount(string seq_num, string pay_date, string pay_amount)
         {
             var r = new R();
             r.Code = -1;
             try
             {
                 string api_url = ConfigurationManager.AppSettings.Get("Ah_Url_uploadEduAmount");
-                string data = "seq_num={0}&pay_data={1}&pay_amount={2}";
-                data = string.Format(data, seq_num, pay_data, pay_amount);
+                string data = "seq_num={0}&pay_date={1}&pay_amount={2}";
+                data = string.Format(data, seq_num, pay_date, pay_amount);
                 r.Message = http.Send(data, api_url);
                 if (r.Message.Substring(0, 1) == "1")
                 {

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using com.hooyes.lms.Model;
 using System.Configuration;
@@ -125,6 +123,36 @@ namespace com.hooyes.lms.Controllers
             Response.Redirect(referrer);
             return Content(r.Message);
         }
+        [HttpPost]
+        public ActionResult CreditSingleScore(int MID)
+        {
+            string referrer = Request.UrlReferrer.ToString();
+            string CIDs = Request.Form["CID_Score"];
+            if (!string.IsNullOrEmpty(CIDs))
+            {
+                string[] CIDa = CIDs.Split(',');
+
+                foreach (var CIDi in CIDa)
+                {
+                    try
+                    {
+                        int CID = Convert.ToInt32(CIDi);
+                        int Score = Convert.ToInt32(Request.Form[string.Format("CID_Score_{0}", CID)]);
+                        if (Score > 0 && Score <= 100)
+                        {
+                            DAL.M.Update.MyCourses(MID, CID, Score);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Warn("{0},{1}", ex.Message, ex.StackTrace);
+                    }
+                }
+            }
+
+            Response.Redirect(referrer);
+            return Content(CIDs);
+        }
 
         [RequiredTag(Tag = 4)]
         public ActionResult ImportMember()
@@ -238,7 +266,7 @@ namespace com.hooyes.lms.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddMember(string Name, string IDCard, string RegionCode)
+        public ActionResult AddMember(string Name, string IDCard, int RegionCode)
         {
             var member = new Member();
             member.MID = 0;
@@ -327,6 +355,51 @@ namespace com.hooyes.lms.Controllers
         
         public ActionResult ImportCs()
         {
+            return View();
+        }
+
+        [RequiredTag(Tag = 18)]
+        public ActionResult UploadQuestion()
+        {
+            return View();
+        }
+        [RequiredTag(Tag = 18)]
+        public ActionResult UploadQuestionPreview(string fileName, string SN, string Tag)
+        {
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
+            var ds = DAL.Import.PreviewQuestion(FilePath);
+            ViewData["data"] = ds;
+            ViewData["fileName"] = fileName;
+            ViewData["SN"] = SN;
+            ViewData["Tag"] = Tag;
+            return View();
+        }
+        [RequiredTag(Tag = 18)]
+        [HttpPost]
+        public ActionResult UploadQuestionCommit(string fileName, string SN, string Tag)
+        {
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
+            var r = DAL.Import.Question(FilePath);
+            string message = "";
+            if (r.Code == 0)
+            {
+                message = "导入成功";
+            }
+            else
+            {
+                message = r.Message;
+            }
+            ViewData["Message"] = message;
+            string sUrl = string.Format("UploadQuestionCommit?message={0}", message);
+            Response.Redirect(sUrl);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult UploadQuestionCommit(string Message)
+        {
+
+            ViewData["Message"] = Message;
+
             return View();
         }
     }

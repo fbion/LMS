@@ -9,7 +9,7 @@ namespace com.hooyes.lms
     {
         public static readonly string conn = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         public static readonly string ASPState = ConfigurationManager.ConnectionStrings["ConnectionASPState"].ConnectionString;
-        public static readonly string CDN = ConfigurationManager.AppSettings.Get("CDN");
+        public static readonly string CDN = ConfigurationManager.AppSettings.Get("CDN_Private");
         public static readonly string APP = ConfigurationManager.AppSettings.Get("APP");
         public static readonly string SMSTOKEN = ConfigurationManager.AppSettings.Get("SMSTOKEN");
         public static readonly string SCHOOLID = ConfigurationManager.AppSettings.Get("schoolId");

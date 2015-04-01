@@ -8,7 +8,7 @@ namespace com.hooyes.lms.Controllers
     /// <summary>
     /// Payment Callback Controller 给银行回调使用
     /// </summary>
-    public class PaymentCBController : Controller
+    public class PaymentCB2Controller : Controller
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
         /// <summary>
@@ -91,7 +91,7 @@ namespace com.hooyes.lms.Controllers
                 string flag = string.Empty;
                 try
                 {
-                    flag = com.hooyes.chinapay.Core.checkData(plain, ChkValue);
+                    flag = com.hooyes.chinapay.Core2.checkData(plain, ChkValue);
                 }
                 catch (Exception ex1)
                 {
@@ -271,7 +271,7 @@ namespace com.hooyes.lms.Controllers
                 string flag = string.Empty;
                 try
                 {
-                    flag = com.hooyes.chinapay.Core.checkData(plain, ChkValue);
+                    flag = com.hooyes.chinapay.Core2.checkData(plain, ChkValue);
                 }
                 catch (Exception ex1)
                 {

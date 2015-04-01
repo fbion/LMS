@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web;
 using System.Web.Mvc;
 using com.hooyes.lms.API;
 using com.hooyes.lms.Model;
@@ -26,7 +24,7 @@ namespace com.hooyes.lms.WebUI.Controllers
                     member.IDSN = "0";
                     member.Name = Cipher.Decrypt(user_name);
                     member.IDCard = Cipher.Decrypt(card_id);
-                    member.RegionCode = Cipher.Decrypt(department_code);
+                    member.RegionName = Cipher.Decrypt(department_code);
 
                     member.Login = member.IDCard;
                     member.Password = member.Name;
@@ -64,7 +62,7 @@ namespace com.hooyes.lms.WebUI.Controllers
 
                             memberExt.MID = MID;
                             memberExt.IDSN = Cipher.Decrypt(seq_num);
-                            memberExt.Year = Convert.ToInt32(memberExt.IDSN.Substring(0, 4));
+                            memberExt.PID = Convert.ToInt32(memberExt.IDSN.Substring(0, 4));
                             memberExt.Flag = 10; 
                             var r3 = DAL.Update.Member(memberExt);
                             if (r3.Code != 0)
@@ -120,14 +118,26 @@ namespace com.hooyes.lms.WebUI.Controllers
                 {
                     memberExt.MID = 0;
                     memberExt.IDSN = Cipher.Decrypt(seq_num);
-                    memberExt.Year = Convert.ToInt32(memberExt.IDSN.Substring(0, 4));
+                    memberExt.PID = Convert.ToInt32(memberExt.IDSN.Substring(0, 4));
                     memberExt.Flag = 0;
-                    var r3 = DAL.Update.Member(memberExt);
-                    if (r3.Code != 0)
+                    //检查是否可以更新，已交费不允许更新
+
+                    var CurrentExt = DAL.Get.MemberExtMy(memberExt.IDSN);
+                    if (CurrentExt.MyID == 0 && CurrentExt.Code ==0 )
                     {
-                        result = "0";
+
+                        var r3 = DAL.Update.MemberExt(memberExt);
+                        if (r3.Code != 0)
+                        {
+                            result = "0";
+                        }
+                        logResult.Message = logResult.Message + string.Format("->R3-{0}:{1}", r3.Code, r3.Message);
                     }
-                    logResult.Message = logResult.Message + string.Format("->R3-{0}:{1}", r3.Code, r3.Message);
+                    else
+                    {
+                        result = "2";
+                        log.Info("NO Delete {0},{1}", memberExt.IDSN, 2);
+                    }
 
                 }
             }
@@ -156,6 +166,5 @@ namespace com.hooyes.lms.WebUI.Controllers
             }
             return Content(result);
         }
-
     }
 }

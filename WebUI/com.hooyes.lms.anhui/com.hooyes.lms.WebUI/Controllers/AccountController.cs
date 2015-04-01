@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using com.hooyes.lms.Model;
-using com.hooyes.lms.SMS;
 
 namespace com.hooyes.lms.Controllers
 {
@@ -22,9 +18,42 @@ namespace com.hooyes.lms.Controllers
             }
             var CLData = DAL.Get.MyCourses(Client.MID, id, Client.Type);
             var Report = DAL.Get.Report(Client.MID, id);
+            var Product = DAL.Get.ProductsEx(Client.MID, id);
+
+            // 更新课时
+            decimal Total_Length = 0;
+            var CL_Finish = CLData.FindAll(N => N.Status == 1 && N.Score>=60);
+            foreach (var a in CL_Finish)
+            {
+                Total_Length = Total_Length + a.Length;
+            }
+            if (Total_Length >= Report.Compulsory)
+            {
+                DAL.Update.Report(Client.MID, id, Total_Length);
+                Report.Compulsory = Total_Length;
+            }
+
+            //结业状态
+            if (Report.Compulsory >= 24 && Report.Status == 0)
+            {
+                DAL.Update.ReportStatus(Client.MID, id, 1);
+                Report.Status = 1;
+            }
+            //提交成绩
+            if (Report.Status == 1 && Report.Compulsory>=24 &&  Report.Flag == 0)
+            {
+                var rApi = API.Teach.UploadEduInfo(Product.IDSN, Report.Compulsory, API.Cipher.Encrypt(Product.Name), DateTime.Now.ToString("yyyy-MM-dd"));
+                if (rApi.Code == 0)
+                {
+                    DAL.Update.ReportFlag(Client.MID, id, 1);
+                }
+            }
+
+            
             ViewData["MyCourses"] = CLData;
             ViewData["DisplayYear"] = id;
             ViewData["Report"] = Report;
+            ViewData["Product"] = Product;
             return View();
         }
 
@@ -45,6 +74,22 @@ namespace com.hooyes.lms.Controllers
 
 
         public ActionResult Player(int cid, int ccid)
+        {
+            var Courses = DAL.Get.Courses(cid);
+            if (!U.IsActive(Courses.Year))
+            {
+                GoMessage(string.Format("您尚未开通本课程"));
+            }
+            var LtContents = DAL.Get.Contents(cid);
+            string startUrl = string.Empty;
+            ViewData["CID"] = cid;
+            ViewData["CCID"] = ccid;
+            ViewData["Courses"] = Courses;
+            //ViewData["LtContents"] = LtContents;
+            ViewData["Contents"] = LtContents.Find(delegate(Model.Contents c) { return c.CCID == ccid; });
+            return View();
+        }
+        public ActionResult PlayerHD(int cid, int ccid)
         {
             var Courses = DAL.Get.Courses(cid);
             if (!U.IsActive(Courses.Year))

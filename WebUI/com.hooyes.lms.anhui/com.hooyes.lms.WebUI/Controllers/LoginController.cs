@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Text;
-using System.Net;
-using System.IO;
 using com.hooyes.lms.Model;
 
 namespace com.hooyes.lms.Controllers
@@ -62,7 +58,7 @@ namespace com.hooyes.lms.Controllers
             System.Web.HttpCookie hc = new System.Web.HttpCookie("Resx", string.Empty);
             hc.Expires = DateTime.Now.AddDays(-20);
             System.Web.HttpContext.Current.Response.SetCookie(hc);
-            Response.Redirect(C.APP);
+            Response.Redirect(C.APP+"/");
             //return Content(C.APP);
         }
         [HttpGet]

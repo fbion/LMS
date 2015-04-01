@@ -3,8 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <%
-        var My_Products = (List<com.hooyes.lms.Model.Products>)ViewData["My_Products"];
-        var Products = (List<com.hooyes.lms.Model.Products>)ViewData["Products"];
+        var My_Products = (List<com.hooyes.lms.Model.ProductsEx>)ViewData["My_Products"];
+        var Products = (List<com.hooyes.lms.Model.ProductsEx>)ViewData["Products"];
     %>
     <div id="main" class="event-cl">
         <div id="left">
@@ -22,7 +22,7 @@
                { %>
             <table id="Table1" class="commontb paymenttb" style="width: 100%">
                 <tr class="title">
-                    <td colspan="3">已购买的课程</td>
+                    <td colspan="3">已开通的课程</td>
                 </tr>
                 <%
                    foreach (var p in My_Products)
@@ -38,6 +38,8 @@
                         <a href="<% = com.hooyes.lms.C.APP %>/Account/LearningX/<%=p.PID %>">进入课表</a>
                     </td>
                     <%} %>
+
+                    
                 </tr>
                 <%} %>
             </table>
@@ -97,5 +99,5 @@
         <div class="clear">
         </div>
     </div>
-    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/buy.js"></script>
+    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/buy-2.js"></script>
 </asp:Content>

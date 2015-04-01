@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Text;
-using System.Net;
-using System.IO;
 using com.hooyes.lms.Model;
+using System.Configuration;
 
 namespace com.hooyes.lms.Controllers
 {
@@ -72,8 +69,16 @@ namespace com.hooyes.lms.Controllers
         }
 
         [IPRestrict]
-        public ActionResult MasterLogin()
+        public ActionResult MasterLogin(string flag)
         {
+            if (string.IsNullOrEmpty(flag))
+            {
+                string AuthUrl = ConfigurationManager.AppSettings.Get("auth_url");
+                AuthUrl = AuthUrl.Replace("go?cbUrl=", "masterlogin?cbUrl=");
+                string cbUrl = "http://" + Request.Url.Host + "/CP/login/callback";
+                string sUrl = AuthUrl + cbUrl;
+                Response.Redirect(sUrl);
+            }
             return View();
         }
         [IPRestrict]
@@ -110,7 +115,32 @@ namespace com.hooyes.lms.Controllers
             Response.Redirect(Url);
             
         }
+        public ActionResult Callback(int AID, int status, string sign)
+        {
+            string Url = C.APP + "/Master/Search";
+            string Key = ConfigurationManager.AppSettings.Get("auth_key");
+            string sKey = string.Format("{0}-{1}-{2}", Key, AID, DateTime.Now.ToString("yyyyMMddHH"));
+            string Localsign = U.GetMD5(sKey);
 
+            if (status == 1 && Localsign == sign)
+            {
+
+                var admin = DAL.M.Get.Admin(AID);
+
+                if (admin.AID > 0 && admin.Level >= 0)
+                {
+                    MemCache.Save("admin", "admin");
+                    MemCache.Save("AID", admin.AID);
+                    MemCache.Save("AdminLogin", admin.Login);
+                    MemCache.Save("Tag", admin.Tag);
+                    //资源访问
+                    System.Web.HttpCookie hc = new System.Web.HttpCookie("Resx", admin.AID.ToString());
+                    System.Web.HttpContext.Current.Response.SetCookie(hc);
+                    Response.Redirect(Url);
+                }
+            }
+            return Content("Nothing");
+        }
 
     }
 }

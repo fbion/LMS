@@ -9,14 +9,20 @@
     <div id="main">
         <div id="right" style="width: 100%">
             <div class="board board2" style="text-align: center; font-weight: bold">
-                 <%=MyCourses.Name %>  考试题 
+                <%=MyCourses.Name %>  考试题 
             </div>
             <div id="paperdiv scorediv">
                 <div class="score">
-                    考试成绩：<b style="font-size:28px;"><%= MyCourses.Score %></b> 分
+                    考试成绩：<b style="font-size: 28px;"><%= MyCourses.Score %></b> 分
                 <%if (MyCourses.Score < 60)
                   { %>
                     <a href="<%=com.hooyes.lms.C.APP %>/Account/Paper/<%=DisplayYear %>/<%=MyCourses.CID %>">再考一次</a>
+                    <%}
+                  else
+                  {
+                      
+                    %>
+                       <a href="<%=com.hooyes.lms.C.APP %>/Account/LearningX/<%=DisplayYear %>">继续学习</a>
                     <%} %>
                 </div>
             </div>

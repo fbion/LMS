@@ -1,12 +1,8 @@
 ﻿using com.hooyes.lms.Model;
-using com.hooyes.lms.SMS;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 
 namespace com.hooyes.lms.Controllers
 {
@@ -17,7 +13,22 @@ namespace com.hooyes.lms.Controllers
 
         public ActionResult Buy()
         {
-            var Products = DAL.Get.Products(Client.MID);
+            var Products = DAL.Get.ProductsEx(Client.MID);
+            var My_Products_Submit = Products.FindAll(n => n.MyID > 0 && n.Flag == 10);
+
+            //提交数据 Begin
+            foreach (var data in My_Products_Submit)
+            {
+                var rApi = API.Teach.UploadEduAmount(data.IDSN, data.PayDate.ToString("yyyy-MM-dd"), Math.Round(data.Price,0).ToString());
+                log.Info("submit api {0},{1},{2}", data.IDSN, rApi.Code, rApi.Message);
+                if (rApi.Code == 0)
+                {
+                    var r = DAL.Update.MemberExt(Client.MID, data.IDSN, 11);
+                    log.Info("local update {0},{1},{2}", data.IDSN, r.Code, r.Message);
+                }
+            }
+            //提交数据 End
+
             ViewData["Products"] = Products.FindAll(n => n.MyID <= 0);
             ViewData["My_Products"] = Products.FindAll(n => n.MyID > 0);
             return View();
@@ -63,7 +74,7 @@ namespace com.hooyes.lms.Controllers
 
                 string GateWayUrl = ConfigurationManager.AppSettings.Get("ChinaPay_GateWay_Url");
                 string MerId = ConfigurationManager.AppSettings.Get("ChinaPay_Merchant_ID");//商户号
-                string BusiId = ""; //业务标识
+                string BusiId = "00000998"; //业务标识
                 string OrdId = Order.OrderID;// com.hooyes.chinapay.Core.getMerSeqId();
                 string OrdAmt = PayAmount;//订单金额 (分)
                 string CuryId = "156";//币种
@@ -96,12 +107,124 @@ namespace com.hooyes.lms.Controllers
 
                 string CustomIp = ""; //IP
 
-                string OrdDesc = "开通课程";
+                string OrdDesc = ConfigurationManager.AppSettings.Get("ChinaPay_Pay_Desc");
 
                 //准备签名的数据
                 string plain = MerId + BusiId + OrdId + OrdAmt + CuryId + Version + BgRetUrl + PageRetUrl + GateId + Param1 + Param2 + Param3 + Param4 + Param5 + Param6 + Param7 + Param8 + Param9 + Param10 + ShareType + ShareData + Priv1 + CustomIp;
 
                 string ChkValue = com.hooyes.chinapay.Core.signData(MerId, plain); // 签名
+
+                var sb = new StringBuilder();
+                sb.AppendFormat("<html><head><title>{0}</title></head><body>", "请稍等...");
+                sb.AppendLine("<form name='hooyesPayForm' method='post' action='" + GateWayUrl + "'>");         //支付地址
+                sb.AppendFormat("<input type=\"hidden\" name=\"MerId\" value=\"{0}\" />", MerId);
+                sb.AppendFormat("<input type=\"hidden\" name=\"BusiId\" value=\"{0}\" />", BusiId);
+                sb.AppendFormat("<input type=\"hidden\" name=\"OrdId\" value=\"{0}\" />", OrdId);
+                sb.AppendFormat("<input type=\"hidden\" name=\"OrdAmt\" value=\"{0}\" />", OrdAmt);
+                sb.AppendFormat("<input type=\"hidden\" name=\"CuryId\" value=\"{0}\" />", CuryId);
+                sb.AppendFormat("<input type=\"hidden\" name=\"Version\" value=\"{0}\" />", Version);
+                sb.AppendFormat("<input type=\"hidden\" name=\"BgRetUrl\" value=\"{0}\" />", BgRetUrl);
+                sb.AppendFormat("<input type=\"hidden\" name=\"PageRetUrl\" value=\"{0}\" />", PageRetUrl);
+                sb.AppendFormat("<input type=\"hidden\" name=\"GateId\" value=\"{0}\" />", GateId);
+                sb.AppendFormat("<input type=\"hidden\" name=\"Param1\" value=\"{0}\" />", Param1);
+                sb.AppendFormat("<input type=\"hidden\" name=\"Param2\" value=\"{0}\" />", Param2);
+                sb.AppendFormat("<input type=\"hidden\" name=\"Param3\" value=\"{0}\" />", Param3);
+                sb.AppendFormat("<input type=\"hidden\" name=\"Param4\" value=\"{0}\" />", Param4);
+                sb.AppendFormat("<input type=\"hidden\" name=\"Param5\" value=\"{0}\" />", Param5);
+                sb.AppendFormat("<input type=\"hidden\" name=\"Param6\" value=\"{0}\" />", Param6);
+                sb.AppendFormat("<input type=\"hidden\" name=\"Param7\" value=\"{0}\" />", Param7);
+                sb.AppendFormat("<input type=\"hidden\" name=\"Param8\" value=\"{0}\" />", Param8);
+                sb.AppendFormat("<input type=\"hidden\" name=\"Param9\" value=\"{0}\" />", Param9);
+                sb.AppendFormat("<input type=\"hidden\" name=\"Param10\" value=\"{0}\" />", Param10);
+                sb.AppendFormat("<input type=\"hidden\" name=\"ShareType\" value=\"{0}\" />", ShareType);
+                sb.AppendFormat("<input type=\"hidden\" name=\"ShareData\" value=\"{0}\" />", ShareData);
+                sb.AppendFormat("<input type=\"hidden\" name=\"Priv1\" value=\"{0}\" />", Priv1);
+                sb.AppendFormat("<input type=\"hidden\" name=\"OrdDesc\" value=\"{0}\" />", OrdDesc);
+                sb.AppendFormat("<input type=\"hidden\" name=\"ChkValue\" value=\"{0}\" />", ChkValue);
+                sb.AppendLine("</form><script>");
+                sb.AppendLine("document.hooyesPayForm.submit();");
+                sb.AppendLine("</script>");
+                sb.AppendLine("</body>");
+                sb.AppendLine("</html>");
+
+                HTML = sb.ToString();
+            }
+            else if (Order.Status < 10 && Order.Cash == 0)
+            {
+                string Url = string.Format("{0}/Payment/OrdersDetail/{1}", C.APP, Order.ID);
+                var r = DAL.Update.CommitOrder(Order);
+                if (r.Code == 0)
+                {
+                    Response.Redirect(Url);
+                }
+                else
+                {
+                    HTML = "请求错误";
+                }
+            }
+            else
+            {
+                HTML = "非法请求";
+            }
+            return Content(HTML);
+
+        }
+
+
+        /// <summary>
+        /// 银联第二网关支付
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public ActionResult Pay2(int ID)
+        {
+            string HTML = "";
+            var Order = DAL.Get.Order(Client.MID, ID);
+            if (Order.Status < 10 && Order.Cash > 0)
+            {
+                string PayAmount = string.Format("{0}", Math.Round(Order.Cash * 100, 0)); //人币民 分 
+
+                string GateWayUrl = ConfigurationManager.AppSettings.Get("ChinaPay_GateWay_Url");
+                string MerId = ConfigurationManager.AppSettings.Get("ChinaPay_Merchant_ID_2");//商户号
+                string BusiId = ""; //业务标识 00000998
+                string OrdId = Order.OrderID;// com.hooyes.chinapay.Core.getMerSeqId();
+                string OrdAmt = PayAmount;//订单金额 (分)
+                string CuryId = "156";//币种
+                string Version = ConfigurationManager.AppSettings.Get("ChinaPay_Merchant_Version_2");//版本
+                string BgRetUrl = ConfigurationManager.AppSettings.Get("ChinaPay_Notify_Backend_Url_2");//后台地址
+                string PageRetUrl = ConfigurationManager.AppSettings.Get("ChinaPay_Notify_Front_Url_2");//前台地址
+                string GateId = "8607";//网关
+
+                string Param1 = Client.MID.ToString();//参数 MID
+                string Param2 = Order.ID.ToString();//参数   ID
+                string Param3 = Client.IDCard;//参数
+                string Param4 = "";//参数
+                string Param5 = "";//参数
+                string Param6 = "";//参数
+                string Param7 = "";//参数
+                string Param8 = "";//参数
+                string Param9 = "";//参数
+                string Param10 = "";//参数
+
+                string ShareType = "0001";//分账类型
+                string ShareData = string.Format("{0}^{1}", ConfigurationManager.AppSettings.Get("ChinaPay_Merchant_Branch_ID_2"), PayAmount);//分账数据
+                /*
+                    ShareData:
+                    所有分账数据金额之和必须等于订单金额，且分账方必须存在
+                    账户分账格式为：分账方代号^分账金额(分); 分账方代号^分账金额(分);
+                    费用分账格式为:  费用类型A^分账金额(分); 费用类型B^分账金额(分);
+                 */
+
+                string Priv1 = "";//商户私有域
+
+                string CustomIp = ""; //IP
+
+                string OrdDesc = ConfigurationManager.AppSettings.Get("ChinaPay_Pay_Desc");
+
+                //准备签名的数据
+                string plain = MerId + BusiId + OrdId + OrdAmt + CuryId + Version + BgRetUrl + PageRetUrl + GateId + Param1 + Param2 + Param3 + Param4 + Param5 + Param6 + Param7 + Param8 + Param9 + Param10 + ShareType + ShareData + Priv1 + CustomIp;
+
+                string ChkValue = com.hooyes.chinapay.Core2.signData(MerId, plain); // 签名
 
                 var sb = new StringBuilder();
                 sb.AppendFormat("<html><head><title>{0}</title></head><body>", "请稍等...");
@@ -180,7 +303,7 @@ namespace com.hooyes.lms.Controllers
                 string Url = string.Format("{0}/Payment/Orders/{1}?S={2}&Refresh={3}", C.APP, r.Value, r.Message, r.Code);
                 Response.Redirect(Url);
             }
-           
+
             return Content(string.Empty);
         }
 
