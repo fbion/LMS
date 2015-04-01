@@ -2,17 +2,18 @@
 -- Version:     1.0.1.0
 -- Author:		hooyes
 -- Create date: 2012-01-02
--- Update date: 2015-02-14
--- Desc: 从所学的课程中抽题
+-- Update date: 2015-03-26
+-- Desc: 单科考试用
 -- =============================================
 CREATE PROCEDURE [dbo].[Get_MyPaper]
     @MID INT = 0 ,
     @Year INT = 0 ,
-    @Type INT = 0
+    @CID INT = 0
 AS 
     DECLARE @Question TABLE
         (
           [QID] [int] NOT NULL ,
+          [CID] [int] NOT NULL ,
           [CName] [varchar](50) NOT NULL ,
           [Subject] [nvarchar](300) NOT NULL ,
           [A] [nvarchar](255) NULL ,
@@ -27,8 +28,12 @@ AS
 
     DECLARE @Tags VARCHAR(100) ,
         @Count INT = 0 ,
-        @Cate INT = 1    --- 目前 1,2,3
+        @Cate INT = 1 ,    --- 目前 1,2,3
+        @CName VARCHAR(50)
 
+    SELECT  @CName = CName
+    FROM    dbo.Courses
+    WHERE   CID = @CID
 
     WHILE ( @Cate < 4 ) 
         BEGIN
@@ -42,6 +47,7 @@ AS
                     AND [Cate] = @Cate
             INSERT  INTO @Question
                     ( [QID] ,
+                      [CID] ,
                       [CName] ,
                       [Subject] ,
                       [A] ,
@@ -54,6 +60,7 @@ AS
                     )
                     SELECT TOP ( @Count )
                             [QID] ,
+                            [CID] = @CID ,
                             [CName] ,
                             [Subject] ,
                             [A] ,
@@ -65,18 +72,10 @@ AS
                             [Cate]
                     FROM    Question
                     WHERE   [Cate] = @Cate
-                            AND CName IN (
-                            SELECT  b.CName
-                            FROM    dbo.My_Courses a
-                                    INNER JOIN dbo.Courses b ON a.CID = b.CID
-                            WHERE   a.MID = @MID
-                                    AND b.Year = @Year 
-									AND a.[Status] = 1
-									)
+                            AND [CName] = @CName
                     ORDER BY NEWID()
             SET @Cate = @Cate + 1
         END
-
 
     SELECT  @Count = COUNT(1)
     FROM    @Question
@@ -93,9 +92,10 @@ AS
             EXECUTE [Get_MyPaper_Defaut] 
                 @MID = @MID ,
                 @Year = @Year ,
-                @Type = @Type
+                @CID = @CID
         END   
-    
+
+	
 
  
     RETURN 0

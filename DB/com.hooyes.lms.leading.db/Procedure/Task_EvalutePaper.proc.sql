@@ -4,10 +4,13 @@ GO
 -- Version:     1.0.0.5
 -- Author:		hooyes
 -- Create date: 2012-01-02
--- Update date: 2015-02-14
+-- Update date: 2013-12-11
 -- Desc:
 -- =============================================
-CREATE PROCEDURE [dbo].[Task_EvalutePaper] @MID INT = 0, @Year INT = 0
+CREATE PROCEDURE [dbo].[Task_EvalutePaper]
+    @MID INT = 0 ,
+    @Year INT = 0 ,
+    @CID INT = 0
 AS /* 1.判题是否正确 */
     DECLARE @QID INT ,
         @Answer NVARCHAR(50)
@@ -61,35 +64,19 @@ AS /* 1.判题是否正确 */
         BEGIN
             SET @c = @b / ( @a + @b ) 
             SET @Score = @c * 100
-
-			/* GK000 特别处理 */
-
-            IF @Score < 80 
-                BEGIN
-                    IF EXISTS ( SELECT  1
-                                FROM    dbo.Question
-                                WHERE   QID IN ( SELECT QID
-                                                 FROM   MY_Question
-                                                 WHERE  MID = @MID )
-                                        AND CName = 'GK000' ) 
-                        BEGIN
-                            SELECT  @Score = 80 + RAND() * 11     
-                        END          
-  
-                END          
-			/* GK000 特别处理 End*/
-
-
-
             IF @Score >= 60 
                 BEGIN
                     SET @Status = 1   
                 END          
-            EXECUTE [Update_Report] 
-                @MID = @MID ,
-                @Year = @Year ,
-                @Score = @Score ,
-                @Status = @Status
+            --EXECUTE [Update_Report] @MID = @MID, @Year = @Year,
+            --    @Score = @Score,@Status = @Status
+            UPDATE  My_Courses
+            SET     Score = CASE WHEN Score < @Score
+                                      OR Score IS NULL THEN @Score
+                                 ELSE Score
+                            END
+            WHERE   MID = @MID
+                    AND CID = @CID
         END
     ELSE 
         BEGIN

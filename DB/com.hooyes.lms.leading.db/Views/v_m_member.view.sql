@@ -1,8 +1,8 @@
 ﻿-- =============================================
--- Version:     1.0.0.5
+-- Version:     1.0.0.4
 -- Author:		hooyes
 -- Create date: 2012-04-21
--- Update date: 2014-05-26
+-- Update date: 2013-12-20
 -- Desc:
 -- =============================================
 CREATE VIEW [dbo].[v_m_member]
@@ -16,17 +16,22 @@ AS
             M.[Name] ,
             M.[IDCard] ,
             M.[IDSN] ,
-            [Year] = ISNULL(myp.PID, 0) ,
+            [Year] = P.Year ,
             M.[Type] ,
             M.[Level] ,
             M.[Phone] ,
             M.[RegDate] ,
             M.RegionCode ,
             R.CommitDate ,
-            PayDate = myp.CreateDate
+            PayDate = myp.CreateDate ,
+            P.PID ,
+            RegionName = Rg.Name
     FROM    Member M
-            INNER JOIN dbo.My_Products myp ON myp.MID = M.MID
+            INNER JOIN Region Rg ON Rg.Code = M.RegionCode
+            INNER JOIN My_Products myp ON myp.MID = M.MID
+            INNER JOIN Products P ON P.PID = myp.PID
             LEFT OUTER JOIN Report R ON R.MID = M.MID
                                         AND myp.PID = R.Year
     WHERE   M.Tag = 0
-	AND   M.MID > 10000
+	--AND   M.MID > 10000
+           

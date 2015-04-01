@@ -1,10 +1,10 @@
 ﻿-- DROP PROC [Get_MyCourses]
 GO
 -- =============================================
--- Version:     1.0.0.3
+-- Version:     1.0.0.4
 -- Author:		hooyes
 -- Create date: 2011-12-18
--- Update date: 2013-10-05
+-- Update date: 2013-12-11
 -- Desc:
 -- =============================================
 CREATE PROCEDURE [dbo].[Get_MyCourses] @MID INT, @CID INT
@@ -18,7 +18,8 @@ AS
             Status = ISNULL(b.Status, 0) ,
             Validate = ISNULL(b.Validate, 0) ,
             Length = ISNULL(a.Length, 0),
-			[Year] = a.Year
+			[Year] = a.YEAR,
+			[Score] = ISNULL(b.Score, 0)
     FROM    ( SELECT    *
               FROM      Courses
               WHERE     CID = @CID

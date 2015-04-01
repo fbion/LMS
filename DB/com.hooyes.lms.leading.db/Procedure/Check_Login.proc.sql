@@ -4,8 +4,8 @@ GO
 -- Version:     1.0.0.8
 -- Author:		hooyes
 -- Create date: 2011-12-18
--- Update date: 2015-02-16
--- Desc: Login / IDCert Can Login in
+-- Update date: 2015-03-28
+-- Desc:
 -- =============================================
 CREATE PROCEDURE [dbo].[Check_Login]
 	 @LoginID varchar(30) = null
@@ -23,9 +23,10 @@ AS
 	END
 	ELSE
 	BEGIN
+        SELECT @LoginPWD = LOWER(REPLACE(@LoginPWD,' ','')) 
 		SELECT @MID = MID 
 		FROM Member 
-		WHERE ([Login] = @LoginID OR IDCert = @LoginID)
+		WHERE [Login] = @LoginID 
 				AND [Password] = sys.fn_VarBinToHexStr(hashbytes('md5',@LoginPWD+'lms'+convert(varchar,MID)))
 				AND ([ExpireDate] >=GETDATE() OR [ExpireDate] IS NULL)
 						

@@ -1,10 +1,10 @@
 ﻿-- DROP PROC [Update_Report]
 GO
 -- =============================================
--- Version:     1.0.0.3
+-- Version:     1.0.0.2
 -- Author:		hooyes
 -- Create date: 2012-01-03
--- Update date: 2015-02-14
+-- Update date: 2013-10-05
 -- Desc:
 -- =============================================
 CREATE PROCEDURE [dbo].[Update_Report]
@@ -20,17 +20,14 @@ AS
     IF EXISTS ( SELECT  *
                 FROM    Report
                 WHERE   MID = @MID
-                        AND [Year] = @Year ) 
+				AND [Year] = @Year ) 
         BEGIN
             UPDATE  Report
             SET     Score = CASE WHEN Score < @Score
                                       OR Score IS NULL THEN @Score
                                  ELSE Score
                             END ,
-                    [Minutes] = CASE WHEN [Minutes] < @Minutes
-                                          OR [Minutes] IS NULL THEN @Minutes
-                                     ELSE [Minutes]
-                                END ,
+                    [Minutes] = ISNULL(@Minutes, [Minutes]) ,
                     [Status] = ISNULL(@Status, [Status]) ,
                     Memo = ISNULL(@Memo, Memo) ,
                     UpdateDate = GETDATE() ,
@@ -38,13 +35,13 @@ AS
                                       ELSE CommitDate
                                  END
             WHERE   MID = @MID
-                    AND [Year] = @Year
+			AND [Year] = @Year
         END
     ELSE 
         BEGIN
             INSERT  INTO Report
                     ( MID ,
-                      [Year] ,
+					  [Year],
                       Score ,
                       Compulsory ,
                       Elective ,
@@ -53,7 +50,7 @@ AS
                       Memo
                     )
             VALUES  ( @MID ,
-                      @Year ,
+			          @Year,
                       @Score ,
                       @Compulsory ,
                       @Elective ,

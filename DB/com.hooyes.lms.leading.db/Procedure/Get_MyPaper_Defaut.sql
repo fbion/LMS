@@ -8,11 +8,12 @@
 CREATE PROCEDURE [dbo].[Get_MyPaper_Defaut]
     @MID INT = 0 ,
     @Year INT = 0,
-	@Type INT = 0
+	@CID INT = 0
 AS 
     DECLARE @Question TABLE
         (
           [QID] [int] NOT NULL ,
+		  [CID] [int] NOT NULL ,
           [CName] [varchar](50) NOT NULL ,
           [Subject] [nvarchar](300) NOT NULL ,
           [A] [nvarchar](255) NULL ,
@@ -42,6 +43,7 @@ AS
                     AND [Cate] = @Cate
             INSERT  INTO @Question
                     ( [QID] ,
+					  [CID] ,
                       [CName] ,
                       [Subject] ,
                       [A] ,
@@ -54,6 +56,7 @@ AS
                     )
                     SELECT TOP ( @Count )
                             [QID] ,
+							[CID] = @CID ,
                             [CName] ,
                             [Subject] ,
                             [A] ,
@@ -65,8 +68,7 @@ AS
                             [Cate]
                     FROM    Question
                     WHERE   [Cate] = @Cate
-                            AND [CName] IN ( SELECT [value]
-                                         FROM   [split](@Tags, ',') )
+                            AND [CName] ='GK000'
 				    ORDER BY NEWID()
             SET @Cate = @Cate + 1
         END
