@@ -1,14 +1,14 @@
 ﻿-- =============================================
--- Version:     1.0.1.0
+-- Version:     1.0.0.9
 -- Author:		hooyes
 -- Create date: 2012-01-02
--- Update date: 2015-04-01
+-- Update date: 2014-02-14
 -- Desc: 
 -- =============================================
-CREATE PROCEDURE [dbo].[Get_MyPaper]
+CREATE PROCEDURE [dbo].[Get_MyPaper_Defaut]
     @MID INT = 0 ,
-    @Year INT = 0 ,
-    @Type INT = 0
+    @Year INT = 0,
+	@Type INT = 0
 AS 
     DECLARE @Question TABLE
         (
@@ -40,7 +40,6 @@ AS
             FROM    dbo.QuestionConfig
             WHERE   [Year] = @Year
                     AND [Cate] = @Cate
-					AND [Type] = @Type
             INSERT  INTO @Question
                     ( [QID] ,
                       [CName] ,
