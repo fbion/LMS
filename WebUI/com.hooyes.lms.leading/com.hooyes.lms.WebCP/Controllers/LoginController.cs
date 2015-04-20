@@ -7,60 +7,19 @@ namespace com.hooyes.lms.Controllers
 {
     public class LoginController : Controller
     {
-        [HttpPost]
-        public ActionResult CheckWithCaptcha(string ID, string PWD, string Captcha, string sid)
-        {
-            var r = new R();
-            r.Code = 101;
-            r.Message = string.Empty;
-            if (!string.IsNullOrEmpty(Captcha) && !string.IsNullOrEmpty(sid))
-            {
-                if (CodeResult.VaildateCaptcha(sid, Captcha))
-                {
-                    r = DAL.Login.Check(ID, PWD);
-                    if (r.Code == 0)
-                    {
-                        U.SetLoginSession(r.Value);
-                    }
-                    else
-                    {
-                        MemCache.clear();
-                    }
-                }
-                else
-                {
-                    r.Code = 197;
-                    r.Message = "验证码错误";
-                }
-            }
-            return Json(r);
-        }
-        [HttpPost]
-        public ActionResult CheckWithNoCaptcha(string ID, string PWD, string Captcha, string sid)
-        {
-            var r = new R();
-            r.Code = 101;
-            r.Message = string.Empty;
-            r = DAL.Login.Check(ID, PWD);
-            if (r.Code == 0)
-            {
-                U.SetLoginSession(r.Value);
-            }
-            else
-            {
-                MemCache.clear();
-            }
-            return Json(r);
-        }
         public void Logout()
         {
-           
+
             MemCache.clear();
             System.Web.HttpCookie hc = new System.Web.HttpCookie("Resx", string.Empty);
             hc.Expires = DateTime.Now.AddDays(-20);
             System.Web.HttpContext.Current.Response.SetCookie(hc);
-            Response.Redirect(C.APP);
-            //return Content(C.APP);
+
+            string AuthUrl = ConfigurationManager.AppSettings.Get("auth_url");
+            AuthUrl = AuthUrl.Replace("go?cbUrl=", "masterlogin?cbUrl=");
+            string cbUrl = "http://" + Request.Url.Host + "/CP/login/callback";
+            string sUrl = AuthUrl + cbUrl;
+            Response.Redirect(sUrl);
         }
         [HttpGet]
         public ActionResult Code(string sid)
@@ -71,14 +30,7 @@ namespace com.hooyes.lms.Controllers
         [IPRestrict]
         public ActionResult MasterLogin(string flag)
         {
-            if (string.IsNullOrEmpty(flag))
-            {
-                string AuthUrl = ConfigurationManager.AppSettings.Get("auth_url");
-                AuthUrl = AuthUrl.Replace("go?cbUrl=", "masterlogin?cbUrl=");
-                string cbUrl = "http://" + Request.Url.Host + "/CP/login/callback";
-                string sUrl = AuthUrl + cbUrl;
-                Response.Redirect(sUrl);
-            }
+
             return View();
         }
         [IPRestrict]
@@ -99,7 +51,7 @@ namespace com.hooyes.lms.Controllers
             }
             else
             {
-                Url = C.APP + "/login/masterlogin?Code="+r.Code.ToString();
+                Url = C.APP + "/login/masterlogin?Code=" + r.Code.ToString();
             }
             Response.Redirect(Url);
             return Content("");
@@ -113,7 +65,7 @@ namespace com.hooyes.lms.Controllers
             System.Web.HttpContext.Current.Response.SetCookie(hc);
             string Url = C.APP + "/login/masterlogin";
             Response.Redirect(Url);
-            
+
         }
 
         public ActionResult Callback(int AID, int status, string sign)
@@ -134,6 +86,7 @@ namespace com.hooyes.lms.Controllers
                     MemCache.Save("AID", admin.AID);
                     MemCache.Save("AdminLogin", admin.Login);
                     MemCache.Save("Tag", admin.Tag);
+                    MemCache.Save("Level", admin.Level);
                     //资源访问
                     System.Web.HttpCookie hc = new System.Web.HttpCookie("Resx", admin.AID.ToString());
                     System.Web.HttpContext.Current.Response.SetCookie(hc);
@@ -143,6 +96,15 @@ namespace com.hooyes.lms.Controllers
             return Content("Nothing");
         }
 
+        public ActionResult Auth()
+        {
 
+            string AuthUrl = ConfigurationManager.AppSettings.Get("auth_url");
+            AuthUrl = AuthUrl.Replace("go?cbUrl=", "masterlogin?cbUrl=");
+            string cbUrl = "http://" + Request.Url.Host + "/CP/login/callback";
+            string sUrl = AuthUrl + cbUrl;
+            Response.Redirect(sUrl);
+            return Content("");
+        }
     }
 }

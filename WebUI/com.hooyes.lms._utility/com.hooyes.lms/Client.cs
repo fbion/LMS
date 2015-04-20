@@ -94,6 +94,13 @@ namespace com.hooyes.lms
                 return MemCache.Get<string>("Tag");
             }
         }
+        public static int RegionCode
+        {
+            get
+            {
+                return MemCache.Get<int>("RegionCode");
+            }
+        }
         /// <summary>
         /// 是否已完成学业
         /// </summary>

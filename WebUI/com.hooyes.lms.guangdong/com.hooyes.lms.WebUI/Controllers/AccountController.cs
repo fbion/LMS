@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using com.hooyes.lms.Model;
-using com.hooyes.lms.SMS;
 
 namespace com.hooyes.lms.Controllers
 {
@@ -22,8 +18,16 @@ namespace com.hooyes.lms.Controllers
             }
             var CLData = DAL.Get.MyCourses(Client.MID, id, Client.Type);
             var Report = DAL.Get.Report(Client.MID, id);
-
             var Product = DAL.Get.Products(Client.MID, id);
+
+            //提交成绩
+            if (Report.Status == 1 && Report.Minutes >= 1080 && Report.Flag == 0)
+            {
+
+                var rApi = DAL.Task.CommitReport(Client.MID, id);
+
+            }
+
 
             //必修
             ViewData["MyCourses_1"] = CLData.FindAll(n => n.Cate == 1);
@@ -97,8 +101,10 @@ namespace com.hooyes.lms.Controllers
                 GoMessage(string.Format("请您学够本年度({0}年度)课时再来参加考试", id));
             }
             var lt = DAL.Get.MyPaper(Client.MID, id, 0);
+            var Product = DAL.Get.Products(Client.MID, id);
             ViewData["DisplayYear"] = id;
             ViewData["lt"] = lt;
+            ViewData["Product"] = Product;
             return View();
         }
         [HttpPost]

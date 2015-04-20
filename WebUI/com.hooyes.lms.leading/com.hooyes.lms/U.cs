@@ -111,47 +111,19 @@ namespace com.hooyes.lms
             }
             return word;
         }
-        public static string ConvertToCSV<T>(List<T> L)
-        {
-            var sb = new StringBuilder();
-            foreach (var m in L)
-            {
-                Type type = m.GetType();
-                foreach (PropertyInfo p in type.GetProperties())
-                {
-                    string val = Convert.ToString(p.GetValue(m, null));
-                    sb.AppendFormat("\"{0}\",", val);
-                }
-                sb.AppendLine();
-            }
-            return sb.ToString();
-        }
-        public static void ExportCSV(string CSV)
-        {
-            var Response = HttpContext.Current.Response;
-            var root = AppDomain.CurrentDomain.BaseDirectory;
-            string fileName = "Export_" + DateTime.Now.ToString("yyyyMMddHHmm") + ".csv";
-            string filePath = Path.Combine(root, "App_Data/" + fileName);
-
-            StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8);
-            sw.Write(CSV);
-            sw.Close();
-
-            FileInfo file = new System.IO.FileInfo(filePath);
-            Response.Clear();
-            Response.AddHeader("Content-Disposition", "filename=" + file.Name);
-            Response.AddHeader("Content-Length", file.Length.ToString());
-            Response.ContentType = "application/msexcel";
-            Response.WriteFile(file.FullName);
-            Response.End();
-        }
         public static string BuildFilter(Model.M.M1Params m1params)
         {
             string Filter = string.Empty;
+            var sb = new StringBuilder();
+            sb.Append(" 1 = 1 ");
+            if (AdminClient.AID > 10000)
+            {
+                sb.AppendFormat(@"and RegionCode IN ( SELECT  RegionCode
+                        FROM    dbo.AdminRegions
+                        WHERE   AID = {0} )", AdminClient.AID);
+            }
             if (m1params.QueryFlag == 1)
             {
-                var sb = new StringBuilder();
-                sb.Append(" 1 = 1 ");
                 //分钟
                 if (m1params.Type != -1)
                 {
@@ -243,8 +215,9 @@ namespace com.hooyes.lms
                     }
                 }
 
-                Filter = sb.ToString();
+                
             }
+            Filter = sb.ToString();
             return Filter;
         }
         public static string BuildFilter(Model.M.M2Params m2params)
@@ -335,13 +308,6 @@ namespace com.hooyes.lms
                 Filter = sb.ToString();
             }
             return Filter;
-        }
-        public static string BuildJSON<T>(T Params)
-        {
-            string JsonStr = string.Empty;
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            JsonStr = jss.Serialize(Params);
-            return JsonStr;
         }
         /// <summary>
         /// 检查学员是否已开通了某年度的课程

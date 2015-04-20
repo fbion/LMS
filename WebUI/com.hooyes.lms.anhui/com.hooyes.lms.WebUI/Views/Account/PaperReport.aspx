@@ -14,16 +14,11 @@
             <div id="paperdiv scorediv">
                 <div class="score">
                     考试成绩：<b style="font-size: 28px;"><%= MyCourses.Score %></b> 分
-                <%if (MyCourses.Score < 60)
-                  { %>
-                    <a href="<%=com.hooyes.lms.C.APP %>/Account/Paper/<%=DisplayYear %>/<%=MyCourses.CID %>">再考一次</a>
-                    <%}
-                  else
-                  {
-                      
-                    %>
-                       <a href="<%=com.hooyes.lms.C.APP %>/Account/LearningX/<%=DisplayYear %>">继续学习</a>
-                    <%} %>
+               
+                    <a href="<%=com.hooyes.lms.C.APP %>/Account/Paper/p/<%=DisplayYear %>/<%=MyCourses.CID %>">再考一次</a>
+                    <br />
+                    <a href="<%=com.hooyes.lms.C.APP %>/Account/LearningX/<%=DisplayYear %>">继续学习</a>
+
                 </div>
             </div>
         </div>

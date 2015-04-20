@@ -16,7 +16,7 @@
                     考试成绩：<b style="font-size:28px;"><%= MyCourses.Score %></b> 分
                 <%if (MyCourses.Score < 60)
                   { %>
-                    <a href="<%=com.hooyes.lms.C.APP %>/Account/Paper/<%=DisplayYear %>/<%=MyCourses.CID %>">再考一次</a>
+                    <a href="<%=com.hooyes.lms.C.APP %>/Account/Paper/p/<%=DisplayYear %>/<%=MyCourses.CID %>">再考一次</a>
                     <%} %>
                 </div>
             </div>

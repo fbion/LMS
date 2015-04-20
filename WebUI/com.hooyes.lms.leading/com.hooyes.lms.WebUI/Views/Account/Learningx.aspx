@@ -37,13 +37,13 @@
                             </th>
                             <th>课时
                             </th>
-                            <th>状态
+                             <th style="width:60px">状态
                             </th>
-                            <th>已学时长
+                            <th style="width:80px">已学时长
                             </th>
                             <th>听课
                             </th>
-                            <th>成绩</th>
+                            <th style="width:110px">成绩</th>
                         </tr>
                         <%
                             Total_Minutes = 0;
@@ -97,7 +97,7 @@
                                   }
                                   if (c.Score < 60)
                                   { %>
-                                <a class="on" href="<%=com.hooyes.lms.C.APP %>/Account/Paper/<%=DisplayYear %>/<%= c.CID %>" target="_blank">进入考试</a>
+                                <a class="on" href="<%=com.hooyes.lms.C.APP %>/Account/Paper/p/<%=DisplayYear %>/<%= c.CID %>" target="_blank">进入考试</a>
                                 <%}%>
                                 
                             </td>
@@ -164,13 +164,13 @@
                             </th>
                             <th>课时
                             </th>
-                            <th>状态
+                            <th style="width:60px">状态
                             </th>
-                            <th>已学时长
+                            <th style="width:80px">已学时长
                             </th>
                             <th>听课
                             </th>
-                            <th>成绩</th>
+                            <th style="width:110px">成绩</th>
                         </tr>
                         <%
                             Total_Minutes = 0;
@@ -224,7 +224,7 @@
                                   }
                                   if (c.Score < 60)
                                   { %>
-                                <a class="on" href="<%=com.hooyes.lms.C.APP %>/Account/Paper/<%=DisplayYear %>/<%= c.CID %>" target="_blank">进入考试</a>
+                                <a class="on" href="<%=com.hooyes.lms.C.APP %>/Account/Paper/p/<%=DisplayYear %>/<%= c.CID %>" target="_blank">进入考试</a>
                                 <%}%>
                                 
                             </td>

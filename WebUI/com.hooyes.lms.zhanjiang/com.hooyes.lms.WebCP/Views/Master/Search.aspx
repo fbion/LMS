@@ -83,7 +83,7 @@
                 <%= YearString%>
             </td>
             <td>
-                <a href="ViewCourses?MID=<%= m.MID%>&year=<% = m.Year %>&type=<% = m.Type %>" target="_blank">
+                <a href="ViewCourses?MID=<%= m.MID%>&year=<% = m.PID %>&type=<% = m.Type %>" target="_blank">
                     <%= Math.Round(m.Minutes,0) %>
                     分钟 </a>
             </td>

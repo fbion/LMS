@@ -45,7 +45,7 @@ namespace com.hooyes.lms.DAL.M
             }
             catch (Exception ex)
             {
-                log.Fatal("{0},{1}", ex.Message, ex.Source);
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
             }
             return l;
         }
@@ -92,7 +92,7 @@ namespace com.hooyes.lms.DAL.M
             }
             catch (Exception ex)
             {
-                log.Fatal("{0},{1}", ex.Message, ex.Source);
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
                 Count = 0;
             }
             return l;
@@ -149,7 +149,7 @@ namespace com.hooyes.lms.DAL.M
             }
             catch (Exception ex)
             {
-                log.Fatal("{0},{1}", ex.Message, ex.Source);
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
                 Count = 0;
             }
             return l;
@@ -209,7 +209,7 @@ namespace com.hooyes.lms.DAL.M
             }
             catch (Exception ex)
             {
-                log.Fatal("{0},{1}", ex.Message, ex.Source);
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
                 Count = 0;
             }
             return l;
@@ -274,7 +274,7 @@ namespace com.hooyes.lms.DAL.M
             }
             catch (Exception ex)
             {
-                log.Fatal("{0},{1}", ex.Message, ex.Source);
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
                 Count = 0;
             }
             return l;
@@ -313,7 +313,7 @@ namespace com.hooyes.lms.DAL.M
             }
             catch (Exception ex)
             {
-                log.Fatal("{0},{1}", ex.Message, ex.Source);
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
                 Count = 0;
             }
             return l;

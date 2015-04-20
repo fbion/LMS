@@ -34,9 +34,9 @@
                             </th>
                             <th>课时
                             </th>
-                            <th>状态
+                            <th style="width:60px;">状态
                             </th>
-                            <th>已学时长
+                            <th style="width:100px;">已学时长
                             </th>
                             <th>听课
                             </th>
@@ -105,7 +105,7 @@
                                 <% = ExamMin.ToString("0.#")%> 分钟
                             </td>
                         </tr>
-                        <%--<tr>
+                        <tr>
                             <td colspan="5">考试成绩  
 
                                <span class="exlinksp">
@@ -134,7 +134,7 @@
                                 <%=Report.Score %>
                                                                                             
                             </td>
-                        </tr>--%>
+                        </tr>
                         <tr>
                             <td colspan="5">本年度结业状态
                             </td>

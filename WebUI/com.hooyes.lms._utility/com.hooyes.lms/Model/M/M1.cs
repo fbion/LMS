@@ -69,6 +69,8 @@ namespace com.hooyes.lms.Model.M
         public string RegionName { get; set; }
 
         public int PID { get; set; }
+
+        public int Flag { get; set; }
     }
 
     /// <summary>

@@ -42,7 +42,8 @@ namespace com.hooyes.lms.Controllers
             //提交成绩
             if (Report.Status == 1 && Report.Compulsory>=24 &&  Report.Flag == 0)
             {
-                var rApi = API.Teach.UploadEduInfo(Product.IDSN, Report.Compulsory, API.Cipher.Encrypt(Product.Name), DateTime.Now.ToString("yyyy-MM-dd"));
+                log.Info("UploadEduInfo:{0}", Client.MID);
+                var rApi = API.Teach.UploadEduInfo(Product.IDSN, Report.Compulsory, Product.Memo, DateTime.Now.ToString("yyyy-MM-dd"));
                 if (rApi.Code == 0)
                 {
                     DAL.Update.ReportFlag(Client.MID, id, 1);
@@ -173,7 +174,7 @@ namespace com.hooyes.lms.Controllers
                 DAL.Update.MyQuestion(myQuestion);
             }
             DAL.Task.EvalutePaper(Client.MID, id, cid);
-            Response.Redirect(string.Format(C.APP + "/Account/PaperReport/{0}/{1}", id, cid));
+            Response.Redirect(string.Format(C.APP + "/Account/PaperReport/p/{0}/{1}", id, cid));
             return Content(string.Empty);
         }
         public ActionResult PaperReport(int id, int cid)

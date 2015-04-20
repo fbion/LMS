@@ -131,6 +131,8 @@ namespace com.hooyes.lms.API
             var r = new R();
             try
             {
+                
+                edu_content = API.Cipher.Encrypt(edu_content);
                 string api_url = ConfigurationManager.AppSettings.Get("Ah_Url_uploadEduInfo");
                 string data = "seq_num={0}&training_hours={1}&edu_content={2}&training_end_date={3}";
                 data = string.Format(data, seq_num, training_hours, edu_content, training_end_date);

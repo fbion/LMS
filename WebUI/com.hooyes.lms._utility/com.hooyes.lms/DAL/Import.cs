@@ -196,59 +196,59 @@ namespace com.hooyes.lms.DAL
 
             return m;
         }
-        public static R Member(string excelPath)
-        {
-            var m = new R();
-            try
-            {
-                string SQL = "Select * from [sheet1$]";
-                var dr = excel.ExcuteReader(excelPath, SQL);
-                while (dr.Read())
-                {
+        //public static R Member(string excelPath)
+        //{
+        //    var m = new R();
+        //    try
+        //    {
+        //        string SQL = "Select * from [sheet1$]";
+        //        var dr = excel.ExcuteReader(excelPath, SQL);
+        //        while (dr.Read())
+        //        {
 
-                    try
-                    {
-                        if (dr["身份证号"] != DBNull.Value && dr["报名序号"] != DBNull.Value)
-                        {
-                            SqlParameter[] param =
-                        {
-                            new SqlParameter("@R",0),
-                            new SqlParameter("@Code",0),
-                            new SqlParameter("@Message",string.Empty),
-                            new SqlParameter("@Name",dr["姓名"].ToString()),
-                            new SqlParameter("@IDCard",dr["身份证号"].ToString()),
-                            new SqlParameter("@IDSN",dr["报名序号"].ToString()),
-                            new SqlParameter("@Year",dr["教育年份"].ToString()),
-                            new SqlParameter("@Phone",dr["电话"].ToString())
-                        };
-                            param[0].Direction = ParameterDirection.ReturnValue;
-                            param[1].Direction = ParameterDirection.Output;
-                            param[2].Direction = ParameterDirection.Output;
+        //            try
+        //            {
+        //                if (dr["身份证号"] != DBNull.Value && dr["报名序号"] != DBNull.Value)
+        //                {
+        //                    SqlParameter[] param =
+        //                {
+        //                    new SqlParameter("@R",0),
+        //                    new SqlParameter("@Code",0),
+        //                    new SqlParameter("@Message",string.Empty),
+        //                    new SqlParameter("@Name",dr["姓名"].ToString()),
+        //                    new SqlParameter("@IDCard",dr["身份证号"].ToString()),
+        //                    new SqlParameter("@IDSN",dr["报名序号"].ToString()),
+        //                    new SqlParameter("@Year",dr["教育年份"].ToString()),
+        //                    new SqlParameter("@Phone",dr["电话"].ToString())
+        //                };
+        //                    param[0].Direction = ParameterDirection.ReturnValue;
+        //                    param[1].Direction = ParameterDirection.Output;
+        //                    param[2].Direction = ParameterDirection.Output;
 
-                            var r = SqlHelper.ExecuteNonQuery(SqlHelper.Local, CommandType.StoredProcedure, "M_Import_Member", param);
-                            log.Info("M_Import_Member:{0},{1},{2}", param[0].Value, param[1].Value, param[2].Value);
-                        }
-                    }
-                    catch (Exception ex1)
-                    {
-                        m.Code = 301;
-                        m.Message = ex1.Message;
-                        log.Error("{0},{1}", ex1.Message, ex1.StackTrace);
-                    }
+        //                    var r = SqlHelper.ExecuteNonQuery(SqlHelper.Local, CommandType.StoredProcedure, "M_Import_Member", param);
+        //                    log.Info("M_Import_Member:{0},{1},{2}", param[0].Value, param[1].Value, param[2].Value);
+        //                }
+        //            }
+        //            catch (Exception ex1)
+        //            {
+        //                m.Code = 301;
+        //                m.Message = ex1.Message;
+        //                log.Error("{0},{1}", ex1.Message, ex1.StackTrace);
+        //            }
 
-                }
-                dr.Close();
-                dr.Dispose();
+        //        }
+        //        dr.Close();
+        //        dr.Dispose();
 
-            }
-            catch (Exception ex)
-            {
-                m.Code = 300;
-                m.Message = ex.Message;
-                log.Error("{0},{1}", ex.Message, ex.StackTrace);
-            }
-            return m;
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        m.Code = 300;
+        //        m.Message = ex.Message;
+        //        log.Error("{0},{1}", ex.Message, ex.StackTrace);
+        //    }
+        //    return m;
+        //}
         public static R MemberCredit(string excelPath, decimal SN)
         {
             var m = new R();
@@ -495,5 +495,110 @@ namespace com.hooyes.lms.DAL
             return r;
         }
 
+        public static DataSet PreviewCs(string excelPath)
+        {
+            var ds = new DataSet();
+            try
+            {
+
+                string SQL = @"SELECT
+                               [CName]
+                              ,[Name]
+                              ,[Year]
+                              ,[Cate]
+                              ,[Teacher]
+                              ,[Length]
+                              ,[ActMinutes]
+                              ,[Memo]
+                          FROM [Courses$]";
+                //log.Info(excelPath);
+                ds = excel.ExcuteDataset(excelPath, SQL);
+
+            }
+            catch (Exception ex)
+            {
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
+            }
+            return ds;
+        }
+
+        public static R Cs(string excelPath)
+        {
+            var r = new R();
+
+            var ds = PreviewCs(excelPath);
+
+            var dt = ds.Tables[0];
+
+            //int CurrentCID = BaseGet.Seed(2);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                var info = new Courses();
+                info.CID = BaseGet.Seed(2);
+                info.CName = Convert.ToString(dr["CName"]);
+                info.Name = Convert.ToString(dr["Name"]);
+                info.Year = Convert.ToInt32(dr["Year"]);
+                info.Cate = Convert.ToInt32(dr["Cate"]);
+                info.Teacher = Convert.ToString(dr["Teacher"]);
+                info.Length = Convert.ToDecimal(dr["Length"]);
+                info.ActMinutes = Convert.ToDecimal(dr["ActMinutes"]);
+                info.Tag = "";
+                info.Memo = Convert.ToString(dr["Memo"]);
+                DAL.M.BaseUpdate.Courses(info);
+            }
+
+            return r;
+        }
+
+        public static DataSet PreviewMember(string excelPath)
+        {
+            var ds = new DataSet();
+            try
+            {
+
+                string SQL = @"SELECT
+                                [Login]
+                               ,[Password]
+                               ,[Name]
+                               ,[IDCard]
+                               ,[Phone]
+                               ,[RegionCode]
+                          FROM [member$]";
+                //log.Info(excelPath);
+                ds = excel.ExcuteDataset(excelPath, SQL);
+
+            }
+            catch (Exception ex)
+            {
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
+            }
+            return ds;
+        }
+
+        public static R Member(string excelPath)
+        {
+            var r = new R();
+
+            var ds = PreviewMember(excelPath);
+
+            var dt = ds.Tables[0];
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                var member = new Member();
+                member.MID = 0;
+                member.Login = Convert.ToString(dr["Login"]);
+                member.Password = Convert.ToString(dr["Password"]);
+                member.Name = Convert.ToString(dr["Name"]);
+                member.IDCard = Convert.ToString(dr["IDCard"]);
+                member.RegionCode = Convert.ToInt32(dr["RegionCode"]);
+                member.IDSN = "0";
+                member.Phone = Convert.ToString(dr["Phone"]);
+                DAL.BaseUpdate.Member(member);
+            }
+
+            return r;
+        }
     }
 }

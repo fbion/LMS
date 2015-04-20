@@ -36,9 +36,10 @@
             </td>
             <td>课时
             </td>
-            <td>考试
+            <td>结业状态</td>
+            <td style="background-color: #0094ff; color: #FFF">提交状态
             </td>
-
+            <td style="background-color: #0094ff; color: #FFF">提交时间</td>
         </tr>
         <% 
                 int odd = 0;
@@ -83,17 +84,42 @@
                 <%= YearString%>
             </td>
             <td>
-                <a href="ViewCourses?MID=<%= m.MID%>&year=<% = m.Year %>&type=<% = m.Type %>" target="_blank">
+                <a href="ViewCourses?MID=<%= m.MID%>&year=<% = m.PID %>&type=<% = m.Type %>" target="_blank">
                     <%= Math.Round(m.Minutes,0) %>
                     分钟 </a>
             </td>
             <td>
-                <%= m.Score %>
+                <%if (m.Status == 1)
+                  { %>
+                已结业
+                <%}
+                  else
+                  { %>
+                --
+                <%} %>
             </td>
-
+            <td>
+                <%if (m.Flag == 1)
+                  {%>
+                   已提交
+                <%}
+                  else
+                  { %>
+                   --
+                <%} %>
+            </td>
+            <td>
+                <%if (m.Flag == 1)
+                  {%>
+                <%=m.CommitDate %>
+                <%}
+                  else
+                  { %>
+                 --
+                <%} %>
+            </td>
         </tr>
         <%} %>
-       
     </table>
     <%
             }
@@ -109,4 +135,9 @@
             }
         }
     %>
+    <%--<table id="Table4" class="commontb">
+        <tr>
+            <td><a target="_blank" href="http://218.22.1.72/ahkj/portal/self_center/webEduLog/login.jsp">安徽省财政厅查询系统</a></td>
+        </tr>
+    </table>--%>
 </asp:Content>

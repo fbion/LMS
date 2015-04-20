@@ -86,7 +86,7 @@ namespace com.hooyes.lms.DAL
             }
             return l;
         }
-        public static List<MyCourses> MyCourses(int MID,int Year,int Type)
+        public static List<MyCourses> MyCourses(int MID, int Year, int Type)
         {
             var l = new List<MyCourses>();
             try
@@ -203,7 +203,7 @@ namespace com.hooyes.lms.DAL
                         m.Second = Convert.ToDecimal(dr["Second"]);
                     if (DBNull.Value != dr["Status"])
                         m.Status = Convert.ToInt32(dr["Status"]);
-                    
+
                     l.Add(m);
                 }
                 dr.Close();
@@ -215,7 +215,7 @@ namespace com.hooyes.lms.DAL
             }
             return l;
         }
-        public static List<Courses> CoursesList(int Year,int Type)
+        public static List<Courses> CoursesList(int Year, int Type)
         {
             var l = new List<Courses>();
             try
@@ -282,12 +282,12 @@ namespace com.hooyes.lms.DAL
                     m.Phone = Convert.ToString(dr["Phone"]);
                     l.Add(m);
                 }
-                
+
                 dr.Close();
             }
             catch (Exception ex)
             {
-               
+
                 log.Fatal(ex.Message);
                 log.FatalException(ex.Message, ex);
             }
@@ -465,7 +465,7 @@ namespace com.hooyes.lms.DAL
             }
             return m;
         }
-        public static Courses Courses(int CID,int MID,int Year,int Type)
+        public static Courses Courses(int CID, int MID, int Year, int Type)
         {
             var m = new Courses();
             try
@@ -578,7 +578,7 @@ namespace com.hooyes.lms.DAL
             }
             return m;
         }
-        public static Report Report(int MID,int Year)
+        public static Report Report(int MID, int Year)
         {
             var m = new Report();
             try
@@ -682,7 +682,7 @@ namespace com.hooyes.lms.DAL
                     if (DBNull.Value != dr["Tel"])
                         m.Tel = Convert.ToString(dr["Tel"]);
                     if (DBNull.Value != dr["Province"])
-                    m.Province = Convert.ToString(dr["Province"]);
+                        m.Province = Convert.ToString(dr["Province"]);
                     if (DBNull.Value != dr["City"])
                         m.City = Convert.ToString(dr["City"]);
                     if (DBNull.Value != dr["Address"])
@@ -703,7 +703,7 @@ namespace com.hooyes.lms.DAL
             }
             return lt;
         }
-        public static Invoice Invoice(int MID,int IID)
+        public static Invoice Invoice(int MID, int IID)
         {
             var m = new Invoice();
             try
@@ -716,7 +716,7 @@ namespace com.hooyes.lms.DAL
                 var dr = SqlHelper.ExecuteReader(SqlHelper.Local, CommandType.StoredProcedure, "Get_Invoice", param);
                 if (dr.Read())
                 {
-                    
+
                     m.MID = MID;
                     if (DBNull.Value != dr["IID"])
                         m.IID = Convert.ToInt32(dr["IID"]);
@@ -741,7 +741,7 @@ namespace com.hooyes.lms.DAL
                     if (DBNull.Value != dr["CreateDate"])
                         m.CreateDate = Convert.ToDateTime(dr["CreateDate"]);
 
-                   
+
                 }
                 dr.Close();
             }
@@ -752,7 +752,7 @@ namespace com.hooyes.lms.DAL
             }
             return m;
         }
-        public static Order Order(int MID,int ID)
+        public static Order Order(int MID, int ID)
         {
             var m = new Order();
             try
@@ -847,7 +847,7 @@ namespace com.hooyes.lms.DAL
                 m.Amount = Convert.ToDecimal(param[1].Value);
                 m.Cash = Convert.ToDecimal(param[2].Value);
                 m.Rebate = Convert.ToDecimal(param[3].Value);
-                
+
             }
             catch (Exception ex)
             {
@@ -889,7 +889,43 @@ namespace com.hooyes.lms.DAL
             }
             return m;
         }
-        public static R CheckPhone(int MID,int Year, string Phone)
+        public static Cards Cards(string NO, string SN)
+        {
+            var m = new Cards();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@NO",NO),
+                    new SqlParameter("@SN",SN)
+                };
+
+                var dr = SqlHelper.ExecuteReader(SqlHelper.Local, CommandType.StoredProcedure, "Get_Cards", param);
+                if (dr.Read())
+                {
+                    m.ID = Convert.ToInt32(dr["ID"]);
+                    m.NO = Convert.ToString(dr["NO"]);
+                    m.SN = Convert.ToString(dr["SN"]);
+                    m.Amount = Convert.ToDecimal(dr["Amount"]);
+                    m.Status = Convert.ToInt32(dr["Status"]);
+                    if (dr["CreateDate"] != DBNull.Value)
+                        m.CreateDate = Convert.ToDateTime(dr["CreateDate"]);
+                    if (dr["UpdateDate"] != DBNull.Value)
+                        m.UpdateDate = Convert.ToDateTime(dr["UpdateDate"]);
+                    if (dr["ExpDate"] != DBNull.Value)
+                        m.ExpDate = Convert.ToDateTime(dr["ExpDate"]);
+                }
+                dr.Close();
+
+            }
+            catch (Exception ex)
+            {
+                log.Fatal(ex.Message);
+                log.Fatal(ex.StackTrace);
+            }
+            return m;
+        }
+        public static R CheckPhone(int MID, int Year, string Phone)
         {
             R r = new R();
             try
@@ -978,8 +1014,8 @@ namespace com.hooyes.lms.DAL
                 r.Code = 300;
                 r.Message = ex.Message;
                 r.Value = 0;
-                log.Fatal("{0},{1}",ex.Message,ex.StackTrace);
-                
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
+
             }
             return r;
         }
@@ -998,7 +1034,7 @@ namespace com.hooyes.lms.DAL
                 {
                     m.ID = Convert.ToInt32(dr["ID"]);
                     m.MID = Convert.ToInt32(dr["MID"]);
-                 
+
                     if (DBNull.Value != dr["CreateDate"])
                         m.CreateDate = Convert.ToDateTime(dr["CreateDate"]);
                     if (DBNull.Value != dr["BeginDate"])
@@ -1015,6 +1051,55 @@ namespace com.hooyes.lms.DAL
             }
             return m;
         }
-
+        public static CertConfig CertConfig(int PID)
+        {
+            var m = new CertConfig();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@PID",PID)
+                    
+                };
+                string SQL = "SELECT * FROM dbo.CertConfig WHERE PID=@PID";
+                var dr = SqlHelper.ExecuteReader(SqlHelper.Local, CommandType.Text, SQL, param);
+                if (dr.Read())
+                {
+                    m.PID = Convert.ToInt32(dr["PID"]);
+                    m.title = Convert.ToString(dr["title"]);
+                    m.text = Convert.ToString(dr["text"]);
+                    m.certid = Convert.ToString(dr["certid"]);
+                    m.sign = Convert.ToString(dr["sign"]);
+                }
+                dr.Close();
+            }
+            catch (Exception ex)
+            {
+                log.Fatal(ex.Message);
+                log.Fatal(ex.StackTrace);
+            }
+            return m;
+        }
+        public static int Seed(int SeedID)
+        {
+            int m = 0;
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@Value",0),
+                    new SqlParameter("@ID",SeedID)
+                };
+                param[0].Direction = ParameterDirection.Output;
+                string SQL = "[Get_Seed]";
+                var dr = SqlHelper.ExecuteNonQuery(SqlHelper.Local, CommandType.StoredProcedure, SQL, param);
+                m = Convert.ToInt32(param[0].Value);
+            }
+            catch (Exception ex)
+            {
+                log.Fatal("{0}",ex.StackTrace);
+            }
+            return m;
+        }
     }
 }

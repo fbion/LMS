@@ -5,8 +5,8 @@
     string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
 %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=8" />
@@ -82,20 +82,10 @@
             <div class="loginFlow" style="height: auto; padding: 0px 0px 0px 0px;">
                 <div class="about-flow">
                     <ul class="ul-content">
-                        <li class="t">关于2015年度会计人员继续教育日期的通知</li>
+                        <li class="t">关于2015年度会计人员继续教育的通知</li>
                         <li class="c">
                             <p>
-                                各单位，培训机构，会计人员：
-                            </p>
-                            <p>
-                                根据计划安排，我省2015年度会计人员继续教育拟于4月1日开始，12月31日结束，请做好相关准备工作。
-    广大会计人员，缴费后应在本年度规定的时段内完成继续教育学分，过期未完成者，下年度须重新缴费补学。
-                            </p>
-                            <p style="text-align:right">
-                                安徽省财政厅会计处
-                            </p>
-                            <p style="text-align:right">
-                                2015.3.2
+                                点击下载：<a href="http://news.online.nai.edu.cn/anhui/2015年安徽继续教育通知.doc" target="_blank">2015年安徽继续教育通知.doc</a>
                             </p>
                         </li>
                         <li class="t">学习流程</li>
@@ -142,12 +132,14 @@
                     <form class="login_form" id="login_form" action="" onsubmit="return Login()" method="post">
 
                         <div class="loginInt" id="userName" style="margin-bottom: 0;">
+                            身份证号：<br />
                             <input type="text" value="" placeholder="身份证号" class="loginInput" id="ID" name="ID" tabindex="1" />
                         </div>
                         <div class="forgetPwdLine">
                             <%-- <a href="/index.php/Index/forget" target="_blank">忘记密码?</a>--%>
                         </div>
                         <div class="loginInt" id="passWord">
+                            姓名：<br />
                             <input type="text" value="" placeholder="姓名" class="loginInput" id="PWD" name="PWD" tabindex="2" />
                         </div>
                         <%-- <p style='font-size: 13px;'>
@@ -159,7 +151,7 @@
                             <input type="submit" id="login_btn" value="登 录" />
                             <%--<span class="lfBtnReg"><a title="该专区不允许学员自行注册">注 册</a></span>--%>
                         </div>
-                        <div class="loginFormConf" style="margin-bottom: 5px;">
+                        <div class="loginFormConf" style="margin-bottom: 5px; display:none">
                             <div class="loginFormVer">
                                 <a href="/index.php/Help" target="_blank">帮助中心</a>
                             </div>

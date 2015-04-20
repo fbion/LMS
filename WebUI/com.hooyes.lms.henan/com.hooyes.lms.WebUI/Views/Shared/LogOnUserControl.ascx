@@ -122,7 +122,8 @@
     <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/account.js?v=2013030101" type="text/javascript"></script>
 </div>
 <div id="help_div" class="help-div beta">
-    <p id="help_div_msg">如您已缴费还无法正常登陆学习，<br />请选择以下帮助</p>
+    <p id="help_div_msg">如您已缴费还无法正常登陆学习，<br />
+        请选择以下帮助</p>
     <ul>
         <li class="a"><a href="<% = com.hooyes.lms.C.APP %>/home/faq" id="A1" target="_blank">常见问题</a></li>
         <li><a href="javascript:void(0);" id="help_1">在线帮助</a></li>
@@ -147,12 +148,14 @@
         }
         %>
         <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/Account/Learning">【课程列表】</a></li>
-       <%-- <% if (com.hooyes.lms.Client.Year >= 2012)
+        <%-- <% if (com.hooyes.lms.Client.Year >= 2012)
            { %>
         <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/Account/Paper" target="_blank">【考试入口】</a></li>
         <%} %>--%>
         <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/Account/Invoice"
             target="_blank">【申请发票】</a></li>
+        <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/Survey" target="_blank">【培训调查】</a>
+        </li>
         <li class="t_a_c linkli2"><a href="<% = com.hooyes.lms.C.APP %>/login/logout">【退出登录】</a></li>
     </ul>
     <p class="cert">
@@ -160,9 +163,9 @@
     </p>
 
     <%
-           //已在本平台学完，但对方系统未结业的学员提示
-           if (com.hooyes.lms.Client.Learning_Finish == 1 && com.hooyes.lms.Client.Report_Status != 1)
-           {
+        //已在本平台学完，但对方系统未结业的学员提示
+        if (com.hooyes.lms.Client.Learning_Finish == 1 && com.hooyes.lms.Client.Report_Status != 1)
+        {
     %>
     <script type="text/javascript">
         setTimeout(function () {

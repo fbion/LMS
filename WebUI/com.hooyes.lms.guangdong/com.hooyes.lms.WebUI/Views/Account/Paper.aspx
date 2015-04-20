@@ -8,11 +8,12 @@
     <%
         var lt = (List<com.hooyes.lms.Model.Question>)ViewData["lt"];
         var DisplayYear = (int)ViewData["DisplayYear"];
+        var Product = (com.hooyes.lms.Model.Products)ViewData["Product"];
     %>
     <div id="main">
         <div id="right" style="width: 100%">
             <div class="board board2" style="text-align: center; font-weight: bold">
-                <%= DisplayYear %> 年会计人员继续教育考试
+             <%=Product.Name %>      考试
             </div>
             <div id="paperdiv" style="background-color:#FFF">
                 <form id="paperform" action="" method="post">
@@ -45,7 +46,7 @@
                                i = 1;
                         %>
                         <tr>
-                            <td class="title">三、判断题
+                            <td class="title">二、判断题
                             </td>
                         </tr>
                         <% } %>

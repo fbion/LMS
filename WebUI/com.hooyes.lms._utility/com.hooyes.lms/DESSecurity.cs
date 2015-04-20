@@ -20,7 +20,7 @@ namespace com.hooyes.lms
             {
                 keybyte[i] = (byte)random.Next(65, 122);
             }
-            return ASCIIEncoding.ASCII.GetString(keybyte);
+            return Encoding.UTF8.GetString(keybyte);
         }
 
         /// <summary>
@@ -33,9 +33,9 @@ namespace com.hooyes.lms
         {
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
             {
-                byte[] inputByteArray = Encoding.Default.GetBytes(dataToEncrypt);//把字符串放到byte数组中
-                des.Key = ASCIIEncoding.ASCII.GetBytes(DESKey); //建立加密对象的密钥和偏移量
-                des.IV = ASCIIEncoding.ASCII.GetBytes(DESKey);
+                byte[] inputByteArray = Encoding.UTF8.GetBytes(dataToEncrypt);//把字符串放到byte数组中
+                des.Key = Encoding.UTF8.GetBytes(DESKey); //建立加密对象的密钥和偏移量
+                des.IV = Encoding.UTF8.GetBytes(DESKey);
                 using (MemoryStream ms = new MemoryStream())
                 {
                     using (CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(), CryptoStreamMode.Write))
@@ -69,15 +69,15 @@ namespace com.hooyes.lms
                     int i = (Convert.ToInt32(dataToDecrypt.Substring(x * 2, 2), 16));
                     inputByteArray[x] = (byte)i;
                 }
-                des.Key = ASCIIEncoding.ASCII.GetBytes(DESKey); //建立加密对象的密钥和偏移量，此值重要，不能修改
-                des.IV = ASCIIEncoding.ASCII.GetBytes(DESKey);
+                des.Key = Encoding.UTF8.GetBytes(DESKey); //建立加密对象的密钥和偏移量，此值重要，不能修改
+                des.IV =Encoding.UTF8.GetBytes(DESKey);
                 using (MemoryStream ms = new MemoryStream())
                 {
                     using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Write))
                     {
                         cs.Write(inputByteArray, 0, inputByteArray.Length);
                         cs.FlushFinalBlock();
-                        return System.Text.Encoding.Default.GetString(ms.ToArray());
+                        return System.Text.Encoding.UTF8.GetString(ms.ToArray());
                     }
                 }
             }

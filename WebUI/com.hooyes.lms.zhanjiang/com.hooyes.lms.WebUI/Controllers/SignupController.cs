@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web;
 using System.Web.Mvc;
 using System.Text.RegularExpressions;
 using com.hooyes.lms.Model;
@@ -41,11 +39,11 @@ namespace com.hooyes.lms.WebUI.Controllers
                     r.Message = " IDCard Exist";
                     return Json(r);
                 }
-
-                if (!IsApiCheck(member))
+                var rx = IsApiCheck(member);
+                if (rx.Code != 0)
                 {
-                    r.Code = 104;
-                    r.Message = " ZT001";
+                    r.Code = rx.Code;
+                    r.Message = rx.Message;
                     return Json(r);
                 }
 
@@ -82,8 +80,9 @@ namespace com.hooyes.lms.WebUI.Controllers
             }
         }
 
-        private bool IsApiCheck(Member member)
+        private R IsApiCheck(Member member)
         {
+            var rx = new R();
             var param = new API.GuangdongParams1();
             param.cardNumber = member.IDCard;
             param.compId = member.IDCert;
@@ -93,12 +92,22 @@ namespace com.hooyes.lms.WebUI.Controllers
             var r = API.Guangdong.compProve(param);
             if (r.ResponseCode == "ZT000")
             {
-                return true;
+                rx.Code = 0;
+                rx.Message = r.ResponseCode;
             }
             else
             {
-                return false;
+                rx.Code = 104;
+                rx.Message = r.ResponseCode;
+                if (!string.IsNullOrEmpty(rx.Message))
+                {
+                    if (rx.Message.Length > 20)
+                    {
+                        rx.Message = rx.Message.Substring(0, 20);
+                    }
+                }
             }
+            return rx;
         }
 
 

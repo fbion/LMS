@@ -5,8 +5,8 @@
     string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
 %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=8" />
@@ -64,16 +64,20 @@
                     <img src="<% = CDN_Private %>/public/image/xxxz.jpg">
                     <div style="width: 620px; height: 460px; padding: 10px;">
                         <div id="noticeContent" style="font-size: 13px; line-height: 25px">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;北京国家会计学院远程教育网“广东省直会计人员继续教育”网络学习开始，现开设<span style="color: red;">2013</span>和<span style="color: red;">2014</span>两个年度的“<span style="color: red;">大中企业类、小企业类、行政事业类</span>”三类课程的学习。达标学时为24学时，考试为综合考试，收费标准：<span style="color: red;">100元/人。</span></p>
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;北京国家会计学院远程教育网“广东省直会计人员继续教育”网络学习开始，现开设<span style="color: red;">2013</span>和<span style="color: red;">2014</span>两个年度的“<span style="color: red;">企业类、小企业类、行政事业类</span>”三类课程的学习。达标学时为24学时，考试为综合考试，收费标准：<span style="color: red;">100元/人。</span></p>
                             <p>
-                                1.关于2014年会计人员继续教育培训有关事项的通知
-							<a target="_blank" href="http://www.gdczt.gov.cn/adminfo/am/201403/t20140304_52937.htm">(点击进入)</a>
+                                1.会计人员继续教育实际完成情况查询和证书打印
+							<a target="_blank" href="http://210.76.65.189:8086/gdkjJXJY/NetService/jxjy/cxfw/cy_user_search.jsp?prePage=%E4%BB%8E%E4%B8%9A%E4%BA%BA%E5%91%98%E6%9F%A5%E8%AF%A2">(点击进入)</a>
+                            </p>
+                            <p>
+                                2.关于2015年会计人员继续教育培训有关事项的通知
+							<a target="_blank" href="http://www.gdczt.gov.cn/adminfo/am/201503/t20150318_55371.htm">(点击进入)</a>
                             </p>
 
-                            <p>
-                                2.广东省直会计人员继续教育学习流程
-							<a target="_blank" href="http://guangdong.elearning360.cn/index.php/Help">(点击进入)</a>
-                            </p>
+                          <%--  <p>
+                                3.广东省直会计人员继续教育学习流程
+							<a target="_blank" href="javascript:void(0);">(点击进入)</a>
+                            </p>--%>
 
                             <p>
                                 3.广东省会计信息服务平台
@@ -107,8 +111,11 @@
 
                 </div>
                 <div class="gonggao" id="showmessage">
-                    <p>1.&nbsp;<a style="cursor: pointer;" id="m_318" class="showmessage">学习流程</a></p>
-
+                   <%-- <p>1.&nbsp;<a style="cursor: pointer;" id="m_318" class="showmessage">学习流程</a></p>--%>
+                     <p>
+                        1.会计人员继续教育实际完成情况查询和证书打印
+							<a target="_blank" href="http://210.76.65.189:8086/gdkjJXJY/NetService/jxjy/cxfw/cy_user_search.jsp?prePage=%E4%BB%8E%E4%B8%9A%E4%BA%BA%E5%91%98%E6%9F%A5%E8%AF%A2">(点击进入)</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -130,7 +137,7 @@
                         <div class="loginInt" id="passWord">
                             <input type="text" value="" placeholder="姓名" class="loginInput" id="PWD" name="PWD" tabindex="2" />
                         </div>
-                         <p style='font-size: 13px;'>
+                        <p style='font-size: 13px;'>
                             请输入<span style='color: red; font-size: 13px; font-weight: bold;'>
                                 身份证号
                             </span>和<span style='color: red; font-size: 13px; font-weight: bold;'> 姓名 </span>登录

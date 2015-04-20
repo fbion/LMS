@@ -34,9 +34,9 @@
                             </th>
                             <th>课时
                             </th>
-                            <th>状态
+                            <th style="width:60px;">状态
                             </th>
-                            <th>已学时长
+                            <th style="width:100px;">已学时长
                             </th>
                             <th>听课
                             </th>
@@ -105,7 +105,7 @@
                                 <% = ExamMin.ToString("0.#")%> 分钟
                             </td>
                         </tr>
-                        <%--<tr>
+                        <tr>
                             <td colspan="5">考试成绩  
 
                                <span class="exlinksp">
@@ -134,12 +134,12 @@
                                 <%=Report.Score %>
                                                                                             
                             </td>
-                        </tr>--%>
+                        </tr>
                         <tr>
                             <td colspan="5">本年度结业状态
                             </td>
                             <td>
-                                <% if (Report.Minutes >= 1125)
+                                <% if (Report.Status == 1)
                                    {
                                 %>
                                 已结业
@@ -151,7 +151,7 @@
                             </td>
                         </tr>
                         <tr style="background-color: #f8f3f3;display:none">
-                            <td colspan="6" style="text-align: left">* 学满必修课1125分钟（25课时) 后可打印本年度证书。</td>
+                            <td colspan="6" style="text-align: left">* 学满1080分钟后结业</td>
                         </tr>
                     </table>
 

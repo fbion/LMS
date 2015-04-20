@@ -22,7 +22,8 @@
         if (!string.IsNullOrEmpty(keyword))
         {
             keyword = com.hooyes.lms.U.LikeKeyword(keyword);
-            var ListM = com.hooyes.lms.DAL.M.Get.M1(keyword);
+            int AID = com.hooyes.lms.AdminClient.AID;
+            var ListM = com.hooyes.lms.DAL.M.Get.M1(keyword, AID);
             if (ListM.Count > 0)
             {
     %>

@@ -231,7 +231,7 @@
                 <%= m.Year%>
             </td>
             <td>
-                <a href="ViewCourses?MID=<%= m.MID%>&year=<% = m.Year %>&type=<% = m.Type %>" target="_blank">
+                <a href="ViewCourses?MID=<%= m.MID%>&year=<% = m.PID %>&type=<% = m.Type %>" target="_blank">
                     <%= m.Minutes.ToString("0.#") %>
                     分钟 </a>
             </td>

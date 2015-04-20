@@ -159,7 +159,7 @@ namespace com.hooyes.lms.Controllers
         public ActionResult ImportMember()
         {
             string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/20120423_Member_Import.xls";
-            DAL.Import.Member(FilePath);
+            //DAL.Import.Member(FilePath);
             return Content("");
         }
 
@@ -405,5 +405,101 @@ namespace com.hooyes.lms.Controllers
             return View();
         }
 
+
+        //课表
+        #region 课表导入
+        [RequiredTag(Tag = 20)]
+        public ActionResult UploadCs()
+        {
+            return View();
+        }
+        [RequiredTag(Tag = 20)]
+        public ActionResult UploadCsPreview(string fileName, string SN, string Tag)
+        {
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
+            var ds = DAL.Import.PreviewCs(FilePath);
+            ViewData["data"] = ds;
+            ViewData["fileName"] = fileName;
+            ViewData["SN"] = SN;
+            ViewData["Tag"] = Tag;
+            return View();
+        }
+        [RequiredTag(Tag = 20)]
+        [HttpPost]
+        public ActionResult UploadCsCommit(string fileName, string SN, string Tag)
+        {
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
+            var r = DAL.Import.Cs(FilePath);
+            string message = "";
+            if (r.Code == 0)
+            {
+                message = "导入成功";
+            }
+            else
+            {
+                message = r.Message;
+            }
+            ViewData["Message"] = message;
+            string sUrl = string.Format("UploadCsCommit?message={0}", message);
+            Response.Redirect(sUrl);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult UploadCsCommit(string Message)
+        {
+
+            ViewData["Message"] = Message;
+
+            return View();
+        }
+        #endregion
+
+        //批量导入学员
+        #region 批量导入学员
+        [RequiredTag(Tag = 21)]
+        public ActionResult UploadMember()
+        {
+            return View();
+        }
+        [RequiredTag(Tag = 20)]
+        public ActionResult UploadMemberPreview(string fileName, string SN, string Tag)
+        {
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
+            var ds = DAL.Import.PreviewMember(FilePath);
+            ViewData["data"] = ds;
+            ViewData["fileName"] = fileName;
+            ViewData["SN"] = SN;
+            ViewData["Tag"] = Tag;
+            return View();
+        }
+        [RequiredTag(Tag = 21)]
+        [HttpPost]
+        public ActionResult UploadMemberCommit(string fileName, string SN, string Tag)
+        {
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
+            var r = DAL.Import.Member(FilePath);
+            string message = "";
+            if (r.Code == 0)
+            {
+                message = "导入成功";
+            }
+            else
+            {
+                message = r.Message;
+            }
+            ViewData["Message"] = message;
+            string sUrl = string.Format("UploadMemberCommit?message={0}", message);
+            Response.Redirect(sUrl);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult UploadMemberCommit(string Message)
+        {
+
+            ViewData["Message"] = Message;
+
+            return View();
+        }
+        #endregion
     }
 }

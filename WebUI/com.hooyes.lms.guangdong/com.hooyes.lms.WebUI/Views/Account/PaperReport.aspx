@@ -8,10 +8,17 @@
     <div id="main">
         <div id="right" style="width: 100%">
             <div class="board board2" style="text-align: center; font-weight: bold">
-               <%=DisplayYear %>年会计人员继续教育考试题
+                <%=DisplayYear %>年会计人员继续教育考试题
             </div>
             <div id="paperdiv">
-             <div class="score">你的考试成绩是：<b><%= Report.Score %></b> 分</div>
+                <div class="score">你的考试成绩是：<b><%= Report.Score %></b> 分</div>
+            </div>
+            <div>
+
+                <a href="<%=com.hooyes.lms.C.APP %>/Account/Paper/<%=DisplayYear %>">再考一次</a>
+                <br />
+                <a href="<%=com.hooyes.lms.C.APP %>/Account/LearningX/<%=DisplayYear %>">继续学习</a>
+
             </div>
         </div>
     </div>

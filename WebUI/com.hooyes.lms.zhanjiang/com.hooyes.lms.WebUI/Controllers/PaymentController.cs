@@ -1,12 +1,8 @@
 ﻿using com.hooyes.lms.Model;
-using com.hooyes.lms.SMS;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 
 namespace com.hooyes.lms.Controllers
 {

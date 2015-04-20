@@ -11,7 +11,7 @@ namespace com.hooyes.lms.DAL
     public class Task
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
-        public static R EvalutePaper(int MID,int Year)
+        public static R EvalutePaper(int MID, int Year)
         {
             var m = new R();
             try
@@ -35,7 +35,7 @@ namespace com.hooyes.lms.DAL
 
             return m;
         }
-        public static R ResetPaper(int MID,int Flag)
+        public static R ResetPaper(int MID, int Flag)
         {
             var m = new R();
             try
@@ -117,7 +117,7 @@ namespace com.hooyes.lms.DAL
         }
         public static R EvaluteCourses(int MID)
         {
-            log.Info("EvaluteCourses:{0}",MID);
+            log.Info("EvaluteCourses:{0}", MID);
             var m = new R();
             try
             {
@@ -189,5 +189,44 @@ namespace com.hooyes.lms.DAL
 
             return m;
         }
+
+        public static R CommitReport(int MID, int PID)
+        {
+
+            var m = new R();
+            try
+            {
+                var data = DAL.Get.CommitInfo(MID, PID);
+                var param = new GuangdongParams2();
+                param.cardNumberType = data.cardNumberType;
+                param.cardNumber = data.cardNumber;
+                param.areaName = data.areaName;
+                param.year = data.year;
+                param.classCode = data.classCode;
+                param.classLearnTimeCount = data.classLearnTimeCount;
+                param.score = data.score;
+             
+
+                var r = Guangdong.saveTelOrgStuScore(param);
+
+                if (r.ResponseCode == "ZT000")
+                {
+                    var ur = DAL.Update.ReportFlag(MID, PID, 1);
+
+                    log.Info("Report Update {0},{1}", ur.Code, ur.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                m.Code = 300;
+                m.Message = ex.Message;
+                log.Fatal(ex.Message);
+                log.FatalException(ex.Message, ex);
+            }
+
+            return m;
+        }
+
+
     }
 }

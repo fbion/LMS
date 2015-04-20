@@ -6,7 +6,7 @@
         </div>
         <div id="signup_div">
             <form id="signup_form">
-                <input id="Text4" name="City" type="hidden"  value="广州市" />
+                <input id="Text4" name="City" type="hidden"  value="省本级" />
                 <table class="commontb signup-tb">
                     <tr>
                         <td class="t">身份证号码 </td>

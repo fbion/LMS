@@ -51,20 +51,15 @@
                     <td>
                         <select id="Years" name="years" multiple="multiple" class="selectyears" style="width:200px;height:120px;">
                             <option value="-1">不限</option>
-                            <%--  <% 
+                              <% 
             int StartYear = 2013;
             int CurrentYear = DateTime.Now.Year;
             for (int i = CurrentYear; i >= StartYear; i--)
             {
                             %>
                             <option value="<%=i %>"><%=i %></option>
-                            <% }%>--%>
-                            <option value="20141">2014年（行政事业类）</option>
-                            <option value="20142">2014年（小企业类）</option>
-                            <option value="20143">2014年（大中企业类）</option>
-                            <option value="20131">2013年（行政事业类）</option>
-                            <option value="20132">2013年（小企业类）</option>
-                            <option value="20133">2013年（大中企业类）</option>
+                            <% }%>
+                         
                         </select>
                         按住 Ctrl 键 可多选
                     </td>
@@ -231,7 +226,7 @@
                 <%= m.Year%>
             </td>
             <td>
-                <a href="ViewCourses?MID=<%= m.MID%>&year=<% = m.Year %>&type=<% = m.Type %>" target="_blank">
+                <a href="ViewCourses?MID=<%= m.MID%>&year=<% = m.PID %>&type=<% = m.Type %>" target="_blank">
                     <%= m.Minutes.ToString("0.#") %>
                     分钟 </a>
             </td>

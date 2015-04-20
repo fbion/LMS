@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Net.Cache;
-using System.Text;
-using System.Web.Caching;
 using System.Web.Mvc;
 
 namespace com.hooyes.lms.Controllers

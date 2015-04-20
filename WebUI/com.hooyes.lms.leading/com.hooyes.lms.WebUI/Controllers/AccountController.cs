@@ -130,7 +130,7 @@ namespace com.hooyes.lms.Controllers
                 DAL.Update.MyQuestion(myQuestion);
             }
             DAL.Task.EvalutePaper(Client.MID, id, cid);
-            Response.Redirect(string.Format(C.APP + "/Account/PaperReport/{0}/{1}", id, cid));
+            Response.Redirect(string.Format(C.APP + "/Account/PaperReport/p/{0}/{1}", id, cid));
             return Content(string.Empty);
         }
         public ActionResult PaperReport(int id, int cid)

@@ -24,9 +24,9 @@
         NexPage = NexPage > MaxPage ? MaxPage : NexPage;
         PrePage = PrePage > 0 ? PrePage : 1;
 
-        
+        bool CanViewMember = com.hooyes.lms.Client.CheckTag(17);
     %>
-    <h2>已缴费学员列表
+    <h2>学员列表
     </h2>
     <%
         if (com.hooyes.lms.Client.CheckTag(5))
@@ -49,15 +49,15 @@
                     <td style="width: 80px">年份
                     </td>
                     <td>
-                        <select id="Years" name="years" multiple="multiple" class="selectyears" style="margin-top:5px;" >
+                        <select id="Years" name="years" multiple="multiple" class="selectyears" style="margin-top: 5px;">
                             <option value="-1">不限</option>
                             <% 
-                                int StartYear = 2013;
-                                int CurrentYear = DateTime.Now.Year;
-                                for (int i = CurrentYear; i >= StartYear; i--)
-                                {
+            int StartYear = 2013;
+            int CurrentYear = DateTime.Now.Year;
+            for (int i = CurrentYear; i >= StartYear; i--)
+            {
                             %>
-                                  <option value="<%=i %>"><%=i %></option>
+                            <option value="<%=i %>"><%=i %></option>
                             <% }%>
                         </select>
                         按住 Ctrl 键 可多选
@@ -125,8 +125,10 @@
                     <td>专区
                     </td>
                     <td>
-                        <select id="RegionCodes" name="RegionCodes" multiple="multiple" class="selectyears" style="width: 360px; height: 160px;margin-top:5px;">
+                        <select id="RegionCodes" name="RegionCodes" multiple="multiple" class="selectyears" style="width: 360px; height: 160px; margin-top: 5px;">
                             <option value="-1">不限</option>
+                            <option value="1017">首期中央国家机关会计领军人才培训班（企业类）第四次集训</option>
+                            <option value="1018">首期中央国家机关会计领军人才培训班（行政事业类）第四次集训</option>
                             <option value="1001">2014级全日制研究生</option>
                             <option value="1002">甘肃领军人才培训第二届专区</option>
                             <option value="1003">甘肃领军人才培训第一届专区</option>
@@ -196,10 +198,10 @@
             </td>
             <td>课时
             </td>
-           <%-- <td>考试成绩
+            <%-- <td>考试成绩
             </td>--%>
             <td>专区代码</td>
-            <td style="background-color:#d1f673;max-width:260px">所属专区</td>
+            <td style="background-color: #d1f673; max-width: 260px">所属专区</td>
         </tr>
         <% 
             int odd = 0;
@@ -226,17 +228,19 @@
                 <%= m.ID%>
             </td>
             <td>
+                <%if (CanViewMember)
+                  { %>
                 <a href="ViewMember?MID=<%= m.MID%>" target="_blank"><%= m.Name%></a>
+                <%}
+                  else
+                  { %>
+                <%= m.Name%>
+                <%} %>
             </td>
-            <%--<td>
-                <%= m.IDSN%>
-            </td>--%>
             <td>
                 <%= m.IDCard%>
             </td>
-            <%-- <td>
-                <% = tystring%>
-            </td>--%>
+
             <td>
                 <%= m.Year%>
             </td>

@@ -4,12 +4,6 @@
     var Year = Convert.ToInt32(Request.QueryString.Get("Year"));
     var memeber = com.hooyes.lms.DAL.Get.Member(MID);
     var report = com.hooyes.lms.DAL.Get.Report(MID, Year);
-    var exam = "-";
-
-    if (report.Score > 0)
-    {
-        exam = report.Score.ToString() + "分";
-    }
     
 %>
 <div id="MemberDiv" style="margin-bottom: 5px">
@@ -22,8 +16,10 @@
             <td>年份
             </td>
             <td>已学课时</td>
-            <td style="text-align: center">考试
+            <td>结业状态</td>
+            <td style="background-color: #0094ff; color: #FFF">提交状态
             </td>
+            <td style="background-color: #0094ff; color: #FFF">提交时间</td>
         </tr>
         <tr>
             <td>
@@ -38,8 +34,35 @@
             <td>
                 <%= Math.Round( report.Minutes,0) %> 分钟
             </td>
-            <td style="text-align: center">
-                <% = exam %>
+            <td>
+                <%if (report.Status == 1)
+                  { %>
+                已结业
+                <%}
+                  else
+                  { %>
+                --
+                <%} %>
+            </td>
+            <td>
+                <%if (report.Flag == 1)
+                  {%>
+                   已提交
+                <%}
+                  else
+                  { %>
+                   --
+                <%} %>
+            </td>
+            <td>
+                <%if (report.Flag == 1)
+                  {%>
+                <%=report.CommitDate %>
+                <%}
+                  else
+                  { %>
+                 --
+                <%} %>
             </td>
         </tr>
     </table>
