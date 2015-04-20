@@ -1,8 +1,8 @@
 ﻿-- =============================================
--- Version:     1.0.0.3
+-- Version:     1.0.0.4
 -- Author:		hooyes
 -- Create date: 2012-03-03
--- Update date: 2013-10-01
+-- Update date: 2015-04-13
 -- Desc:
 -- =============================================
 CREATE PROCEDURE [dbo].[M_Get_Member] 
@@ -18,16 +18,20 @@ AS
             M.[Name] ,
             M.[IDCard] ,
             M.[IDSN] ,
-            [Year] = ISNULL(myp.PID, 0) ,
+            [Year] = ISNULL(P.Year, 0) ,
             M.[Type] ,
             M.[Level] ,
             M.[Phone] ,
             M.[RegDate] ,
             M.[ExpireDate] ,
-            M.[Tag]
+            M.[Tag],
+			P.PID,
+			R.CommitDate,
+			R.Flag
     FROM    Member M 
 	        LEFT JOIN dbo.My_Products myp ON myp.MID = M.MID
-            LEFT OUTER JOIN Report R ON R.MID = M.MID AND myp.PID = R.Year
+			LEFT JOIN Products P ON P.PID = myp.PID
+            LEFT JOIN Report R ON R.MID = M.MID AND myp.PID = R.Year
     WHERE   ( M.Login LIKE @keyword
               OR M.IDCard LIKE @keyword
               OR M.Name LIKE @keyword

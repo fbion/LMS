@@ -2,7 +2,7 @@
 -- =============================================
 -- Author:		hooyes
 -- Create date: 2011-12-22
--- Update date: 2015-02-09
+-- Update date: 2015-04-02
 -- Desc:
 -- @Type 0 行政 1 企业
 -- Cate  0 选修 1 必修  
@@ -26,14 +26,17 @@ AS
                         Cate = c.Cate ,
                         oCate = c.Cate,
 						c.Tag,
-						c.Memo
+						c.Memo,
+						Validate = myc.Validate,
+						Score = 0
               FROM      Courses c
                         INNER JOIN My_Products myp ON c.YEAR = myp.PID
                                                       AND myp.MID = @MID
                         LEFT OUTER JOIN ( SELECT    CID ,
                                                     [Minutes] ,
                                                     [Second] ,
-                                                    [Status]
+                                                    [Status] ,
+													[Validate]
                                           FROM      My_Courses
                                           WHERE     MID = @MID
                                         ) myc ON myc.CID = c.CID

@@ -4,7 +4,7 @@ GO
 -- Version:     1.0.0.5
 -- Author:		hooyes
 -- Create date: 2012-01-02
--- Update date: 2015-02-14
+-- Update date: 2015-04-05
 -- Desc:
 -- =============================================
 CREATE PROCEDURE [dbo].[Task_EvalutePaper] @MID INT = 0, @Year INT = 0
@@ -61,24 +61,6 @@ AS /* 1.判题是否正确 */
         BEGIN
             SET @c = @b / ( @a + @b ) 
             SET @Score = @c * 100
-
-			/* GK000 特别处理 */
-
-            IF @Score < 80 
-                BEGIN
-                    IF EXISTS ( SELECT  1
-                                FROM    dbo.Question
-                                WHERE   QID IN ( SELECT QID
-                                                 FROM   MY_Question
-                                                 WHERE  MID = @MID )
-                                        AND CName = 'GK000' ) 
-                        BEGIN
-                            SELECT  @Score = 80 + RAND() * 11     
-                        END          
-  
-                END          
-			/* GK000 特别处理 End*/
-
 
 
             IF @Score >= 60 
