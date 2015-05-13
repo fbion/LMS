@@ -1,8 +1,8 @@
 ﻿-- =============================================
--- Version:     1.0.0.4
+-- Version:     1.0.0.5
 -- Author:		hooyes
 -- Create date: 2012-02-02
--- Update date: 2015-02-16
+-- Update date: 2015-04-21
 -- Desc:
 -- =============================================
 CREATE PROCEDURE [dbo].[Update_Member]
@@ -39,6 +39,7 @@ AS
                     DECLARE @SID INT
                     EXECUTE [Get_Seed] @ID = 1, @Value = @SID OUTPUT
                     SET @MID = @SID
+					SELECT @Password = LOWER(REPLACE(@Password,' ',''))
                     SET @Password = sys.fn_VarBinToHexStr(HASHBYTES('md5',
                                                               @Password
                                                               + 'lms'
@@ -88,6 +89,7 @@ AS
             IF @Password != ''
                 AND @Password IS NOT NULL 
                 BEGIN
+                    SELECT @Password = LOWER(REPLACE(@Password,' ',''))              
                     SET @Password = sys.fn_VarBinToHexStr(HASHBYTES('md5',
                                                               @Password
                                                               + 'lms'

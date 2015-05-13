@@ -1,8 +1,8 @@
 ﻿-- =============================================
--- Version:     1.0.0.4
+-- Version:     1.0.0.5
 -- Author:		hooyes
 -- Create date: 2012-03-03
--- Update date: 2015-04-19
+-- Update date: 2015-04-29
 -- Desc:
 -- =============================================
 CREATE PROCEDURE [dbo].[M_Get_Member]
@@ -28,12 +28,13 @@ AS
                     M.[RegDate] ,
                     M.[ExpireDate] ,
                     M.[Tag] ,
-                    M.[RegionCode] ,
+                    RegionCode =Rg.Code,
                     P.PID ,
                     RegionName = Rg.Name
             FROM    Member M
-                    INNER JOIN dbo.Region Rg ON Rg.Code = M.RegionCode
+                    
                     LEFT JOIN dbo.My_Products myp ON myp.MID = M.MID
+					LEFT JOIN dbo.Region Rg ON Rg.Code = myp.PID
                     LEFT JOIN dbo.Products P ON P.PID = myp.PID
                     LEFT OUTER JOIN Report R ON R.MID = M.MID
                                                 AND myp.PID = R.Year
@@ -62,12 +63,12 @@ AS
                     M.[RegDate] ,
                     M.[ExpireDate] ,
                     M.[Tag] ,
-                    M.[RegionCode] ,
+                    RegionCode =Rg.Code,
                     P.PID ,
                     RegionName = Rg.Name
             FROM    Member M
-                    INNER JOIN dbo.Region Rg ON Rg.Code = M.RegionCode
                     LEFT JOIN dbo.My_Products myp ON myp.MID = M.MID
+					LEFT JOIN dbo.Region Rg ON Rg.Code = myp.PID
                     LEFT JOIN dbo.Products P ON P.PID = myp.PID
                     LEFT OUTER JOIN Report R ON R.MID = M.MID
                                                 AND myp.PID = R.Year

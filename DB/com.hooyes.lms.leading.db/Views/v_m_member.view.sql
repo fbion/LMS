@@ -1,8 +1,8 @@
 ﻿-- =============================================
--- Version:     1.0.0.4
+-- Version:     1.0.0.5
 -- Author:		hooyes
 -- Create date: 2012-04-21
--- Update date: 2013-12-20
+-- Update date: 2015-04-29
 -- Desc:
 -- =============================================
 CREATE VIEW [dbo].[v_m_member]
@@ -21,14 +21,14 @@ AS
             M.[Level] ,
             M.[Phone] ,
             M.[RegDate] ,
-            M.RegionCode ,
+            RegionCode =Rg.Code,
             R.CommitDate ,
             PayDate = myp.CreateDate ,
             P.PID ,
             RegionName = Rg.Name
     FROM    Member M
-            INNER JOIN Region Rg ON Rg.Code = M.RegionCode
             INNER JOIN My_Products myp ON myp.MID = M.MID
+			INNER JOIN Region Rg ON Rg.Code =  myp.PID
             INNER JOIN Products P ON P.PID = myp.PID
             LEFT OUTER JOIN Report R ON R.MID = M.MID
                                         AND myp.PID = R.Year
