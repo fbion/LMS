@@ -1,8 +1,8 @@
 ﻿-- =============================================
--- Version:     1.0.0.5
+-- Version:     1.0.0.6
 -- Author:		hooyes
 -- Create date: 2012-04-21
--- Update date: 2015-03-30
+-- Update date: 2015-05-04
 -- Desc:
 -- =============================================
 CREATE VIEW [dbo].[v_m_member]
@@ -23,7 +23,8 @@ AS
             M.[RegDate] ,
 			M.RegionCode ,
             R.CommitDate,
-			P.PID
+			P.PID,
+			PayDate = myp.CreateDate
     FROM    Member M
             INNER JOIN dbo.My_Products myp ON myp.MID = M.MID
 			INNER JOIN Products P ON P.PID = myp.PID
