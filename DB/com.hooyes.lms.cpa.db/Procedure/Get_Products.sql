@@ -1,18 +1,19 @@
 ﻿-- =============================================
--- Version:     1.0.0.3
+-- Version:     1.0.0.4
 -- Author:		hooyes
 -- Create date: 2013-09-14
--- Update date: 2015-03-29
+-- Update date: 2015-07-09
 -- Desc:
 -- =============================================
 CREATE PROCEDURE [dbo].[Get_Products] @MID INT = 0, @PID INT = 0
-AS 
+AS
     SELECT  p.ID ,
             p.PID ,
             P.Price ,
             p.Name ,
             p.Sort ,
             p.Memo ,
+            [ExpireDate] = ISNULL(p.ExpireDate, '2100-01-01') ,
             MyID = ISNULL(myP.ID, 0)
     FROM    dbo.Products P
             INNER JOIN ProductsRegion PR ON PR.PID = P.PID
