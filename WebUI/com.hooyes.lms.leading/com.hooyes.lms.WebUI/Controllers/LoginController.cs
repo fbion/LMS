@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Text;
-using System.Net;
-using System.IO;
 using com.hooyes.lms.Model;
 
 namespace com.hooyes.lms.Controllers

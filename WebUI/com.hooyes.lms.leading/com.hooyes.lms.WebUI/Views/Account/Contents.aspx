@@ -50,7 +50,8 @@
                             <%= status %>
                         </td>
                         <td nowrap="nowrap">
-                            <span class="flashlink blue-txt"><a class='media-b mr-10' href="javascript:ViewCourse(<%= Contents[i].CID %>,<%= Contents[i].CCID %>);">窄带</a> </span><span class="flashlink blue-txt"><a class='media-a mr-10' href="javascript:ViewCourse(<%= Contents[i].CID %>,<%= Contents[i].CCID %>);">宽带</a> </span>
+                            <span class="flashlink blue-txt"><a class='media-b mr-10' href="javascript:ViewCourse(<%= Contents[i].CID %>,<%= Contents[i].CCID %>,'<%= Contents[i].MIME %>');">播放</a> </span>
+                            <%--<span class="flashlink blue-txt"><a class='media-a mr-10' href="javascript:ViewCourse(<%= Contents[i].CID %>,<%= Contents[i].CCID %>);">宽带</a> </span>--%>
                         </td>
                     </tr>
                     <%
@@ -65,8 +66,11 @@
         </div>
     </div>
     <script type="text/javascript">
-        function ViewCourse(cid, ccid) {
+        function ViewCourse(cid, ccid, MIME) {
             var url = "<% = com.hooyes.lms.C.APP %>/Account/Player/v/" + cid + "/" + ccid;
+            if (MIME == "video/mp4") {
+                url = "<% = com.hooyes.lms.C.APP %>/Account/PlayerHD/v/" + cid + "/" + ccid;
+            }
             var w = window.open(url, "CourseWindow");
             w.focus();
         }

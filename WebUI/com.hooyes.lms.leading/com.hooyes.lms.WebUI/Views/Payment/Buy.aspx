@@ -5,6 +5,7 @@
     <%
         var My_Products = (List<com.hooyes.lms.Model.Products>)ViewData["My_Products"];
         var Products = (List<com.hooyes.lms.Model.Products>)ViewData["Products"];
+        var Announcement = (com.hooyes.lms.Model.Announcement)ViewData["Announcement"];
     %>
     <div id="main" class="event-cl">
         <div id="left">
@@ -31,17 +32,24 @@
                 <tr>
                     <td><%=p.Name %></td>
                     <%-- <td><%=Math.Round(p.Price, 0)%> 元</td>--%>
-                    <% if (p.MyID > 0)
+                    <% if (p.MyID > 0 && p.ExpireDate > DateTime.Now)
                        { %>
 
                     <td style="width: 20%">
                         <a href="<% = com.hooyes.lms.C.APP %>/Account/LearningX/<%=p.PID %>">进入课表</a>
                     </td>
+                    <%}%>
+
+                    <%if (p.ExpireDate < DateTime.Now)
+                      { %>
+                    <td style="width: 20%">
+                        学习已截止
+                    </td>
                     <%} %>
                 </tr>
                 <%} %>
             </table>
-               <div class="clear" style="margin-bottom:10px">
+            <div class="clear" style="margin-bottom: 10px">
             </div>
             <%} %>
             <!-- 买课 -->
@@ -67,7 +75,7 @@
                         <td><%=Math.Round(p.Price, 0)%> 元</td>
                         <% if (p.MyID == 0)
                            { %>
-                        <td style="width:20%">
+                        <td style="width: 20%">
                             <input type="hidden" id="t_c_<%=p.ID %>" value="<%=Math.Round(p.Price, 2)%>" />
                             <input name="IDS" type="checkbox" id="c_<%=p.ID %>" class="paymentcb" value="<%=p.ID %>" />
 
@@ -93,6 +101,13 @@
                 </div>
             </form>
             <%} %>
+
+            <!-- inner announcement-->
+            <div class="announcement">
+                <%=Announcement.Content %>
+            </div>
+            <!-- inner announcement-->
+
         </div>
         <div class="clear">
         </div>

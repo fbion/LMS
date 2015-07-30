@@ -1,13 +1,8 @@
 ﻿using com.hooyes.lms.Model;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-using System.Web.Script.Serialization;
 
 namespace com.hooyes.lms
 {
@@ -40,7 +35,7 @@ namespace com.hooyes.lms
                 MemCache.Save("Type", member.Type);
                 MemCache.Save("Level", member.Level);
                 MemCache.Save("Phone", member.Phone);
-
+                MemCache.Save("RegionCode", member.RegionCode);
                 //资源访问
                 System.Web.HttpCookie hc = new System.Web.HttpCookie("Resx", MID.ToString());
                 System.Web.HttpContext.Current.Response.SetCookie(hc);

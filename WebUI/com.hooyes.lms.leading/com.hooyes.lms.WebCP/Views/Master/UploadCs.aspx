@@ -4,7 +4,7 @@
     <h2>导入课表 <a href="../Content/Template/T19.xls">下载模板</a></h2>
     <div id="Container">
         <div id="tip" class="style16">
-            注意，必需按照模板格式上传 ,Sheet 的名称为 Final
+            注意，必需按照模板格式上传 ,Sheet 的名称为 Courses
         </div>
         <div id="uploader" class="style17">
             <span></span>

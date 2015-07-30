@@ -62,6 +62,22 @@ namespace com.hooyes.lms.Controllers
             ViewData["Contents"] = LtContents.Find(delegate(Model.Contents c) { return c.CCID == ccid; });
             return View();
         }
+        public ActionResult PlayerHD(int cid, int ccid)
+        {
+            var Courses = DAL.Get.Courses(cid);
+            if (!U.IsActive(Courses.Year))
+            {
+                GoMessage(string.Format("您尚未开通本课程"));
+            }
+            var LtContents = DAL.Get.Contents(cid);
+            string startUrl = string.Empty;
+            ViewData["CID"] = cid;
+            ViewData["CCID"] = ccid;
+            ViewData["Courses"] = Courses;
+            //ViewData["LtContents"] = LtContents;
+            ViewData["Contents"] = LtContents.Find(delegate(Model.Contents c) { return c.CCID == ccid; });
+            return View();
+        }
         public ActionResult Invoice(string act)
         {
             var invoice = DAL.Get.Invoice(Client.MID);

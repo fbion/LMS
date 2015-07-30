@@ -25,6 +25,9 @@
         PrePage = PrePage > 0 ? PrePage : 1;
 
         bool CanViewMember = com.hooyes.lms.Client.CheckTag(17);
+
+        // Regions
+        var Regions = (List<com.hooyes.lms.Model.M.Region>)ViewData["Regions"];
     %>
     <h2>学员列表
     </h2>
@@ -125,26 +128,15 @@
                     <td>专区
                     </td>
                     <td>
-                        <select id="RegionCodes" name="RegionCodes" multiple="multiple" class="selectyears" style="width: 360px; height: 160px; margin-top: 5px;">
+                        <select id="RegionCodes" name="RegionCodes" multiple="multiple" class="selectyears" style="width: 460px; height: 160px; margin-top: 5px;">
+                          <%if (Regions.Count > 1)
+                              { %>
                             <option value="-1">不限</option>
-                            <option value="1017">首期中央国家机关会计领军人才培训班（企业类）第四次集训</option>
-                            <option value="1018">首期中央国家机关会计领军人才培训班（行政事业类）第四次集训</option>
-                            <option value="1001">2014级全日制研究生</option>
-                            <option value="1002">甘肃领军人才培训第二届专区</option>
-                            <option value="1003">甘肃领军人才培训第一届专区</option>
-                            <option value="1004">国家卫生计生委员会卫生计生行业第一届经济管理</option>
-                            <option value="1005">海南领军第3次集训CPA专区</option>
-                            <option value="1006">海南领军第3次集训非CPA专区</option>
-                            <option value="1007">河南第三届会计领军人才第三次培训CPA专区</option>
-                            <option value="1008">河南第三届会计领军人才第三次培训非CPA专区</option>
-                            <option value="1009">河南省第四期领军人才第一次集训</option>
-                            <option value="1010">黑龙江第一届第三次集训</option>
-                            <option value="1011">黑龙江领军行政第二期第二次集训</option>
-                            <option value="1012">黑龙江省第三届会计领军人才行政事业类专区</option>
-                            <option value="1013">黑龙江省第三届会计领军人才企业类专区</option>
-                            <option value="1014">吉林省首期行政事业类会计领军（后备）人才培训班第四次集训</option>
-                            <option value="1015">浸会八期班名单-远程教育中心</option>
-                            <option value="1016">全国中医领军第一届第二次集训</option>
+                            <%} %>
+                            <% foreach (var region in Regions)
+                               { %>
+                            <option value="<%=region.Code %>"><%=region.Code %> - <%=region.Name %></option>
+                            <%} %>
                         </select>
                     </td>
                 </tr>

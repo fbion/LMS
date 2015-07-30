@@ -86,18 +86,18 @@
                                 <a href="<%=com.hooyes.lms.C.APP %>/Account/Contents/<%= c.CID %>" target="_blank"><span class="icon_listen"></span></a>
                             </td>
                             <td>
-                                <%if (c.Score >= 60)
+                                <%if (c.Score >= 100)
                                   { %>
-                                <%=c.Score%> 分
+                                    <%=c.Score%> 分
                                 <%}
-                                  else if (c.Score > 0 && c.Score < 60)
+                                  else if (c.Score > 0 && c.Score < 100)
                                   { %>
-                                <%=c.Score%> 分 |
+                                    <%=c.Score%> 分 |
                                 <% 
                                   }
-                                  if (c.Score < 60)
+                                  if (c.Score < 100)
                                   { %>
-                                <a class="on" href="<%=com.hooyes.lms.C.APP %>/Account/Paper/p/<%=DisplayYear %>/<%= c.CID %>" target="_blank">进入考试</a>
+                                     <a class="on" href="<%=com.hooyes.lms.C.APP %>/Account/Paper/p/<%=DisplayYear %>/<%= c.CID %>" target="_blank">进入考试</a>
                                 <%}%>
                                 
                             </td>
@@ -113,7 +113,7 @@
                             }
                         %>
                         <tr style="">
-                            <td colspan="5">本年度必修总学时长
+                            <td colspan="5">必修总学时长
                             </td>
                             <td>
                                 <% = Total_Minutes.ToString("0.#")%> 分钟
@@ -121,7 +121,7 @@
                             <td>-</td>
                         </tr>
                         
-                        <tr>
+                        <%--<tr>
                             <td colspan="5">本年度结业状态
                             </td>
                             <td>
@@ -136,11 +136,11 @@
                                 <%} %>
                             </td>
                             <td>-</td>
-                        </tr>
-
-                      <%--  <tr style="background-color: #f8f3f3">
-                            <td colspan="7" style="text-align: left">* 结业条件：学满24学时，并通过所学科目考试，学完一门课后才可以参加该门课程的单科考试</td>
                         </tr>--%>
+
+                        <tr style="background-color: #f8f3f3">
+                            <td colspan="7" style="text-align: left">* 1 课时 = 45 分钟</td>
+                        </tr>
                     </table>
 
                 </div>
@@ -213,16 +213,16 @@
                                 <a href="<%=com.hooyes.lms.C.APP %>/Account/Contents/<%= c.CID %>" target="_blank"><span class="icon_listen"></span></a>
                             </td>
                             <td>
-                                <%if (c.Score >= 60)
+                                <%if (c.Score >= 100)
                                   { %>
                                 <%=c.Score%> 分
                                 <%}
-                                  else if (c.Score > 0 && c.Score < 60)
+                                  else if (c.Score > 0 && c.Score < 100)
                                   { %>
                                 <%=c.Score%> 分 |
                                 <% 
                                   }
-                                  if (c.Score < 60)
+                                  if (c.Score < 100)
                                   { %>
                                 <a class="on" href="<%=com.hooyes.lms.C.APP %>/Account/Paper/p/<%=DisplayYear %>/<%= c.CID %>" target="_blank">进入考试</a>
                                 <%}%>
@@ -240,7 +240,7 @@
                             }
                         %>
                         <tr style="">
-                            <td colspan="5">本年度选修总学时长
+                            <td colspan="5">选修总学时长
                             </td>
                             <td>
                                 <% = Total_Minutes.ToString("0.#")%> 分钟
@@ -266,7 +266,7 @@
                         </tr>--%>
 
                         <tr style="background-color: #f8f3f3">
-                            <td colspan="7" style="text-align: left"></td>
+                            <td colspan="7" style="text-align: left">* 1 课时 = 45 分钟</td>
                         </tr>
                     </table>
 
