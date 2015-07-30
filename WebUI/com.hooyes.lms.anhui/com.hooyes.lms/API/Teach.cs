@@ -114,6 +114,7 @@ namespace com.hooyes.lms.API
             }
             catch (Exception ex)
             {
+                r.Code = 301;
                 log.Warn("{0},{1}", ex.Message, ex.StackTrace);
             }
             return r;
@@ -148,6 +149,7 @@ namespace com.hooyes.lms.API
             }
             catch (Exception ex)
             {
+                r.Code = 301;
                 log.Warn("{0},{1}", ex.Message, ex.StackTrace);
             }
             return r;

@@ -1,22 +1,19 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <%
-    string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
-    string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
-
     var cid = Convert.ToInt32(ViewData["CID"]);
     var ccid = Convert.ToInt32(ViewData["CCID"]);
     var Contents = (com.hooyes.lms.Model.Contents)ViewData["Contents"];
     var Courses = (com.hooyes.lms.Model.Courses)ViewData["Courses"];
-
-    string ContentServer = ConfigurationManager.AppSettings.Get("ContentServer");
-    ContentServer = string.IsNullOrEmpty(ContentServer) ? string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Host) : ContentServer;
-    var StartUrl = ContentServer + "/Content/x/" + Courses.CName + "/" + Contents.Url;
+    var StartUrl = com.hooyes.lms.C.APP + "/Content/x/" + Courses.CName + "/" + Contents.Url;
+  
 %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= Courses.Name%>- 课程学习 </title>
+    <title>
+        <%= Courses.Name%>
+        - 课程学习 </title>
     <style type="text/css">
         body {
             margin: 0px;
@@ -61,9 +58,12 @@
                 text-align: center;
             }
     </style>
-
+    <link href="<% = com.hooyes.lms.C.CDN %>/Scripts/video-js/video-js.css" rel="stylesheet" />
+    <script>
+        videojs.options.flash.swf = "<% = com.hooyes.lms.C.CDN %>/Scripts/video-js/video-js.swf";
+   </script>
 </head>
-<body style="height: 600px; width: 100%" onunload="goodbye()" oncontextmenu="return false">
+<body style="height: 600px; width: 100%" onunload="goodbye()">
     <div class="tip" id="tip">
         <div class="msg" id="msg">系统已自动跳转到您上次播放的位置</div>
     </div>
@@ -75,38 +75,40 @@
         var CATE = <% = Courses.Cate %>;
         var CookieKey = "C-<%= cid %>-<%= ccid %>";
     </script>
-    <script src="<% = CDN_Public %>/jquery/1.7.1/jquery.min.js"></script>
-    <script src="<% = CDN_Private %>/Scripts/jquery.extend.js" type="text/javascript"></script>
-    <script src="<% = CDN_Private %>/Scripts/config.js" type="text/javascript"></script>
-    <script src="<% = CDN_Private %>/Scripts/player.js?t=20120220" type="text/javascript"></script>
-    <script src="<% = CDN_Private %>/Scripts/s-player/player/sewise.player.min.js"></script>
-    <script type="text/javascript">
-        SewisePlayer.setup({
-            server: "vod",
-            type: "mp4",
-            videourl: "<% = StartUrl %>",
-            skin: "vodFlowPlayer",
-            topbardisplay: "disable",
-            fallbackurls: {
-                
-            }
-        });
-    </script>
+    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/jquery.extend.js" type="text/javascript"></script>
+    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/config.js" type="text/javascript"></script>
+    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/player.js?t=20120220" type="text/javascript"></script>
+    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/video-js/video.js"></script>
+
+    <video autoplay="autoplay" id="hooyes_video_1" class="video-js vjs-default-skin" controls preload="none" width="100%" height="100%"
+        poster="<% = com.hooyes.lms.C.CDN %>/img/nai-1.jpg"
+        data-setup="{}">
+        <source src="<% = StartUrl %>" type='<%= Contents.MIME %>' />
+        <p class="vjs-no-js">
+           如您正在使用360浏览器，请您切换到 “极速模式” 播放本课程。<br />
+           <img src="<% = com.hooyes.lms.C.CDN %>/img/360tip1.png" />
+        </p>
+    </video>
     <script>
-       
+        $(function(){
+            $("body").css("height", $(window).height()+"px");
+        });
         var myPlayer;
         var PrePasused = false;
-        $(function () {
-            $("body").css("height", $(window).height()+"px");
-            myPlayer = SewisePlayer;
+        videojs("hooyes_video_1").ready(function () {
+            myPlayer = this;
+            //myPlayer.play();
 
             var currentTime = parseInt($.cookie(CookieKey));
+
+            
            
            
             if(currentTime>0){
 
                 setTimeout(function () {
-                    myPlayer.doSeek(currentTime);
+                    myPlayer.currentTime(currentTime);
 
                     $("#tip").show();
 
@@ -119,39 +121,37 @@
             }
            
             API.LMSInitialize();
+           
+           
+            setInterval(function () {
+                var isPaused = myPlayer.paused();
+                if(isPaused && !PrePasused){
+                    //Stop
+                    API.LMSSetValue("cmi.core.suspend_data","suspend");
+                    PrePasused = true;
+                }
 
-            SewisePlayer.onStop(function(name){
-                API.LMSSetValue("cmi.core.suspend_data","suspend");
-                PrePasused = true;
-            });
+                if(!isPaused && PrePasused){
+                    //Continue
+                    API.LMSSetValue("cmi.core.suspend_data","continue");
+                    PrePasused = false;
+                }
 
-            SewisePlayer.onPause(function(name){
-                API.LMSSetValue("cmi.core.suspend_data","suspend");
-                PrePasused = true;
-            });
-
-            SewisePlayer.onStart(function(id){
-                API.LMSSetValue("cmi.core.suspend_data","continue");
-                PrePasused = false;
-            });
+            }, 1000);
 
             setTimeout(function(){
                 API.LMSSetValue("cmi.core.lesson_location","");
             },1100);
 
             setInterval(function () {
-               
-                if(!PrePasused){
+                var isPaused = myPlayer.paused();
+                if(!isPaused){
                     API.LMSSetValue("cmi.core.lesson_location","");
-                    recordMe();
                 }
 
-            }, 61000);
+                recordMe();
 
-            setTimeout(function(){
-                //console.log("API Say Hello");
-                API.LMSSetValue("cmi.core.lesson_location","");
-            },1400);
+            }, 62000);
 
         });
 
@@ -161,7 +161,7 @@
         }
 
         function recordMe(){
-            var whereYouAt = myPlayer.playTime();
+            var whereYouAt = myPlayer.currentTime();
             var lengthOfVideo = myPlayer.duration();
             if(whereYouAt>=lengthOfVideo && lengthOfVideo > 0){
                 whereYouAt =0;
@@ -169,11 +169,12 @@
             $.cookie(CookieKey,whereYouAt,{expires:30});
         }
 
-       
 
         window.onresize = function(){  
             $("body").css("height", $(window).height()+"px");
         }  
+
+        
     </script>
 </body>
 </html>

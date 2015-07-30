@@ -83,9 +83,17 @@
                     </td>
                 </tr>--%>
                 <tr>
+                    <td>缴费时间</td>
+                    <td>
+                        <input type="text" name="PayMinDate" id="PayMinDate" class="Wdate" maxlength="20" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', qsEnabled: false })" />
+                        ~
+                        <input type="text" name="PayMaxDate" id="PayMaxDate" class="Wdate" maxlength="20" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', qsEnabled: false })" />
+                    </td>
+                </tr>
+                <tr>
                     <td>结业时间</td>
                     <td>
-                        <input type="text" name="GrMinDate" id="GrMinDate" class="Wdate" maxlength="20" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', qsEnabled:false })" />
+                        <input type="text" name="GrMinDate" id="GrMinDate" class="Wdate" maxlength="20" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', qsEnabled: false })" />
                         ~
                         <input type="text" name="GrMaxDate" id="GrMaxDate" class="Wdate" maxlength="20" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', qsEnabled: false })" />
                     </td>
@@ -121,12 +129,13 @@
                         </select>
                     </td>
                 </tr>--%>
-                    <tr>
+                <tr>
                     <td>区域
                     </td>
                     <td>
                         <select id="RegionCodes" name="RegionCodes" multiple="multiple" class="selectyears">
-                               <option value="-1">不限</option>                        </select>
+                            <option value="-1">不限</option>
+                        </select>
                     </td>
                 </tr>
             </table>
@@ -181,7 +190,7 @@
             </td>
             <td>考试成绩
             </td>
-           <td>区域代码</td>
+            <td>区域代码</td>
         </tr>
         <% 
             int odd = 0;
@@ -230,7 +239,7 @@
             <td>
                 <%= m.Score %>
             </td>
-           <td><%=m.RegionCode %></td>
+            <td><%=m.RegionCode %></td>
         </tr>
         <%
             }
@@ -344,7 +353,10 @@
 
                 $("#RegMinDate").val(data.RegMinDate.toCustomDate());
                 $("#RegMaxDate").val(data.RegMaxDate.toCustomDate());
-                
+
+                $("#PayMinDate").val(data.PayMinDate.toCustomTime());
+                $("#PayMaxDate").val(data.PayMaxDate.toCustomTime());
+
                 $("#GrMinDate").val(data.GrMinDate.toCustomTime());
                 $("#GrMaxDate").val(data.GrMaxDate.toCustomTime());
 
@@ -357,7 +369,7 @@
         };
 
         function ResetSearchForm() {
-            var data = { "Type": -1, "Years": null, RegionCodes: null, "MaxMinutes": 0, "MinMinutes": 0, "MinScore": 0, "MaxScore": 0, "Status": -1, "IID": -1, "RegMinDate": "\/Date(-62135596800000)\/", "RegMaxDate": "\/Date(-62135596800000)\/", "GrMinDate": "\/Date(-62135596800000)\/", "GrMaxDate": "\/Date(-62135596800000)\/", "QueryFlag": 1 };
+            var data = { "Type": -1, "Years": null, RegionCodes: null, "MaxMinutes": 0, "MinMinutes": 0, "MinScore": 0, "MaxScore": 0, "Status": -1, "IID": -1, "RegMinDate": "\/Date(-62135596800000)\/", "RegMaxDate": "\/Date(-62135596800000)\/", "PayMinDate": "\/Date(-62135596800000)\/", "PayMaxDate": "\/Date(-62135596800000)\/", "GrMinDate": "\/Date(-62135596800000)\/", "GrMaxDate": "\/Date(-62135596800000)\/", "QueryFlag": 1 };
             InitData(data);
         }
 

@@ -17,7 +17,7 @@ namespace com.hooyes.lms.Controllers
         public ActionResult ListMember(Model.M.M1Params m1params)
         {
             m1params.Years = Request.QueryString.Get("Years"); //Years 多条
-            m1params.RegionCodes = Request.QueryString.Get("RegionCodes"); 
+            m1params.RegionCodes = Request.QueryString.Get("RegionCodes");
             ViewData["Filter"] = U.BuildFilter(m1params);
             ViewData["JsonStr"] = U.BuildJSON(m1params);
             return View();
@@ -44,9 +44,9 @@ namespace com.hooyes.lms.Controllers
         {
             return View();
         }
-        public ActionResult ViewCourses(int MID,int Year)
+        public ActionResult ViewCourses(int MID, int Year)
         {
-            var r = DAL.Task.EvaluteCourses(MID, Year); 
+            var r = DAL.Task.EvaluteCourses(MID, Year);
             return View();
         }
         public ActionResult ViewInvoice()
@@ -104,7 +104,7 @@ namespace com.hooyes.lms.Controllers
                 }
             }
 
-            return Json(new { Code = 0,Message ="success" });
+            return Json(new { Code = 0, Message = "success" });
         }
         [HttpPost]
         public ActionResult CreditScore(int MID, int Year, int Score)
@@ -165,7 +165,7 @@ namespace com.hooyes.lms.Controllers
         #region MemberCredit Controller
 
         [RequiredTag(Tag = 4)]
-        public ActionResult ImportMemberCredit(string fileName,decimal SN)
+        public ActionResult ImportMemberCredit(string fileName, decimal SN)
         {
             string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
             var r = DAL.Import.MemberCredit(FilePath, SN);
@@ -221,7 +221,7 @@ namespace com.hooyes.lms.Controllers
             return Json(r);
         }
 
-        #endregion 
+        #endregion
 
         [RequiredTag(Tag = 7)]
         public ActionResult UpdatePassword()
@@ -306,7 +306,7 @@ namespace com.hooyes.lms.Controllers
                 DAL.Update.Certificate(MID);
                 Cert = DAL.Get.Certificate(MID);
             }
-            
+
             ViewData["member"] = member;
             ViewData["Invoices"] = invoices;
             ViewData["Orders"] = Orders;
@@ -352,8 +352,51 @@ namespace com.hooyes.lms.Controllers
             }
             return Json(rl);
         }
-        
+
         public ActionResult ImportCs()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ImportCs2(string sCName)
+        {
+            var rl = new List<R>();
+            try
+            {
+                string FolderPath = ConfigurationManager.AppSettings.Get("ContentRoot");
+                var di = new DirectoryInfo(FolderPath);
+                var dii = di.GetDirectories(sCName);
+                foreach (var d in dii)
+                {
+                    var r = new R();
+                    string filename = Path.Combine(FolderPath, d.Name + "\\imsmanifest.xlsx");
+                    if (System.IO.File.Exists(filename))
+                    {
+                        var course = new Courses();
+                        course.CName = d.Name;
+                        r = Import.Courses(filename, course, true);
+                    }
+                    else
+                    {
+                        r.Code = 101;
+                        r.Message = string.Format("File Not Found:{0}", filename);
+                    }
+                    rl.Add(r);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Warn("{0},{1}", ex.Message, ex.StackTrace);
+                var r = new R();
+                r.Code = 300;
+                r.Message = ex.Message;
+                rl.Add(r);
+            }
+            return Json(rl);
+        }
+
+        public ActionResult ImportCs2()
         {
             return View();
         }
@@ -403,9 +446,51 @@ namespace com.hooyes.lms.Controllers
             return View();
         }
 
-        //public ActionResult GoAnhui()
-        //{
-        //    return View();
-        //}
+        #region 课表导入
+        [RequiredTag(Tag = 20)]
+        public ActionResult UploadCs()
+        {
+            return View();
+        }
+        [RequiredTag(Tag = 20)]
+        public ActionResult UploadCsPreview(string fileName, string SN, string Tag)
+        {
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
+            var ds = DAL.Import.PreviewCs(FilePath);
+            ViewData["data"] = ds;
+            ViewData["fileName"] = fileName;
+            ViewData["SN"] = SN;
+            ViewData["Tag"] = Tag;
+            return View();
+        }
+        [RequiredTag(Tag = 20)]
+        [HttpPost]
+        public ActionResult UploadCsCommit(string fileName, string SN, string Tag)
+        {
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
+            var r = DAL.Import.Cs(FilePath);
+            string message = "";
+            if (r.Code == 0)
+            {
+                message = "导入成功";
+            }
+            else
+            {
+                message = r.Message;
+            }
+            ViewData["Message"] = message;
+            string sUrl = string.Format("UploadCsCommit?message={0}", message);
+            Response.Redirect(sUrl);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult UploadCsCommit(string Message)
+        {
+
+            ViewData["Message"] = Message;
+
+            return View();
+        }
+        #endregion
     }
 }

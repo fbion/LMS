@@ -189,6 +189,17 @@ namespace com.hooyes.lms
                     sb.AppendFormat(" and RegDate <='{0}'", m1params.RegMaxDate);
                 }
 
+                //缴费时间
+                if (m1params.PayMinDate > DateTime.MinValue)
+                {
+                    sb.AppendFormat(" and PayDate >='{0}'", m1params.PayMinDate);
+                }
+                //缴费时间
+                if (m1params.PayMaxDate > DateTime.MinValue)
+                {
+                    sb.AppendFormat(" and PayDate <='{0}'", m1params.PayMaxDate);
+                }
+
                 //结业时间
                 if (m1params.GrMinDate > DateTime.MinValue)
                 {

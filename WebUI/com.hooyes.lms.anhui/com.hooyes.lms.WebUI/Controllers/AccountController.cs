@@ -21,6 +21,7 @@ namespace com.hooyes.lms.Controllers
             var Product = DAL.Get.ProductsEx(Client.MID, id);
 
             // 更新课时
+            /*
             decimal Total_Length = 0;
             var CL_Finish = CLData.FindAll(N => N.Status == 1 && N.Score>=60);
             foreach (var a in CL_Finish)
@@ -32,26 +33,71 @@ namespace com.hooyes.lms.Controllers
                 DAL.Update.Report(Client.MID, id, Total_Length);
                 Report.Compulsory = Total_Length;
             }
+            */
 
-            //结业状态
-            if (Report.Compulsory >= 24 && Report.Status == 0)
+            #region 更新必修选修课的学习记录 Report 表
+
+            var List_Compulsory = CLData.FindAll(n => n.Cate == 1);
+            var List_Elective = CLData.FindAll(n => n.Cate == 0);
+
+            decimal Total_Compulsory_Length = 0; //必修:应完成
+            decimal Total_Compulsory = 0;        //必修:已完成
+            decimal Total_Elective = 0;          //选修:已完成
+
+            foreach (var c in List_Compulsory)
+            {
+                Total_Compulsory_Length = Total_Compulsory_Length + c.Length;
+                if (c.Status == 1 && c.Score >= 60)
+                {
+                    Total_Compulsory = Total_Compulsory + c.Length;
+                }
+            }
+            foreach (var c in List_Elective)
+            {
+                if (c.Status == 1 && c.Score >= 60)
+                {
+                    Total_Elective = Total_Elective + c.Length;
+                }
+            }
+
+            if (Report.Compulsory != Total_Compulsory)
+            {
+                DAL.Update.Report_Compulsory(Client.MID, id, Total_Compulsory);
+                Report = DAL.Get.Report(Client.MID, id);
+            }
+            if (Report.Elective != Total_Elective)
+            {
+                DAL.Update.Report_Elective(Client.MID, id, Total_Elective);
+                Report = DAL.Get.Report(Client.MID, id);
+            }
+
+            #endregion
+
+            // 结业条件判断：必修全部完成 + 累计24学时 = 完成
+            if (Report.Compulsory >= Total_Compulsory_Length && (Report.Compulsory + Report.Elective) >= 24 && Report.Status == 0)
             {
                 DAL.Update.ReportStatus(Client.MID, id, 1);
                 Report.Status = 1;
             }
+
+
             //提交成绩
-            if (Report.Status == 1 && Report.Compulsory>=24 &&  Report.Flag == 0)
+            if (Report.Status == 1 && Report.Flag == 0)
             {
                 log.Info("UploadEduInfo:{0}", Client.MID);
-                var rApi = API.Teach.UploadEduInfo(Product.IDSN, Report.Compulsory, Product.Memo, DateTime.Now.ToString("yyyy-MM-dd"));
+                decimal training_hours = 24; //Report.Compulsory + Report.Elective;
+                var rApi = API.Teach.UploadEduInfo(Product.IDSN, training_hours, Product.Memo, DateTime.Now.ToString("yyyy-MM-dd"));
                 if (rApi.Code == 0)
                 {
                     DAL.Update.ReportFlag(Client.MID, id, 1);
                 }
             }
 
-            
-            ViewData["MyCourses"] = CLData;
+
+            //必修
+            ViewData["MyCourses_1"] = CLData.FindAll(n => n.Cate == 1);
+            //选修 
+            ViewData["MyCourses_0"] = CLData.FindAll(n => n.Cate == 0);
             ViewData["DisplayYear"] = id;
             ViewData["Report"] = Report;
             ViewData["Product"] = Product;
