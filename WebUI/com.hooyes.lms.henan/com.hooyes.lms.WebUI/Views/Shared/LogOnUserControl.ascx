@@ -65,7 +65,7 @@
         <%}%>
     </script>
     <script src="<% = CDN_Public %>/jquery-validate/1.9.0/jquery.validate.min.js" type="text/javascript"></script>
-    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/survey.js" type="text/javascript"></script>
+    <script src="<% = CDN_Private %>/Scripts/survey.js" type="text/javascript"></script>
 </div>
 <h3>学员登陆</h3>
 
@@ -119,7 +119,7 @@
             </tr>--%>
         </table>
     </form>
-    <script src="<% = com.hooyes.lms.C.CDN %>/Scripts/account.js?v=2013030101" type="text/javascript"></script>
+    <script src="<% = CDN_Private %>/Scripts/account.henan.js?v=2013030101" type="text/javascript"></script>
 </div>
 <div id="help_div" class="help-div beta">
     <p id="help_div_msg">如您已缴费还无法正常登陆学习，<br />

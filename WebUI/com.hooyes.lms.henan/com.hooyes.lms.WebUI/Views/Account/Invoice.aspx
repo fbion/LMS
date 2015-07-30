@@ -10,7 +10,7 @@
         bool CurrentYear = false;
         if (com.hooyes.lms.Client.Year == DateTime.Now.Year)
         {
-            invoice_amount = 45;
+            invoice_amount = 40;
             CurrentYear = true;
         }
        

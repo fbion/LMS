@@ -8,14 +8,53 @@ namespace com.hooyes.lms
 {
     public class HttpNotFound : IHttpHandler
     {
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
         public bool IsReusable
         {
             get { return true; }
         }
         public void ProcessRequest(HttpContext context)
         {
+            var gonext = true;
+
+            if (context.Request.UrlReferrer != null)
+            {
+                string rhost = context.Request.UrlReferrer.Host;
+                log.Debug("r:{0}", context.Request.UrlReferrer.PathAndQuery);
+                log.Debug("r:{0}", context.Request.FilePath);
+                log.Debug("rHost:{0}", rhost);
+                var chost = ConfigurationManager.AppSettings.Get("Referrer_Host");
+
+                //if (rhost != chost)
+                if(!chost.Contains(rhost))
+                {
+                    gonext = false;
+                }
+                // For chrome view source
+                if (context.Request.UrlReferrer.PathAndQuery == context.Request.FilePath)
+                {
+                    gonext = false;
+                }
+
+                //// Forbidden download 
+                //if (rhost == context.Request.Url.Host)
+                //{
+                //    gonext = false;
+                //}
+            }
+            else
+            {
+                gonext = false;
+            }
+
             var auth = HttpContext.Current.Request.Cookies.Get("Resx");
             if (auth == null || string.IsNullOrEmpty(auth.Value))
+            {
+                gonext = false;
+            }
+
+
+            if (!gonext)
             {
                 context.Response.Write("Not Found");
             }
@@ -24,6 +63,7 @@ namespace com.hooyes.lms
                 Real(context.Response, context.Request);
             }
         }
+
         private void Real(HttpResponse response, HttpRequest request)
         {
 
