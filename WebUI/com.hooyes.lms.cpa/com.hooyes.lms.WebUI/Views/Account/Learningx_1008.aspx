@@ -27,7 +27,7 @@
             <div class="lesson">
                 <div class="lesson2011">
                     <h3>
-                        <%=Product.Name %> &nbsp;&nbsp;</h3>
+                        <%=Product.Name %> &nbsp;&nbsp;必修</h3>
                     <table>
                         <tr>
                             <th>课程名称
@@ -92,69 +92,29 @@
                             <%} %>
                         </tr>
                         <%
-                            }
+                   }
 
-                            ExamMin = Total_Minutes;
-                            if (ExamMin < Report.Minutes)
-                            {
-                                ExamMin = Report.Minutes;
-                            }
+                   ExamMin = Total_Minutes;
+                   if (ExamMin < Report.Minutes)
+                   {
+                       ExamMin = Report.Minutes;
+                   }
                         %>
-                        <tr style="">
+                        <tr style="display: none">
                             <td colspan="5">必修总学时长
                             </td>
                             <td>
                                 <% = ExamMin.ToString("0.#")%> 分钟
                             </td>
                         </tr>
-                        <tr class="exam-tr">
-                            <td colspan="5">考试成绩  
+                        <tr style="">
+                            <td colspan="5">必修已完成课时数
+                            </td>
+                            <td>
+                                <% = Report.Compulsory %> 课时
+                            </td>
+                        </tr>
 
-                               <span class="exlinksp">
-                                   <%
-                   if (Report.Score < 60)
-                   {
-                       // 考试及格后，不再显示考试按钮
-                       if (ExamMin >= 1125)
-                       { %>
-                                   <a class="on" href="<%=com.hooyes.lms.C.APP %>/Account/Paper/<%=DisplayYear %>" target="_blank">[进入考试]</a>
-                                   <%}
-                                           else
-                                           { %>
-                                   <script type="text/javascript">
-                                       function msg_for_exam() {
-                                           alert("您需要完成至少1125分钟的学习后，才可以进入考试，\n请继续学习。");
-                                       }
-                                   </script>
-                                   <a class="off" onclick="msg_for_exam()">[进入考试]</a>
-                                   <% }
-                                       }
-                                   %>
-                               </span>
-                            </td>
-                            <td>
-                                <%=Report.Score %>
-                                                                                            
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="5">本年度结业状态
-                            </td>
-                            <td>
-                                <% if (Report.Status == 1)
-                                   {
-                                %>
-                                已结业
-                                <%}
-                                   else
-                                   { %>
-                                未结业
-                                <%} %>
-                            </td>
-                        </tr>
-                        <tr style="background-color: #f8f3f3">
-                            <td colspan="6" style="text-align: left">* 学满必修课1125分钟（25课时) 后可打印本年度证书。</td>
-                        </tr>
                     </table>
 
                 </div>
@@ -233,16 +193,23 @@
                             <%} %>
                         </tr>
                         <%
-                            }
+                   }
 
-                            ExamMin = Total_Minutes;
+                   ExamMin = Total_Minutes;
                            
                         %>
-                        <tr style="">
+                        <tr style="display: none">
                             <td colspan="5">选修总学时长
                             </td>
                             <td>
                                 <% = ExamMin.ToString("0.#")%> 分钟
+                            </td>
+                        </tr>
+                        <tr style="">
+                            <td colspan="5">选修已完成课时数
+                            </td>
+                            <td>
+                                <% = Report.Elective %> 课时
                             </td>
                         </tr>
 
@@ -253,6 +220,79 @@
 
             <!-- 选修 -->
             <%} %>
+
+            <!-- 结业与考试信息 B-->
+            <div class="lesson">
+                <div class="lesson2011">
+                    <table>
+                        <tr class="exam-tr">
+                            <td colspan="5">考试成绩  
+                               
+                            </td>
+                            <td style="width: 30%">
+                                <%=Report.Score %>
+                                <span class="exlinksp1">
+                                    <%
+                                        if (Report.Score < 60)
+                                        {
+
+                                            //if (Report.Compulsory >= 14.5m && Report.Elective >= 26.5m)
+                                            if (Report.Elective >= 40m)
+                                            { %>
+                                    <a class="on" href="<%=com.hooyes.lms.C.APP %>/Account/Paper/<%=DisplayYear %>" target="_blank">>>进入考试</a>
+                                    <%}
+                                            else
+                                            { %>
+                                    <script type="text/javascript">
+                                        function msg_for_exam() {
+                                            alert("至少学40课时方可参加考试！");
+                                        }
+                                    </script>
+                                    <a class="off" onclick="msg_for_exam()">>>进入考试</a>
+                                    <% }
+                                        }
+                                    %>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">结业状态
+                            </td>
+                            <td>
+                                <% if (Report.Status == 1)
+                                   {
+                                %>
+                                已结业
+                                <%}
+                                   else
+                                   { %>
+                                未结业
+                                <%} %>
+                            </td>
+                        </tr>
+                        <% if (Report.Status == 1)
+                           {
+                        %>
+                        <tr>
+                            <td colspan="5">结业证书
+                            </td>
+                            <td>
+                                <a href="<% = com.hooyes.lms.C.APP %>/Account/Certificatev2/<%=Product.PID %>" target="_blank">查看证书</a>
+                            </td>
+                        </tr>
+                        <%} %>
+                        <tr style="background-color: #f8f3f3">
+                            <td colspan="6" style="text-align: left">* 选修课任选，选修总共至少40课时学完方可参加考试，通过考试(60分)后可打印本年度证书。
+                                <br />
+                                * 考试通过后，请刷新本页查看最新成绩。
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <!-- 结业与考试信息 E-->
+
         </div>
         <div class="clear">
         </div>
@@ -260,7 +300,6 @@
     </div>
 
     <script>
-
         function show_package(id) {
 
             $(".CID-" + id).show();
@@ -268,7 +307,6 @@
             $("#sp_1_" + id).hide();
             $("#sp_2_" + id).show();
         }
-
         function hide_package(id) {
             $(".CID-" + id).hide();
             $("#sp_1_" + id).parent().parent().removeClass("package-head");
@@ -277,4 +315,5 @@
         }
 
     </script>
+    <!-- 1004 -->
 </asp:Content>

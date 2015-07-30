@@ -16,7 +16,7 @@
     <form id="f1" action="CreditCourses" method="post" onsubmit="return xConfirm()">
         <input type="hidden" name="MID" value="<%=MID %>" />
         <div class="nav-h">
-           <h2> 必修课程</h2>
+            <h2>课程</h2>
         </div>
         <table class="commontb">
             <tr>
@@ -90,8 +90,11 @@
                 </td>
             </tr>
         </table>
-        <div class="nav-h" style="margin-top:10px">
-           <h2> 选修课程</h2>
+        <%if (CL_0.Count > 0)
+          { %>
+        <!-- 选修 Begin -->
+        <div class="nav-h" style="margin-top: 10px">
+            <h2>选修课程 (不记入总学时)</h2>
         </div>
         <table class="commontb">
             <tr>
@@ -110,14 +113,14 @@
                 </th>
             </tr>
             <%
-                Total_Minutes = 0;
-                foreach (var c in CL_0)
-                {
-                    c.Minutes = (c.Minutes > c.Length * 45) ? c.Length * 45 : c.Minutes;
-                    c.Minutes = (c.Status == 1) ? c.Length * 45 : c.Minutes;
-                    var status = (c.Second > 0) ? "学习中" : "未听";
-                    status = (c.Status == 1) ? "已完成" : status;
-                    Total_Minutes = Total_Minutes + c.Minutes;
+                  Total_Minutes = 0;
+                  foreach (var c in CL_0)
+                  {
+                      c.Minutes = (c.Minutes > c.Length * 45) ? c.Length * 45 : c.Minutes;
+                      c.Minutes = (c.Status == 1) ? c.Length * 45 : c.Minutes;
+                      var status = (c.Second > 0) ? "学习中" : "未听";
+                      status = (c.Status == 1) ? "已完成" : status;
+                      Total_Minutes = Total_Minutes + c.Minutes;
             %>
             <tr>
                 <%if (CanCredit)
@@ -165,6 +168,8 @@
                 </td>
             </tr>
         </table>
+        <!-- 选修 End -->
+        <%} %>
     </form>
     <%
         if (com.hooyes.lms.Client.CheckTag(10))

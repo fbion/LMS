@@ -85,7 +85,8 @@
                     </tr>
                     <tr class="tr-btn">
                         <td class="t-btn" colspan="2">
-                            <button class="s-btn" id="signup_btn" type="button">提交注册</button>
+                            <br />培训结束，系统已关闭<br />
+                            <button class="s-btn" id="signup_btn" type="button" disabled="disabled">提交注册</button>
                             <a class="signup-link" href="/">已注册过？直接登录</a>
                         </td>
                     </tr>

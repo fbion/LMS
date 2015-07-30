@@ -20,6 +20,7 @@ namespace com.hooyes.lms.Controllers
             m1params.RegionCodes = Request.QueryString.Get("RegionCodes");
             ViewData["Filter"] = U.BuildFilter(m1params);
             ViewData["JsonStr"] = U.BuildJSON(m1params);
+            ViewData["Regions"] = com.hooyes.lms.DAL.M.Get.Region(AdminClient.AID);
             return View();
         }
         public ActionResult ListInvoice(Model.M.M2Params m2params)
@@ -34,6 +35,7 @@ namespace com.hooyes.lms.Controllers
             //m2params.Years = Request.QueryString.Get("Years"); //Years 多条
             ViewData["Filter"] = U.BuildFilter(Params);
             ViewData["JsonStr"] = U.BuildJSON(Params);
+            ViewData["Regions"] = com.hooyes.lms.DAL.M.Get.Region(AdminClient.AID);
             return View();
         }
         public ActionResult FixCourses()

@@ -115,7 +115,7 @@
                    if (Report.Score < 60)
                    {
                        // 考试及格后，不再显示考试按钮
-                       if (ExamMin >= 1125)
+                       if (ExamMin >= 1080)
                        { %>
                                    <a class="on" href="<%=com.hooyes.lms.C.APP %>/Account/Paper/<%=DisplayYear %>" target="_blank">[进入考试]</a>
                                    <%}
@@ -123,7 +123,7 @@
                                            { %>
                                    <script type="text/javascript">
                                        function msg_for_exam() {
-                                           alert("您需要完成至少1125分钟的学习后，才可以进入考试，\n请继续学习。");
+                                           alert("您需要完成至少24课时(1080分钟)分钟，才可以进入考试，请继续学习。");
                                        }
                                    </script>
                                    <a class="off" onclick="msg_for_exam()">[进入考试]</a>
@@ -153,7 +153,7 @@
                             </td>
                         </tr>
                         <tr style="background-color: #f8f3f3">
-                            <td colspan="6" style="text-align: left">* 学满必修课1125分钟（25课时) 后可打印本年度证书。</td>
+                            <td colspan="6" style="text-align: left">* 学满必修课24课时(1080分钟),并通过考试(60分)后可打印本年度证书。</td>
                         </tr>
                     </table>
 
@@ -277,4 +277,5 @@
         }
 
     </script>
+    <!-- 10371 -->
 </asp:Content>

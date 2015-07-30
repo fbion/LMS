@@ -7,11 +7,26 @@
         string QueryString = Request.QueryString.ToString();
         int PageSize = 30;
         int CurrentPage = Convert.ToInt32(Request.QueryString.Get("Page"));
+        int RegionCode = Convert.ToInt32(Request.QueryString.Get("RegionCode"));
         int TotalRecords = 0;
 
         CurrentPage = CurrentPage < 1 ? 1 : CurrentPage;
-        var ListM2 = com.hooyes.lms.DAL.M.Get.Incomes(PageSize, CurrentPage, Filter, out TotalRecords);
-        var IncomesSum = com.hooyes.lms.DAL.M.Get.Incomes(Filter);
+        var ListM2 = new List<com.hooyes.lms.Model.M.Incomes>();
+        var IncomesSum = new com.hooyes.lms.Model.Results();
+        if (RegionCode > 0)
+        {
+            ListM2 = com.hooyes.lms.DAL.M.Get.Incomes2(PageSize, CurrentPage, Filter, out TotalRecords);
+            IncomesSum = com.hooyes.lms.DAL.M.Get.Incomes2(Filter);
+        }
+        else
+        {
+            ListM2 = com.hooyes.lms.DAL.M.Get.Incomes(PageSize, CurrentPage, Filter, out TotalRecords);
+            IncomesSum = com.hooyes.lms.DAL.M.Get.Incomes(Filter);
+        }
+
+
+
+
         var TotalAmount = IncomesSum.DecimalValue;
         int MaxPage = 0;
         int Remainder = 0;
@@ -24,6 +39,9 @@
         int PrePage = CurrentPage - 1;
         NexPage = NexPage > MaxPage ? MaxPage : NexPage;
         PrePage = PrePage > 0 ? PrePage : 1;
+
+        // Regions
+        var Regions = (List<com.hooyes.lms.Model.M.Region>)ViewData["Regions"];
     %>
     <h2>收入统计 </h2>
     <%
@@ -35,10 +53,9 @@
             <input type="hidden" name="QueryFlag" value="1" />
             <table class="commontb">
                 <tr>
-                    <td colspan="2">
-                        按条件查询
+                    <td colspan="2">按条件查询
                     </td>
-                    <td rowspan="3">
+                    <td rowspan="4">
                         <input id="Button1" type="submit" class="btn1" value="查询" />
                         <br />
                         <a href="javascript:void(0);" onclick="ResetSearchForm()">清空查询条件</a>
@@ -62,12 +79,29 @@
                         <input type="text" name="MaxAmount" id="MaxAmount" value="0" maxlength="5" class="shortinput" />
                     </td>
                 </tr>
+                <tr style="">
+                    <td>专区
+                    </td>
+                    <td>
+                        <select id="RegionCode" name="RegionCode">
+                            <%if (Regions.Count > 1)
+                              { %>
+                            <option value="-1">不限</option>
+                            <%} %>
+                            <% foreach (var region in Regions)
+                               { %>
+                            <option value="<%=region.Code %>"><%=region.Code %> - <%=region.Name %></option>
+                            <%} %>
+                        </select>
+                    </td>
+                </tr>
             </table>
         </form>
     </div>
     <% } %>
     <div id="Pager1" class="Pager">
-        <div class="total">统计：<%= TotalRecords%>天，共 <%= Math.Round( TotalAmount,0)%> 元
+        <div class="total">
+            统计：<%= TotalRecords%>天，共 <%= Math.Round( TotalAmount,0)%> 元
         </div>
         <a href="../Export/Incomes?PageSize=<%= TotalRecords%>&CurrentPage=0&<%=QueryString %>">[导出全部]</a>
         <a href="../Export/Incomes?PageSize=<%=PageSize %>&CurrentPage=<%= CurrentPage%>&<%=QueryString %>">[导出本页]</a>
@@ -88,7 +122,7 @@
     </div>
     <table id="Table2" class="commontb">
         <tr style="font-weight: bold">
-           <td>日期</td>
+            <td>日期</td>
             <td>金额
             </td>
             <td>订单数量
@@ -113,12 +147,12 @@
                
         %>
         <tr class="<%=oddClass %>">
-             <td><%= m.Date %></td>
-             <td><%= Math.Round( m.Amount,0) %></td>
-             <td><%= m.Count %></td>
-             <td><%= Math.Round(m.Avg,2) %></td>
+            <td><%= m.Date %></td>
+            <td><%= Math.Round( m.Amount,0) %></td>
+            <td><%= m.Count %></td>
+            <td><%= Math.Round(m.Avg,2) %></td>
         </tr>
-      
+
         <% }%>
     </table>
     <div id="Pager2" class="Pager">
@@ -213,11 +247,13 @@
                 $("#MinDate").val(data.MinDate.toCustomDate());
                 $("#MaxDate").val(data.MaxDate.toCustomDate());
 
+                $("#RegionCode").val(data.RegionCode);
+
             }
 
         };
         function ResetSearchForm() {
-            var data = { "Years": null, "MinAmount": 0, "MaxAmount": 0, "MinDate": "\/Date(-62135596800000)\/", "MaxDate": "\/Date(-62135596800000)\/", "QueryFlag": 1 };
+            var data = { RegionCode: "-1", "Years": null, "MinAmount": 0, "MaxAmount": 0, "MinDate": "\/Date(-62135596800000)\/", "MaxDate": "\/Date(-62135596800000)\/", "QueryFlag": 1 };
             InitData(data);
         }
         $(function () {

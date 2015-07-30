@@ -6,29 +6,72 @@
    
 %>
 
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=8" />
     <title><%=ConfigurationManager.AppSettings.Get("web_title") %> -- 北京国家会计学院</title>
     <link href="<% = CDN_Private %>/public/css/commen.css" type="text/css" rel="stylesheet" />
-    <link href="<% = CDN_Private %>/public/css/content.css" type="text/css" rel="stylesheet" />
-    <link href="<% = CDN_Private %>/Css/r/icpa.css?t=20150210" rel="stylesheet" type="text/css" />
+    <link href="<% = CDN_Private %>/public/css/content.css?t=20150525" type="text/css" rel="stylesheet" />
+    <link href="<% = CDN_Private %>/Css/r/icpa.css?t=20150505" rel="stylesheet" type="text/css" />
     <link href="<% = CDN_Private %>/favicon.ico" rel="Bookmark" />
     <link href="<% = CDN_Private %>/favicon.ico" rel="Shortcut Icon" />
     <script src="<% = CDN_Public %>/jquery/1.7.1/jquery.min.js"></script>
     <script src="<% = CDN_Private %>/Scripts/config.js"></script>
-    <script src="<% = CDN_Private %>/Scripts/account-2.js"></script>
+    <script src="<% = CDN_Private %>/Scripts/account-2.js?t=20150506"></script>
 
 </head>
 <body>
     <!--header 开始-->
     <div class="header">
-
         <div class="header-inner"></div>
+    </div>
+    <div class="study-flow">
+        <div class="study-flow-inner">
+
+            <ul class="study-flow-ul">
+                <li style="margin-left: 15px">
+                    <div class="icon login"></div>
+                    <div class="text">登录平台</div>
+                </li>
+                <li class="arrow">
+                    <div class="arrow-div"></div>
+                </li>
+                <li>
+                    <div class="icon info"></div>
+                    <div class="text">完善信息</div>
+                </li>
+                <li class="arrow">
+                    <div class="arrow-div"></div>
+                </li>
+                <li>
+                    <div class="icon pay"></div>
+                    <div class="text">充值缴费</div>
+                </li>
+                <li class="arrow">
+                    <div class="arrow-div"></div>
+                </li>
+                <li>
+                    <div class="icon study"></div>
+                    <div class="text">在线学习</div>
+                </li>
+                <li class="arrow">
+                    <div class="arrow-div"></div>
+                </li>
+                <li>
+                    <div class="icon test"></div>
+                    <div class="text">在线考试</div>
+                </li>
+                <li class="arrow">
+                    <div class="arrow-div"></div>
+                </li>
+                <li>
+                    <div class="icon cert"></div>
+                    <div class="text">打印证书</div>
+                </li>
+            </ul>
+        </div>
     </div>
     <!--header 结束-->
     <!--nav 开始-->
@@ -58,43 +101,45 @@
             </div>
             <script type="text/javascript" src="<% = CDN_Private %>/courses/ad/ad_js/taizhou_70.js"></script>
 
-            <div class="loginFlow" style="height: auto; padding: 0px 0px 0px 0px;">
+            <div class="loginFlow" style="height: auto; padding: 0px 0px 0px 0px; margin-top: 163px">
                 <div class="about-flow">
                     <ul class="ul-content">
-                        <li class="t">致非执业专区各位学员：</li>
+                        <li class="t">学习需知：</li>
                         <li class="c">
-                            <p>
-                                本专区学习周期为：2014年11月15日——2015年5月31日。
+                            <p>1、登录</p>
+                            <p style="text-indent: 2em;">
+                                登录名：注册会计师执业会员请用注册会计师证号，非执业会员请用非执业会员证书号，其他人员请用身份证号。
+                                <br />
+                                初始密码：000000
                             </p>
-                            <p>
-                                现已开放2010年--2013年补学课程，请往年度没有学习的学员抓紧时间缴费学习。
-                            </p>
-                            <p>
-                                补学课程截止到2015年5月31日。补学流程同2014年度学习流程一致。
 
-                            </p>
+                            <p>2、选课/学习</p>
+
+                            <p style="text-indent: 2em;">学员根据相关规定选课学习，学满规定学时即可进入下一环节。</p>
+
+                            <p>3、考试</p>
+
+                            <p style="text-indent: 2em;">试卷答题时间为1小时，题型有单选题、多选题和判断题。满分100分，及格分数为60分，考试成绩以最高答题分数记录。</p>
+
+                            <p>4、打印结业证书</p>
+
+                            <p style="text-indent: 2em;">当学员完成规定学时课程，并且考试达标（考试分数大于等于60分）后，即可打印本期网络培训结业证书。</p>
                             <p>
-                                新学员学习流程：个人信息注册 -- 交费70元 -- 完成所有必修课程，获得25学时(选修课程凭兴趣学习，不计学时） --
-                                 打印证书，完成本次在线学习。
+                                <br />
                             </p>
-                            <p>
-                                2013年已注册学员可以直接登录，账号：身份证号(或注册会计师证号)，密码：000000，登录后请完善个人信息。
-                            </p>
+                            <p>温馨提示：学员打印完结业证书后，仍可以登录平台重复学习已选课程内容。 </p>
+
 
                         </li>
 
-                        <li class="t">学习流程</li>
-                        <li class="c">
-                            <p class="cp" style="margin: 0; padding: 0;">
-                                <img src="<% = CDN_Private %>/public/images/learning_7.jpg" alt="" style="width: 605px;" />
-                            </p>
-                        </li>
+
+
 
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="loginSide">
+        <%--<div class="loginSide">
             <div class="loginBlock">
                 <div class="loginFunc">
                     <h3>公告</h3>
@@ -106,24 +151,26 @@
 
                 </div>
             </div>
-        </div>
+        </div>--%>
 
         <div class="loginSide">
-            <div class="loginBlock">
+            <div class="loginBlock" style="height: 277px">
                 <div class="loginFunc">
                     <h3>登录</h3>
                 </div>
                 <div class="loginForm">
-                    <form class="login_form" id="login_form" action="" onsubmit="return Login()" method="post">
+                    <form class="login_form" id="login_form" action="" onsubmit="return Login('/Account/landing')" method="post">
 
                         <div class="loginInt" id="userName" style="margin-bottom: 0;">
-                            <input type="text" value="" placeholder="身份证号" class="loginInput" id="ID" name="ID" tabindex="1" />
+                            用户名：<span class="login-tips">注册会计师证号（身份证号）</span>
+                            <input type="text" value="" placeholder="" class="loginInput" id="ID" name="ID" tabindex="1" />
                         </div>
                         <div class="forgetPwdLine">
                             <%-- <a href="/index.php/Index/forget" target="_blank">忘记密码?</a>--%>
                         </div>
                         <div class="loginInt" id="passWord">
-                            <input type="password" value="" placeholder="密码" class="loginInput" id="PWD" name="PWD" tabindex="2" />
+                            密码：<span class="login-tips">初始密码 000000</span>
+                            <input type="password" value="" placeholder="" class="loginInput" id="PWD" name="PWD" tabindex="2" />
                         </div>
                         <%-- <p style='font-size: 13px;'>
                             请输入<span style='color: red; font-size: 13px; font-weight: bold;'>
@@ -132,7 +179,7 @@
                         </p>--%>
                         <div class="loginBtn">
                             <input type="submit" id="login_btn" value="登 录" />
-                            <span class="lfBtnReg"><a href="/signup" title="">注 册</a></span>
+                            <%--<span class="lfBtnReg"><a href="/signup" title="">注 册</a></span>--%>
                         </div>
                         <%--<div class="loginFormConf" style="margin-bottom: 5px;">
                             <div class="loginFormVer">
@@ -145,9 +192,17 @@
                     </form>
                 </div>
             </div>
-            <div class="loginAbout">
+            <div class="loginAbout" style="margin-top: 164px; background-position: center 10px; height: 435px">
+                <div class="side-notice" style="margin-top: 150px">
+                    <ul>
+                        <li class="head">通知：</li>
+                        <li><a href="http://static.online.nai.edu.cn/HTML/icpa/10371_1.html" target="_blank">关于河南注协非执业会员网上学习的通知</a></li>
+                    </ul>
+                </div>
             </div>
+
         </div>
+
     </div>
     <%--    <!--广告浮动-->
     <div id="floatdiv" onmouseover="floatStop();" onmouseout="floatStart();" style="position: absolute;">

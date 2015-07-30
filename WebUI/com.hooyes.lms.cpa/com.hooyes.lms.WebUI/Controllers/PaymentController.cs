@@ -14,7 +14,7 @@ namespace com.hooyes.lms.Controllers
         public ActionResult Buy()
         {
             var Products = DAL.Get.Products(Client.MID);
-            ViewData["Products"] = Products.FindAll(n => n.MyID <= 0);
+            ViewData["Products"] = Products.FindAll(n => n.MyID <= 0 && n.ExpireDate>DateTime.Now);
             ViewData["My_Products"] = Products.FindAll(n => n.MyID > 0);
             return View();
         }

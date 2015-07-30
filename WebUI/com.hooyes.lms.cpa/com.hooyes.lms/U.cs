@@ -224,6 +224,19 @@ namespace com.hooyes.lms
                     sb.AppendFormat(" and RegDate <='{0}'", m1params.RegMaxDate);
                 }
 
+
+                //缴费时间
+                if (m1params.PayMinDate > DateTime.MinValue)
+                {
+                    sb.AppendFormat(" and PayDate >='{0}'", m1params.PayMinDate);
+                }
+                //缴费时间
+                if (m1params.PayMaxDate > DateTime.MinValue)
+                {
+                    sb.AppendFormat(" and PayDate <='{0}'", m1params.PayMaxDate);
+                }
+
+
                 //结业时间
                 if (m1params.GrMinDate > DateTime.MinValue)
                 {
@@ -313,6 +326,11 @@ namespace com.hooyes.lms
                 var sb = new StringBuilder();
                 sb.Append(" 1 = 1 ");
 
+                if (Params.RegionCode > 0)
+                {
+                    sb.AppendFormat(" and regionCode ='{0}'", Params.RegionCode);
+                }
+
                 //金额下限
                 if (Params.MinAmount != 0)
                 {
@@ -338,13 +356,7 @@ namespace com.hooyes.lms
             }
             return Filter;
         }
-        public static string BuildJSON<T>(T Params)
-        {
-            string JsonStr = string.Empty;
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            JsonStr = jss.Serialize(Params);
-            return JsonStr;
-        }
+       
         /// <summary>
         /// 检查学员是否已开通了某年度的课程
         /// </summary>

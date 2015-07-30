@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -22,22 +23,95 @@ namespace com.hooyes.lms.Controllers
             var Report = DAL.Get.Report(Client.MID, id);
             var Product = DAL.Get.Products(Client.MID, id);
 
-            //评估是否可以标为结业
-            if (Report.Status == 0 && Report.Minutes >= 1125)
+            #region 更新必修选修课的学习记录 Report 表
+
+            var List_Compulsory = CLData.FindAll(n => n.Cate == 1);
+            var List_Elective = CLData.FindAll(n => n.Cate == 0);
+
+            decimal Total_Compulsory = 0;
+            decimal Total_Elective = 0;
+
+            foreach (var c in List_Compulsory)
             {
-                DAL.Task.EvaluteReport(Client.MID, id, Client.RegionCode);
+                if (c.Status == 1)
+                {
+                    Total_Compulsory = Total_Compulsory + c.Length;
+                }
+            }
+            foreach (var c in List_Elective)
+            {
+                if (c.Status == 1)
+                {
+                    Total_Elective = Total_Elective + c.Length;
+                }
+            }
+
+            if (Report.Compulsory != Total_Compulsory)
+            {
+                DAL.Update.Report_Compulsory(Client.MID, id, Total_Compulsory);
+                Report = DAL.Get.Report(Client.MID, id);
+            }
+            if (Report.Elective != Total_Elective)
+            {
+                DAL.Update.Report_Elective(Client.MID, id, Total_Elective);
                 Report = DAL.Get.Report(Client.MID, id);
             }
 
+            #endregion
+
+            string viewname = "";
+            switch (Client.RegionCode)
+            {
+                case 10371:
+                    viewname = "Learningx_10371";
+                    //结业：1080 + 60 
+                    break;
+                case 10871:
+                    viewname = "Learningx_10871";
+                    //结业：1080 + 60 
+                    break;
+                case 1003:
+                    viewname = "Learningx_1003";
+                    //结业：1800 + 60 
+                    break;
+                case 1004:
+                    viewname = "Learningx_1004";
+                    //结业：1800 + 60 
+                    break;
+                case 1005:
+                    viewname = "Learningx_1005";
+                    //结业：1800 + 60 
+                    break;
+                case 1006:
+                    viewname = "Learningx_1006";
+                    //结业：1800 + 60 
+                    break;
+                case 1007:
+                    viewname = "Learningx_1007";
+                    break;
+                case 1008:
+                    viewname = "Learningx_1008";
+                    break;
+                default:
+                    viewname = "";
+                    //结业: 1125 深圳
+                    if (Report.Status == 0 && Report.Minutes >= 1125)
+                    {
+                        DAL.Task.EvaluteReport(Client.MID, id, Client.RegionCode);
+                        Report = DAL.Get.Report(Client.MID, id);
+                    }
+                    break;
+            }
 
             //必修
-            ViewData["MyCourses_1"] = CLData.FindAll(n => n.Cate == 1);
+            ViewData["MyCourses_1"] = List_Compulsory;
             //选修 
-            ViewData["MyCourses_0"] = CLData.FindAll(n => n.Cate == 0);
+            ViewData["MyCourses_0"] = List_Elective;
             ViewData["DisplayYear"] = id;
             ViewData["Report"] = Report;
             ViewData["Product"] = Product;
-            return View();
+
+            return View(viewname);
         }
 
 
@@ -89,7 +163,7 @@ namespace com.hooyes.lms.Controllers
             var r = DAL.Update.Invoice(invoice);
             return Json(r);
         }
-       
+
         public ActionResult Paper(int id)
         {
             if (!U.IsActive(id))
@@ -97,10 +171,10 @@ namespace com.hooyes.lms.Controllers
                 GoMessage(string.Format("您尚未开通本年度的课程", id));
             }
             var Report = DAL.Get.Report(Client.MID, id);
-            if (Report.Minutes < 1080)
-            {
-                GoMessage(string.Format("请您学够本年度课时再来参加考试", id));
-            }
+            //if (Report.Minutes < 1080)
+            //{
+            //    GoMessage(string.Format("请您学够本年度课时再来参加考试", id));
+            //}
             var Product = DAL.Get.Products(Client.MID, id);
             var lt = DAL.Get.MyPaper(Client.MID, id, 0);
             ViewData["DisplayYear"] = id;
@@ -143,6 +217,98 @@ namespace com.hooyes.lms.Controllers
             ViewData["Product"] = Product;
             return View();
         }
+
+        public ActionResult Profiles()
+        {
+            var member = DAL.Get.Member(Client.MID);
+            ViewData["member"] = member;
+
+            string viewname = "";
+            switch (member.RegionCode)
+            {
+                case 10371:
+                    viewname = "Profiles_10371";
+                    break;
+                default:
+                    viewname = "";
+                    break;
+            }
+            return View(viewname);
+        }
+
+        public ActionResult ProfilesEdit()
+        {
+            var member = DAL.Get.Member(Client.MID);
+            ViewData["member"] = member;
+            string viewname = "";
+            switch (member.RegionCode)
+            {
+                case 10371:
+                    viewname = "ProfilesEdit_10371";
+                    break;
+                default:
+                    viewname = "";
+                    break;
+            }
+            return View(viewname);
+        }
+
+        public ActionResult Profiles_w()
+        {
+            var member = DAL.Get.Member(Client.MID);
+            ViewData["member"] = member;
+
+            string viewname = "";
+            switch (member.RegionCode)
+            {
+                case 10371:
+                    viewname = "Profiles_w_10371";
+                    break;
+                default:
+                    viewname = "";
+                    break;
+            }
+
+            return View(viewname);
+        }
+
+        [HttpPost]
+        public ActionResult Profiles(Member member)
+        {
+            var r = new R();
+            try
+            {
+                member.MID = Client.MID;
+                member.RegionCode = Client.RegionCode;
+                if (!Regex.IsMatch(member.Phone, @"^1[3|4|5|7|8][0-9]\d{8}$"))
+                {
+                    r.Code = 102;
+                    r.Message = "Phone Error";
+                    return Json(r);
+                }
+
+                if (r.Code == 0)
+                {
+                    switch (member.RegionCode)
+                    {
+                        case 10371:
+                            r = DAL.Update.Profiles_10371(member);
+                            break;
+                        default:
+                            r = DAL.Update.Profiles(member);
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Code = 401;
+                r.Message = "System Error";
+                log.Error("{0},{1}", ex.Message, ex.StackTrace);
+            }
+            return Json(r);
+        }
+
         [HttpPost]
         public ActionResult UpdateCC(MyConents myContents)
         {
@@ -324,7 +490,7 @@ namespace com.hooyes.lms.Controllers
         public ActionResult Certificatev2(int id)
         {
             decimal Total_length = 0;
-            var report = DAL.Get.Report(Client.MID,id);
+            var report = DAL.Get.Report(Client.MID, id);
             var cert = DAL.Get.Certificate(Client.MID);
             var CLData = DAL.Get.MyCourses(Client.MID, id, Client.Type);
             var certConfig = DAL.Get.CertConfig(id);
@@ -341,7 +507,7 @@ namespace com.hooyes.lms.Controllers
             var MyCourses_1 = CLData.FindAll(n => n.Status == 1);
 
             var ShowList = new List<MyCourses>();
-            for (int i = 0; i <MyCourses_1.Count; i++)
+            for (int i = 0; i < MyCourses_1.Count; i++)
             {
                 Total_length = Total_length + MyCourses_1[i].Length;
                 if (i < 13)
@@ -392,6 +558,18 @@ namespace com.hooyes.lms.Controllers
         {
             ViewData["Message"] = HttpUtility.UrlDecode(m);
             return View();
+        }
+
+        public ActionResult Landing()
+        {
+            var member = DAL.Get.Member(Client.MID);
+            string Url = C.APP + "/Payment/Buy";
+            if (member.Level == -1)
+            {
+                Url = C.APP + "/Account/Profiles_w";
+            }
+            Response.Redirect(Url);
+            return Content("");
         }
 
         [NonAction]

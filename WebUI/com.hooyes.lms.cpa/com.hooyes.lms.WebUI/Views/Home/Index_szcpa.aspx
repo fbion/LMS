@@ -16,7 +16,7 @@
     <title><%=ConfigurationManager.AppSettings.Get("web_title") %> -- 北京国家会计学院</title>
     <link href="<% = CDN_Private %>/public/css/commen.css" type="text/css" rel="stylesheet" />
     <link href="<% = CDN_Private %>/public/css/content.css" type="text/css" rel="stylesheet" />
-    <link href="<% = CDN_Private %>/Css/r/icpa.css?t=20150210" rel="stylesheet" type="text/css" />
+    <link href="<% = CDN_Private %>/Css/r/szcpa.css?t=20150210" rel="stylesheet" type="text/css" />
     <link href="<% = CDN_Private %>/favicon.ico" rel="Bookmark" />
     <link href="<% = CDN_Private %>/favicon.ico" rel="Shortcut Icon" />
     <script src="<% = CDN_Public %>/jquery/1.7.1/jquery.min.js"></script>
@@ -117,13 +117,13 @@
                     <form class="login_form" id="login_form" action="" onsubmit="return Login()" method="post">
 
                         <div class="loginInt" id="userName" style="margin-bottom: 0;">
-                            <input type="text" value="" placeholder="身份证号" class="loginInput" id="ID" name="ID" tabindex="1" />
+                            <input type="text" value="" placeholder="身份证号" class="loginInput" id="ID" name="ID" tabindex="1" disabled="disabled" />
                         </div>
                         <div class="forgetPwdLine">
                             <%-- <a href="/index.php/Index/forget" target="_blank">忘记密码?</a>--%>
                         </div>
                         <div class="loginInt" id="passWord">
-                            <input type="password" value="" placeholder="密码" class="loginInput" id="PWD" name="PWD" tabindex="2" />
+                            <input type="password" value="" placeholder="密码" class="loginInput" id="PWD" name="PWD" tabindex="2" disabled="disabled" />
                         </div>
                         <%-- <p style='font-size: 13px;'>
                             请输入<span style='color: red; font-size: 13px; font-weight: bold;'>
@@ -131,8 +131,9 @@
                             </span>和<span style='color: red; font-size: 13px; font-weight: bold;'> 姓名</span>登陆，选择好专区和年度再使用学习卡激活专区。
                         </p>--%>
                         <div class="loginBtn">
-                            <input type="submit" id="login_btn" value="登 录" />
-                            <span class="lfBtnReg"><a href="/signup" title="">注 册</a></span>
+                            培训结束，系统已关闭<br /><br />
+                            <input type="submit" id="login_btn" value="登 录" disabled="disabled" />
+                            <%--<span class="lfBtnReg"><a href="/signup" title="">注 册</a></span>--%>
                         </div>
                         <%--<div class="loginFormConf" style="margin-bottom: 5px;">
                             <div class="loginFormVer">

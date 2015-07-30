@@ -31,11 +31,17 @@
                 <tr>
                     <td><%=p.Name %></td>
                     <td><a href="<% = com.hooyes.lms.C.APP %>/Account/Certificatev2/<%=p.PID %>" target="_blank">查看证书</a></td>
-                    <% if (p.MyID > 0)
+                    <% if (p.MyID > 0 && p.ExpireDate> DateTime.Now)
                        { %>
 
                     <td style="width: 20%">
                         <a href="<% = com.hooyes.lms.C.APP %>/Account/LearningX/<%=p.PID %>">进入课表</a>
+                    </td>
+                    <%} %>
+
+                    <%if(p.ExpireDate< DateTime.Now){ %>
+                     <td style="width: 20%">
+                        学习已截止
                     </td>
                     <%} %>
                 </tr>

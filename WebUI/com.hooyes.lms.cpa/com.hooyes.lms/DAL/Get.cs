@@ -32,6 +32,8 @@ namespace com.hooyes.lms.DAL
                     m.Year = Convert.ToInt32(dr["Year"]);
                     m.IDCard = Convert.ToString(dr["IDCard"]);
                     m.IDSN = Convert.ToString(dr["IDSN"]);
+                    if (dr["IDCert"] != DBNull.Value)
+                        m.IDCert = Convert.ToString(dr["IDCert"]);
                     m.Level = Convert.ToInt32(dr["Level"]);
                     m.Type = Convert.ToInt32(dr["Type"]);
                     m.Phone = Convert.ToString(dr["Phone"]);
@@ -41,6 +43,32 @@ namespace com.hooyes.lms.DAL
                         m.RegDate = Convert.ToDateTime(dr["RegDate"]);
                     if (dr["Photo"] != DBNull.Value)
                         m.Photo = Convert.ToString(dr["Photo"]);
+                    if (dr["Company"] != DBNull.Value)
+                        m.Company = Convert.ToString(dr["Company"]);
+                    if (dr["Job"] != DBNull.Value)
+                        m.Job = Convert.ToString(dr["Job"]);
+                    if (dr["Address"] != DBNull.Value)
+                        m.Address = Convert.ToString(dr["Address"]);
+                    if (dr["Zip"] != DBNull.Value)
+                        m.Zip = Convert.ToString(dr["Zip"]);
+                    if (dr["Phone"] != DBNull.Value)
+                        m.Phone = Convert.ToString(dr["Phone"]);
+                    if (dr["Email"] != DBNull.Value)
+                        m.Email = Convert.ToString(dr["Email"]);
+                    if (dr["Gender"] != DBNull.Value)
+                        m.Gender = Convert.ToString(dr["Gender"]);
+                    if (dr["City"] != DBNull.Value)
+                        m.City = Convert.ToString(dr["City"]);
+                    if (dr["Birthday"] != DBNull.Value)
+                        m.Birthday = Convert.ToDateTime(dr["Birthday"]);
+                    if (dr["Race"] != DBNull.Value)
+                        m.Race = Convert.ToString(dr["Race"]);
+                    if (dr["Education"] != DBNull.Value)
+                        m.Education = Convert.ToString(dr["Education"]);
+                    if (dr["Degree"] != DBNull.Value)
+                        m.Degree = Convert.ToString(dr["Degree"]);
+                    if (dr["Major"] != DBNull.Value)
+                        m.Major = Convert.ToString(dr["Major"]);
                 }
                 else
                 {
@@ -57,7 +85,7 @@ namespace com.hooyes.lms.DAL
             }
             return m;
         }
-        new public static List<MyCourses> MyCourses(int MID,int Year,int Type)
+        new public static List<MyCourses> MyCourses(int MID, int Year, int Type)
         {
             var l = new List<MyCourses>();
             try
@@ -192,7 +220,7 @@ namespace com.hooyes.lms.DAL
                 {
                     m.ID = Convert.ToInt32(dr["ID"]);
                     m.MID = Convert.ToInt32(dr["MID"]);
-                 
+
                     if (DBNull.Value != dr["CreateDate"])
                         m.CreateDate = Convert.ToDateTime(dr["CreateDate"]);
                     if (DBNull.Value != dr["BeginDate"])
@@ -210,6 +238,40 @@ namespace com.hooyes.lms.DAL
                 log.Fatal(ex.StackTrace);
             }
             return m;
+        }
+        new public static List<Products> Products(int MID)
+        {
+            var l = new List<Products>();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@MID",MID)
+                    
+                };
+                var dr = SqlHelper.ExecuteReader(SqlHelper.Local, CommandType.StoredProcedure, "Get_Products", param);
+                while (dr.Read())
+                {
+                    var m = new Products();
+                    m.ID = Convert.ToInt32(dr["ID"]);
+                    m.PID = Convert.ToInt32(dr["PID"]);
+                    m.Price = Convert.ToDecimal(dr["Price"]);
+                    m.Name = Convert.ToString(dr["Name"]);
+                    m.Memo = Convert.ToString(dr["Memo"]);
+                    if (dr["ExpireDate"] != DBNull.Value)
+                        m.ExpireDate = Convert.ToDateTime(dr["ExpireDate"]);
+                    m.MyID = Convert.ToInt32(dr["MyID"]);
+                    l.Add(m);
+                }
+                dr.Close();
+            }
+            catch (Exception ex)
+            {
+
+                log.Fatal(ex.Message);
+                log.FatalException(ex.Message, ex);
+            }
+            return l;
         }
 
     }

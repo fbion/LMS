@@ -16,7 +16,7 @@
     <title><%=ConfigurationManager.AppSettings.Get("web_title") %> -- 北京国家会计学院</title>
     <link href="<% = CDN_Private %>/public/css/commen.css" type="text/css" rel="stylesheet" />
     <link href="<% = CDN_Private %>/public/css/content.css" type="text/css" rel="stylesheet" />
-    <link href="<% = CDN_Private %>/Css/r/icpa.css?t=20150210" rel="stylesheet" type="text/css" />
+    <link href="<% = CDN_Private %>/Css/r/szcpa.css?t=20150210" rel="stylesheet" type="text/css" />
     <link href="<% = CDN_Private %>/favicon.ico" rel="Bookmark" />
     <link href="<% = CDN_Private %>/favicon.ico" rel="Shortcut Icon" />
     <script src="<% = CDN_Public %>/jquery/1.7.1/jquery.min.js"></script>
