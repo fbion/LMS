@@ -1,8 +1,8 @@
 ﻿-- =============================================
--- Version:     1.0.0.4
+-- Version:     1.0.0.5
 -- Author:		hooyes
 -- Create date: 2012-02-15
--- Update date: 2013-10-12
+-- Update date: 2015-02-15
 -- Desc:
 -- =============================================
 CREATE PROCEDURE [dbo].[Task_EvaluteCourses]
@@ -11,7 +11,7 @@ CREATE PROCEDURE [dbo].[Task_EvaluteCourses]
 AS 
     DECLARE @Minutes DECIMAL
 
-    /* jx 没有必选修 */
+    /* SZCPA 只记录必修课时 */
 
 	/*  @Year 总的学时数 */
     SELECT  @Minutes = ISNULL(SUM(CASE WHEN myc.Status = 1 THEN c.Length * 45
@@ -21,6 +21,7 @@ AS
             INNER JOIN Courses c ON c.CID = myc.CID
     WHERE   myc.MID = @MID
             AND c.[Year] = @Year
+			AND c.Cate = 1
 
     IF EXISTS ( SELECT  1
                 FROM    Report

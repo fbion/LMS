@@ -1,13 +1,13 @@
 ﻿-- =============================================
--- Version:     1.0.0.3
+-- Version:     1.0.0.4
 -- Author:		hooyes
 -- Create date: 2013-09-14
--- Update date: 2013-12-11
+-- Update date: 2015-07-09
 -- Desc:
 -- =============================================
 CREATE PROCEDURE [dbo].[Update_CreateOrder]
     @MID INT ,
-    @Tags VARCHAR(100) ,     --- Products ID 
+    @Tags VARCHAR(1000) ,     --- Products ID 
     @Memo VARCHAR(200) = NULL ,
     @OrderID VARCHAR(20) = '' OUTPUT ,
     @Code INT = 0 OUTPUT ,
@@ -32,12 +32,23 @@ AS
             EXECUTE [Get_Seed] @ID = 4, @Value = @ID OUTPUT
             /* @OrderID 产生逻辑   长度限制为16位*/
 
-            SET @OrderID = CONVERT(VARCHAR(8), GETDATE(),112)  + CONVERT(VARCHAR(8), 50000000 + @ID)
+            SET @OrderID = CONVERT(VARCHAR(8), GETDATE(),112)  + CONVERT(VARCHAR(8), 20000000 + @ID)
             
             SELECT  @Amount = ISNULL(SUM(Price), 0)
             FROM    Products
             WHERE   ID IN ( SELECT  value
                             FROM    dbo.split(@Tags, ',') )
+
+			IF @Amount>=1000 AND @Amount<5000
+			BEGIN
+			   SET @Amount = @Amount * 0.9
+			END 
+
+			IF @Amount>=5000 
+			BEGIN
+			   SET @Amount = @Amount * 0.85
+			END 
+
 
             EXECUTE [Get_Balance] @MID = @MID, @Amount = @B_Amount OUTPUT,
                 @Cash = @B_Cash OUTPUT, @Rebate = @B_Rebate OUTPUT

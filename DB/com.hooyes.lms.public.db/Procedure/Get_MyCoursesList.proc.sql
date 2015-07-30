@@ -1,15 +1,15 @@
-﻿-- DROP PROC [Get_MyCoursesList]
-GO
+﻿GO
 -- =============================================
--- Version: 1.0.0.2
 -- Author:		hooyes
 -- Create date: 2011-12-22
--- Update date: 2013-12-11
+-- Update date: 2015-04-02
 -- Desc:
+-- @Type 0 行政 1 企业
+-- Cate  0 选修 1 必修  
 -- =============================================
 CREATE PROCEDURE [dbo].[Get_MyCoursesList]
     @MID INT ,
-    @Year INT = 2012 ,
+    @Year INT = 2014 ,
     @Type INT = 0
 AS 
     SELECT  *
@@ -25,17 +25,18 @@ AS
                         c.Length ,
                         Cate = c.Cate ,
                         oCate = c.Cate,
-						myc.Validate,
-						myc.Score
+						c.Tag,
+						c.Memo,
+						Validate = myc.Validate,
+						Score = 0
               FROM      Courses c
                         INNER JOIN My_Products myp ON c.YEAR = myp.PID
                                                       AND myp.MID = @MID
                         LEFT OUTER JOIN ( SELECT    CID ,
                                                     [Minutes] ,
                                                     [Second] ,
-                                                    [Status],
-													[Validate],
-													[Score]
+                                                    [Status] ,
+													[Validate]
                                           FROM      My_Courses
                                           WHERE     MID = @MID
                                         ) myc ON myc.CID = c.CID

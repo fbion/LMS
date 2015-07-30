@@ -1,8 +1,8 @@
 ﻿-- =============================================
--- Version:     1.0.0.2
+-- Version:     1.0.0.4
 -- Author:		hooyes
 -- Create date: 2012-02-02
--- Update date: 2013-11-26
+-- Update date: 2015-02-16
 -- Desc:
 -- =============================================
 CREATE PROCEDURE [dbo].[Update_Member]
@@ -17,7 +17,12 @@ CREATE PROCEDURE [dbo].[Update_Member]
     @Level INT = 0 ,
     @Phone VARCHAR(20) = '' ,
     @Flag INT = 0 ,
-    @RegionCode INT = 0
+    @RegionCode INT = 0,
+	@IDCert VARCHAR(30) = '',
+	@Company VARCHAR(50) = '',
+	@Email VARCHAR(50) = '',
+	@City VARCHAR(50) = '',
+	@Address VARCHAR(250) = ''
 AS 
     IF @MID <= 0 
         BEGIN
@@ -50,7 +55,12 @@ AS
                               [Level] ,
                               [Phone] ,
                               [Flag] ,
-                              [RegionCode]
+                              [RegionCode],
+							  [IDCert],
+							  [Company],
+							  [Email],
+							  [City],
+							  [Address]
                             )
                     VALUES  ( @MID ,
                               @Login ,
@@ -63,7 +73,12 @@ AS
                               @Level ,
 							  @Phone ,
                               @Flag ,
-                              @RegionCode
+                              @RegionCode,
+							  @IDCert,
+							  @Company,
+							  @Email,
+							  @City,
+							  @Address
                             )
                 END
         END

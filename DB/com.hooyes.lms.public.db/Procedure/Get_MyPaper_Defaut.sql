@@ -1,14 +1,14 @@
 ﻿-- =============================================
--- Version:     1.0.1.0
+-- Version:     1.0.0.9
 -- Author:		hooyes
 -- Create date: 2012-01-02
--- Update date: 2015-02-14
--- Desc: 从所学的课程中抽题
+-- Update date: 2014-02-14
+-- Desc: 
 -- =============================================
-CREATE PROCEDURE [dbo].[Get_MyPaper]
+CREATE PROCEDURE [dbo].[Get_MyPaper_Defaut]
     @MID INT = 0 ,
-    @Year INT = 0 ,
-    @Type INT = 0
+    @Year INT = 0,
+	@Type INT = 0
 AS 
     DECLARE @Question TABLE
         (
@@ -32,8 +32,8 @@ AS
 
     WHILE ( @Cate < 4 ) 
         BEGIN
-            SET @Tags = '0' 
-            SET @Count = 0
+            SET @Tags ='0' 
+			SET @Count = 0
 			
             SELECT  @Tags = Tags ,
                     @Count = [Count]
@@ -65,37 +65,18 @@ AS
                             [Cate]
                     FROM    Question
                     WHERE   [Cate] = @Cate
-                            AND CName IN (
-                            SELECT  b.CName
-                            FROM    dbo.My_Courses a
-                                    INNER JOIN dbo.Courses b ON a.CID = b.CID
-                            WHERE   a.MID = @MID
-                                    AND b.Year = @Year 
-									AND a.[Status] = 1
-									)
-                    ORDER BY NEWID()
+                            AND [CName] IN ( SELECT [value]
+                                         FROM   [split](@Tags, ',') )
+				    ORDER BY NEWID()
             SET @Cate = @Cate + 1
         END
 
 
-    SELECT  @Count = COUNT(1)
-    FROM    @Question
 
-	/* 取不到题，取默认题库*/
-    IF @Count > 0 
-        BEGIN
-            SELECT  *
-            FROM    @Question
-            ORDER BY Cate ASC
-        END 
-    ELSE 
-        BEGIN
-            EXECUTE [Get_MyPaper_Defaut] 
-                @MID = @MID ,
-                @Year = @Year ,
-                @Type = @Type
-        END   
-    
+	
+    SELECT  *
+    FROM    @Question
+    ORDER BY Cate ASC
 
  
     RETURN 0

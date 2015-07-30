@@ -2,7 +2,7 @@
 -- Version:     1.0.0.1
 -- Author:		hooyes
 -- Create date: 2013-09-16
--- Update date: 2013-09-17
+-- Update date: 2015-07-13
 -- Desc:
 -- =============================================
 CREATE PROCEDURE [dbo].[Update_BalanceTopupByCards]
@@ -10,23 +10,55 @@ CREATE PROCEDURE [dbo].[Update_BalanceTopupByCards]
     @SN VARCHAR(50) ,
     @Code INT = 0 OUTPUT ,
     @Message NVARCHAR(4000) = '' OUTPUT
-AS 
+AS
     DECLARE @Amount MONEY = 0
     SELECT  @Amount = Amount
     FROM    Cards
     WHERE   SN = @SN
             AND [Status] = 1
-    IF @Amount > 0 
+    IF @Amount > 0
         BEGIN
             BEGIN TRY
                 BEGIN TRANSACTION
-                EXECUTE [Update_BalanceTopup] @MID, 0, @Amount
+                EXECUTE [Update_BalanceTopup]
+                    @MID ,
+                    0 ,
+                    @Amount
                 UPDATE  Cards
-                SET     [Status] = 10,
-				        [UpdateDate] = GETDATE()
+                SET     [Status] = 10 ,
+                        [UpdateDate] = GETDATE()
                 WHERE   SN = @SN
-                EXECUTE [Update_AddTransactions] @MID = @MID,
-                    @Amount = @Amount, @Cate = 1, @Source = @SN, @Memo = NULL
+
+                INSERT  INTO dbo.My_Cards
+                        ( MID ,
+                          NO ,
+                          SN ,
+                          Amount ,
+                          Surplus ,
+                          Status ,
+                          CreateDate ,
+                          UpdateDate ,
+                          ExpDate ,
+                          Tag
+                        )
+                VALUES  ( @MID ,
+                          '' ,
+                          @SN ,
+                          @Amount ,
+                          @Amount ,
+                          1 ,
+                          GETDATE() ,
+                          GETDATE() ,
+                          DATEADD(YEAR, 1, GETDATE()) ,
+                          ''  
+                        )
+
+                EXECUTE [Update_AddTransactions]
+                    @MID = @MID ,
+                    @Amount = @Amount ,
+                    @Cate = 1 ,
+                    @Source = @SN ,
+                    @Memo = NULL
                 SET @Code = 0
                 SET @Message = 'success'
                 COMMIT              
@@ -37,7 +69,7 @@ AS
                 SET @Message = 'Transaction Error:' + ERROR_MESSAGE()                          
             END CATCH          
         END  
-    ELSE 
+    ELSE
         BEGIN
             SET @Code = -1
             SET @Message = 'SN Error'
