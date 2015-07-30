@@ -62,7 +62,7 @@
                     <img src="<% = CDN_Private %>/public/image/xxxz.jpg">
                     <div style="width: 620px; height: auto; padding: 10px;">
                         <div id="noticeContent" style="font-size: 13px; line-height: 25px">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;北京国家会计学院远程教育网“广东云浮市会计人员继续教育”网络学习开始，现开设<span style="color: red;">2013</span>和<span style="color: red;">2014</span>两个年度的“<span style="color: red;">企业类、小企业类、行政事业类</span>”三类课程的学习。收费标准：<span style="color: red;">100元/人。</span></p>
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;北京国家会计学院远程教育网“广东云浮市会计人员继续教育”网络学习开始，现开设<span style="color: red;">2013、2014、2015</span>年度的“<span style="color: red;">企业类、小企业类、行政事业类</span>”三类课程的学习。收费标准：<span style="color: red;">100元/人。</span></p>
                             <p>
                                 <span style="color: red; font-weight: bold">1.系统说明：</span><br>
                                 &nbsp;&nbsp;本系统适合广东省云浮市所有参加继续教育的会计人员。<br>

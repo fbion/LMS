@@ -374,5 +374,52 @@ namespace com.hooyes.lms.Controllers
         {
             return View();
         }
+
+        #region 课表导入
+        [RequiredTag(Tag = 20)]
+        public ActionResult UploadCs()
+        {
+            return View();
+        }
+        [RequiredTag(Tag = 20)]
+        public ActionResult UploadCsPreview(string fileName, string SN, string Tag)
+        {
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
+            var ds = DAL.Import.PreviewCs(FilePath);
+            ViewData["data"] = ds;
+            ViewData["fileName"] = fileName;
+            ViewData["SN"] = SN;
+            ViewData["Tag"] = Tag;
+            return View();
+        }
+        [RequiredTag(Tag = 20)]
+        [HttpPost]
+        public ActionResult UploadCsCommit(string fileName, string SN, string Tag)
+        {
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + "App_Data/" + fileName;
+            var r = DAL.Import.Cs(FilePath);
+            string message = "";
+            if (r.Code == 0)
+            {
+                message = "导入成功";
+            }
+            else
+            {
+                message = r.Message;
+            }
+            ViewData["Message"] = message;
+            string sUrl = string.Format("UploadCsCommit?message={0}", message);
+            Response.Redirect(sUrl);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult UploadCsCommit(string Message)
+        {
+
+            ViewData["Message"] = Message;
+
+            return View();
+        }
+        #endregion
     }
 }
