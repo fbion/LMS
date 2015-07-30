@@ -62,7 +62,7 @@ namespace com.hooyes.lms.Controllers
             System.Web.HttpCookie hc = new System.Web.HttpCookie("Resx", string.Empty);
             hc.Expires = DateTime.Now.AddDays(-20);
             System.Web.HttpContext.Current.Response.SetCookie(hc);
-            Response.Redirect(C.APP);
+            Response.Redirect(C.APP+"/");
             //return Content(C.APP);
         }
         [HttpGet]

@@ -15,7 +15,7 @@ namespace com.hooyes.lms
     {
 
         //Database connection strings
-        public static readonly string Local = ConfigurationManager.AppSettings["ConnectionString"];
+        public static readonly string Local = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         //public static readonly string ConnectionStringInventoryDistributedTransaction =  ConfigurationManager.AppSettings["SQLConnString2"];
         //public static readonly string ConnectionStringOrderDistributedTransaction =  ConfigurationManager.AppSettings["SQLConnString3"];
         //public static readonly string ConnectionStringProfile =  ConfigurationManager.AppSettings["SQLProfileConnString"];

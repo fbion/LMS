@@ -25,6 +25,7 @@ namespace com.hooyes.lms.Model
         /// </summary>
         public decimal ActMinutes { get; set; }
         public decimal Length { get; set; }
+        public string Tag { get; set; }
         public string Memo { get; set; }
     }
     public class MyCourses : Courses

@@ -89,6 +89,52 @@
                         %>
                     </table>
                 </div>
+
+
+                <!-- 2015-->
+                <div class="lesson2015">
+                    <h3>2015继续教育课表</h3>
+                    <table>
+                        <tr>
+
+                            <th>课程名称
+                            </th>
+                            <th>主讲老师
+                            </th>
+                            <th>课时
+                            </th>
+                        </tr>
+                        <!-- All -->
+                        <%
+                                
+                            CL = com.hooyes.lms.DAL.Get.CoursesList(2015, -1);
+                            i = 0;
+                            foreach (var c in CL)
+                            {
+                                i++;
+                        %>
+                        <tr>
+
+                            <td class="t_a_l">
+                                <% = c.Name %>
+                            </td>
+                            <td>
+                                <%= c.Teacher %>
+                            </td>
+                            <td>
+                                <%= c.Length %>
+                            </td>
+                        </tr>
+                        <%
+                            } 
+                        %>
+                    </table>
+                </div>
+
+                <!-- 2015-->
+
+
+
                 <div class="lesson2014">
                     <h3>2014继续教育课表</h3>
                     <table>

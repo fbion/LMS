@@ -184,13 +184,13 @@ namespace com.hooyes.lms.DAL
                 }
                 dr.Close();
                 dr.Dispose();
-                
+
             }
             catch (Exception ex)
             {
                 m.Code = 300;
                 m.Message = ex.Message;
-                log.Error("{0},{1}",ex.Message,ex.StackTrace);
+                log.Error("{0},{1}", ex.Message, ex.StackTrace);
             }
             return m;
         }
@@ -212,7 +212,7 @@ namespace com.hooyes.lms.DAL
                         {
                             new SqlParameter("@R",0),
                             new SqlParameter("@Code",0),
-                            new SqlParameter("@Message",string.Empty),
+                            new SqlParameter("@Message",SqlDbType.VarChar,200),
                             new SqlParameter("@SN",SN),
                             new SqlParameter("@Name",dr["名字"].ToString().Trim()),
                             new SqlParameter("@IDCard",dr["身份证号"].ToString().Trim()),
@@ -384,6 +384,67 @@ namespace com.hooyes.lms.DAL
                 log.Error("{0},{1}", ex.Message, ex.StackTrace);
             }
             return m;
+        }
+
+        public static DataSet PreviewCs(string excelPath)
+        {
+            var ds = new DataSet();
+            try
+            {
+
+                string SQL = @"SELECT
+                               [CName]
+                              ,[Name]
+                              ,[Type]
+                              ,[Year]
+                              ,[Cate]
+                              ,[Sort]
+                              ,[Teacher]
+                              ,[Length]
+                              ,[ActMinutes]
+                              ,[Tag]
+                              ,[Memo]
+                          FROM [Courses$]";
+                //log.Info(excelPath);
+                ds = excel.ExcuteDataset(excelPath, SQL);
+
+            }
+            catch (Exception ex)
+            {
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
+            }
+            return ds;
+        }
+
+        public static R Cs(string excelPath)
+        {
+            var r = new R();
+
+            var ds = PreviewCs(excelPath);
+
+            var dt = ds.Tables[0];
+
+            //int CurrentCID = BaseGet.Seed(2);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                var info = new Courses();
+                info.CID = DAL.M.Get.Seed(2);
+                info.CName = Convert.ToString(dr["CName"]);
+                info.Name = Convert.ToString(dr["Name"]);
+                info.Type = Convert.ToInt32(dr["Type"]);
+                info.Year = Convert.ToInt32(dr["Year"]);
+                info.Cate = Convert.ToInt32(dr["Cate"]);
+                info.Sort = Convert.ToInt32(dr["Sort"]);
+                info.Teacher = Convert.ToString(dr["Teacher"]);
+                info.Length = Convert.ToDecimal(dr["Length"]);
+                info.ActMinutes = Convert.ToDecimal(dr["ActMinutes"]);
+                info.Tag = Convert.ToString(dr["Tag"]); ;
+                info.Memo = Convert.ToString(dr["Memo"]);
+                DAL.M.Update.Courses(info);
+            }
+
+            return r;
         }
 
     }
