@@ -62,7 +62,10 @@
                     <img src="<% = CDN_Private %>/public/image/xxxz.jpg">
                     <div style="width: 620px; height: 460px; padding: 10px;">
                         <div id="noticeContent" style="font-size: 13px; line-height: 25px">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;北京国家会计学院远程教育网“湛江会计人员继续教育”网络学习开始，现开设<span style="color: red;">2013</span>和<span style="color: red;">2014</span>两个年度的“<span style="color: red;">企业类、小企业类、行政事业类</span>”三类课程的学习。达标学时为24学时，考试为综合考试，收费标准：<span style="color: red;">2013年度120元/人，2014年度96元/人。</span></p>
+                             <p style="text-indent: 2em">
+                                北京国家会计学院远程教育网“湛江市计人员继续教育”网络学习开始，现开设<span style="color: red; margin-left: 5px; margin-right: 5px;">2013、2014、2015</span>年度的“<span style="color: red; margin-left: 5px; margin-right: 5px;">企业类、小企业类、行政事业类</span>”三类课程的学习。课程任选，学满24学时后可参加考试，考试合格分为60分，考试次数不限，通过为止。
+                                <br />收费标准：2013年度<span style="color: red; margin-left: 5px; margin-right: 5px;">120元/人</span>，2014年度<span style="color: red; margin-left: 5px; margin-right: 5px;">96元/人</span>，2015年度<span style="color: red; margin-left: 5px; margin-right: 5px;">72元/人</span>。
+                            </p>
                             <p>
                                 1.会计人员继续教育实际完成情况查询和证书打印
 							<a target="_blank" href="http://210.76.65.189:8086/gdkjJXJY/NetService/jxjy/cxfw/cy_user_search.jsp?prePage=%E4%BB%8E%E4%B8%9A%E4%BA%BA%E5%91%98%E6%9F%A5%E8%AF%A2">(点击进入)</a>
@@ -92,9 +95,7 @@
 							<a target="_blank" href="http://210.76.65.189:8081/gd-comp/NetService/ExternService/Apply/Comp_Query_Login.jsp?functionName=search">(点击进入)</a>
                             </p>
                             <br>
-                            <p style="color: red;">温馨提示：广大学员在继续教育完成学习时间并参加考试后，请于一周左右登录广东省会计信息服务平台上查询您的继续教育完成信息。</p>
-
-
+                           <p style=""><span style="color: red;">温馨提示</span>：广大学员完成学习并考试合格后,本系统会自动将学员结业数据回传至广东省财政厅，<span style="color: red;">由省财政厅会计处复核,请于一周后登录广东省会计信息服务平台查询您的继续教育完成信息并打印证书。</span></p>
                         </div>
 
                         <img src="<% = CDN_Private %>/public/image/gdxxlc.jpg" style="padding-top: 15px;">
@@ -111,9 +112,10 @@
 
                 </div>
                 <div class="gonggao" id="showmessage">
+                    <p>1.&nbsp;<a style="cursor: pointer;" id="m_318" href="http://static.online.nai.edu.cn/html/zhanjiang/1.html" target="_blank" class="showmessage">学习流程</a></p>
                     <p>
-                        1.会计人员继续教育实际完成情况查询和证书打印
-							<a target="_blank" href="http://210.76.65.189:8086/gdkjJXJY/NetService/jxjy/cxfw/cy_user_search.jsp?prePage=%E4%BB%8E%E4%B8%9A%E4%BA%BA%E5%91%98%E6%9F%A5%E8%AF%A2">(点击进入)</a>
+                        2.&nbsp;<a target="_blank" href="http://210.76.65.189:8086/gdkjJXJY/NetService/jxjy/cxfw/cy_user_search.jsp?prePage=%E4%BB%8E%E4%B8%9A%E4%BA%BA%E5%91%98%E6%9F%A5%E8%AF%A2">学习实际完成情况查询和证书打印
+                        </a>
                     </p>
 
                 </div>
