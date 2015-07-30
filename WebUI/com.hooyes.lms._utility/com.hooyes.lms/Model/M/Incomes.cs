@@ -29,6 +29,9 @@ namespace com.hooyes.lms.Model.M
         /// </summary>
         public DateTime MinDate { get; set; }
         public DateTime MaxDate { get; set; }
+
+        public int RegionCode { get; set; }
+
         /// <summary>
         /// 查询标识 1 在查 0 未查询
         /// </summary>

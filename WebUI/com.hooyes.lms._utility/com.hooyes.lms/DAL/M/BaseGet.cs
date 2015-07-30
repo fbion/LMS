@@ -343,6 +343,71 @@ namespace com.hooyes.lms.DAL.M
             }
             return r;
         }
+
+        public static List<Incomes> Incomes2(int PageSize, int CurrentPage, string Filter, out int Count)
+        {
+            var l = new List<Incomes>();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@PageSize",PageSize),
+                    new SqlParameter("@CurrentPage",CurrentPage),
+                    new SqlParameter("@Filter",Filter)
+                };
+                var dr = SqlHelper.ExecuteReader(SqlHelper.Local, CommandType.StoredProcedure, "M_Get_IncomesList2", param);
+                while (dr.Read())
+                {
+                    var m = new Incomes();
+                    m.Date = Convert.ToInt32(dr["Date"]);
+                    m.Amount = Convert.ToDecimal(dr["Amount"]);
+                    m.Count = Convert.ToInt32(dr["Count"]);
+                    m.Avg = Convert.ToDecimal(dr["Avg"]);
+                    l.Add(m);
+                }
+
+                dr.Close();
+                //取总记录
+                SqlParameter[] param2 =
+                {
+                    new SqlParameter("@Filter",Filter)
+                };
+                var oCount = SqlHelper.ExecuteScalar(SqlHelper.Local, CommandType.StoredProcedure, "M_Get_IncomesListCount2", param2);
+
+                Count = Convert.ToInt32(oCount);
+            }
+            catch (Exception ex)
+            {
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
+                Count = 0;
+            }
+            return l;
+        }
+        public static Results Incomes2(string Filter)
+        {
+            var r = new Results();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@Filter",Filter),
+                };
+
+                var _r = SqlHelper.ExecuteScalar(SqlHelper.Local, CommandType.StoredProcedure, "M_Get_IncomesSum2", param);
+                r.Code = 0;
+                r.Message = "Success";
+                r.DecimalValue = Convert.ToDecimal(_r);
+            }
+            catch (Exception ex)
+            {
+                r.Code = 300;
+                r.Message = ex.Message;
+                r.Value = 0;
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
+
+            }
+            return r;
+        }
         public static List<Model.M.Survey> Survey(int PageSize, int CurrentPage, string Filter, out int Count)
         {
             var l = new List<Model.M.Survey>();
@@ -415,6 +480,32 @@ namespace com.hooyes.lms.DAL.M
                     m.Tag = Convert.ToInt32(dr["Tag"]);
                     m.Item = Convert.ToString(dr["Item"]);
                     m.Url = Convert.ToString(dr["Url"]);
+                    l.Add(m);
+                }
+
+                dr.Close();
+            }
+            catch (Exception ex)
+            {
+                log.Fatal("{0},{1}", ex.Message, ex.Source);
+            }
+            return l;
+        }
+        public static List<Model.M.Region> Region(int AID)
+        {
+            var l = new List<Model.M.Region>();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@AID",AID) 
+                };
+                var dr = SqlHelper.ExecuteReader(SqlHelper.Local, CommandType.StoredProcedure, "M_Get_Region", param);
+                while (dr.Read())
+                {
+                    var m = new Model.M.Region();
+                    m.Code = Convert.ToInt32(dr["Code"]);
+                    m.Name = Convert.ToString(dr["Name"]);
                     l.Add(m);
                 }
 

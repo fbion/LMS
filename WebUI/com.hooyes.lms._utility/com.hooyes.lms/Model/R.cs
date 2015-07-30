@@ -21,6 +21,7 @@ namespace com.hooyes.lms.Model
         public int Code { get; set; }
         public int Value { get; set; }
         public string Message { get; set; }
+        public string SessionId { get; set; }
     }
 
     public class Results : R

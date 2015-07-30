@@ -236,5 +236,39 @@ namespace com.hooyes.lms.DAL.M
 
             return m;
         }
+        public static R Announcement(Announcement info)
+        {
+            var m = new R();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@RegionCode",info.RegionCode),
+                    new SqlParameter("@Content",info.Content)
+                };
+                //param[0].Direction = ParameterDirection.InputOutput;
+                string SQL = @"
+                               DELETE FROM Announcement WHERE RegionCode=@RegionCode
+                               INSERT INTO dbo.Announcement
+                                        ( RegionCode, Content )
+                                VALUES  ( @RegionCode, 
+                                          @Content 
+                                          )";
+                var r = SqlHelper.ExecuteNonQuery(SqlHelper.Local, CommandType.Text, SQL, param);
+                m.Code = 0;
+                m.Value = r;
+                m.Message = "success";
+                // m.Value = Convert.ToInt32(param[0].Value);
+            }
+            catch (Exception ex)
+            {
+                m.Code = 300;
+                m.Message = ex.Message;
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
+            }
+
+            return m;
+        }
+
     }
 }

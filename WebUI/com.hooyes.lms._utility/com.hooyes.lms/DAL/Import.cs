@@ -161,8 +161,8 @@ namespace com.hooyes.lms.DAL
 
                 string SQL1 = @"INSERT INTO [CoursesImport]([CName],[Name],[Type],[Year],[Memo],[Cate],[Sort],[Teacher],[Length])
                                 VALUES('{0}','{1}',{2},{3},'{4}',{5},{6},'{7}',{8})";
-                string SQL2 = @"INSERT INTO [Contents]([CName],[CCID],[CCName],[Name],[Duration],[Url])
-                                VALUES('{0}',{1},'{2}','{3}',{4},'{5}')";
+                string SQL2 = @"INSERT INTO [Contents]([CName],[CCID],[CCName],[Name],[Duration],[Url],[MIME],[Sort])
+                                VALUES('{0}',{1},'{2}','{3}',{4},'{5}','{6}','{7}')";
                 var SQL = new StringBuilder();
                 SQL.Append("BEGIN");
                 SQL.AppendLine();
@@ -179,7 +179,7 @@ namespace com.hooyes.lms.DAL
                 foreach (var c in contents)
                 {
                     SQL.AppendLine();
-                    SQL.AppendFormat(SQL2, c.CName, c.CCID, c.CCName, c.Name, c.Duration, c.Url);
+                    SQL.AppendFormat(SQL2, c.CName, c.CCID, c.CCName, c.Name, c.Duration, c.Url,c.MIME,c.Sort);
                 }
                 SQL.AppendLine();
                 SQL.Append("END");
@@ -504,11 +504,14 @@ namespace com.hooyes.lms.DAL
                 string SQL = @"SELECT
                                [CName]
                               ,[Name]
+                              ,[Type]
                               ,[Year]
                               ,[Cate]
+                              ,[Sort]
                               ,[Teacher]
                               ,[Length]
                               ,[ActMinutes]
+                              ,[Tag]
                               ,[Memo]
                           FROM [Courses$]";
                 //log.Info(excelPath);
@@ -538,12 +541,14 @@ namespace com.hooyes.lms.DAL
                 info.CID = BaseGet.Seed(2);
                 info.CName = Convert.ToString(dr["CName"]);
                 info.Name = Convert.ToString(dr["Name"]);
+                info.Type = Convert.ToInt32(dr["Type"]);
                 info.Year = Convert.ToInt32(dr["Year"]);
                 info.Cate = Convert.ToInt32(dr["Cate"]);
+                info.Sort = Convert.ToInt32(dr["Sort"]);
                 info.Teacher = Convert.ToString(dr["Teacher"]);
                 info.Length = Convert.ToDecimal(dr["Length"]);
                 info.ActMinutes = Convert.ToDecimal(dr["ActMinutes"]);
-                info.Tag = "";
+                info.Tag = Convert.ToString(dr["Tag"]);
                 info.Memo = Convert.ToString(dr["Memo"]);
                 DAL.M.BaseUpdate.Courses(info);
             }
@@ -581,7 +586,6 @@ namespace com.hooyes.lms.DAL
             var r = new R();
 
             var ds = PreviewMember(excelPath);
-
             var dt = ds.Tables[0];
 
             foreach (DataRow dr in dt.Rows)

@@ -143,7 +143,7 @@ namespace com.hooyes.lms.DAL
                     new SqlParameter("@PID",member.PID),
                     new SqlParameter("@Flag",member.Flag)
                 };
-                
+
                 var r = SqlHelper.ExecuteNonQuery(SqlHelper.Local, CommandType.StoredProcedure, "Update_MemberExt", param);
                 m.Code = 0;
                 m.Value = Convert.ToInt32(param[0].Value);
@@ -296,6 +296,56 @@ namespace com.hooyes.lms.DAL
                 m.Code = 0;
                 m.Message = "sucess";
                 log.Info("MID:{0},code:{1}", re.MID, m.Code);
+            }
+            catch (Exception ex)
+            {
+                m.Code = 300;
+                m.Message = ex.Message;
+                log.Fatal(ex.Message);
+                log.FatalException(ex.Message, ex);
+            }
+            return m;
+        }
+        public static R Report_Compulsory(int MID, int PID, decimal Compulsory)
+        {
+            var m = new R();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@MID",MID),
+                    new SqlParameter("@PID",PID),
+                    new SqlParameter("@Compulsory",Compulsory)
+                };
+                string SQL = "UPDATE dbo.Report SET Compulsory=@Compulsory WHERE Year=@PID AND MID=@MID";
+                var r = SqlHelper.ExecuteNonQuery(SqlHelper.Local, CommandType.Text, SQL, param);
+                m.Code = 0;
+                m.Message = "success";
+            }
+            catch (Exception ex)
+            {
+                m.Code = 300;
+                m.Message = ex.Message;
+                log.Fatal(ex.Message);
+                log.FatalException(ex.Message, ex);
+            }
+            return m;
+        }
+        public static R Report_Elective(int MID, int PID, decimal Elective)
+        {
+            var m = new R();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@MID",MID),
+                    new SqlParameter("@PID",PID),
+                    new SqlParameter("@Elective",Elective)
+                };
+                string SQL = "UPDATE dbo.Report SET Elective=@Elective WHERE Year=@PID AND MID=@MID";
+                var r = SqlHelper.ExecuteNonQuery(SqlHelper.Local, CommandType.Text, SQL, param);
+                m.Code = 0;
+                m.Message = "success";
             }
             catch (Exception ex)
             {
@@ -579,5 +629,104 @@ namespace com.hooyes.lms.DAL
             }
             return m;
         }
+
+        #region 带有效期的卡
+        public static R MyCards_Status(int MID, int ID, int Status)
+        {
+            var m = new R();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@MID",MID),
+                    new SqlParameter("@ID",ID)
+                };
+                string SQL = "UPDATE dbo.My_Cards SET Status=@Status,UpdateDate=GETDATE() WHERE MID=@MID AND ID=@ID";
+                var r = SqlHelper.ExecuteNonQuery(SqlHelper.Local, CommandType.Text, SQL, param);
+                m.Code = 0;
+                m.Message = "success";
+            }
+            catch (Exception ex)
+            {
+                m.Code = 300;
+                m.Message = ex.Message;
+                log.Fatal(ex.Message);
+                log.FatalException(ex.Message, ex);
+            }
+            return m;
+        }
+        public static R MyCards_Status(int MID, string SN, int Status)
+        {
+            var m = new R();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@MID",MID),
+                    new SqlParameter("@SN",SN)
+                };
+                string SQL = "UPDATE dbo.My_Cards SET Status=@Status,UpdateDate=GETDATE() WHERE MID=@MID AND SN=@SN";
+                var r = SqlHelper.ExecuteNonQuery(SqlHelper.Local, CommandType.Text, SQL, param);
+                m.Code = 0;
+                m.Message = "success";
+            }
+            catch (Exception ex)
+            {
+                m.Code = 300;
+                m.Message = ex.Message;
+                log.Fatal(ex.Message);
+                log.FatalException(ex.Message, ex);
+            }
+            return m;
+        }
+        public static R MyCards_Surplus(int MID, int ID, decimal Surplus)
+        {
+            var m = new R();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@MID",MID),
+                    new SqlParameter("@ID",ID)
+                };
+                string SQL = "UPDATE dbo.My_Cards SET Surplus=@Surplus,UpdateDate=GETDATE() WHERE MID=@MID AND ID=@ID";
+                var r = SqlHelper.ExecuteNonQuery(SqlHelper.Local, CommandType.Text, SQL, param);
+                m.Code = 0;
+                m.Message = "success";
+            }
+            catch (Exception ex)
+            {
+                m.Code = 300;
+                m.Message = ex.Message;
+                log.Fatal(ex.Message);
+                log.FatalException(ex.Message, ex);
+            }
+            return m;
+        }
+        public static R MyCards_Surplus(int MID, string SN, decimal Surplus)
+        {
+            var m = new R();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@MID",MID),
+                    new SqlParameter("@SN",SN)
+                };
+                string SQL = "UPDATE dbo.My_Cards SET Surplus=@Surplus,UpdateDate=GETDATE() WHERE MID=@MID AND SN=@SN";
+                var r = SqlHelper.ExecuteNonQuery(SqlHelper.Local, CommandType.Text, SQL, param);
+                m.Code = 0;
+                m.Message = "success";
+            }
+            catch (Exception ex)
+            {
+                m.Code = 300;
+                m.Message = ex.Message;
+                log.Fatal(ex.Message);
+                log.FatalException(ex.Message, ex);
+            }
+            return m;
+        }
+        #endregion  
     }
 }

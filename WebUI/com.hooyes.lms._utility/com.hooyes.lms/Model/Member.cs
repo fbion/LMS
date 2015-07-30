@@ -62,6 +62,18 @@ namespace com.hooyes.lms.Model
 
         public string TagName { get; set; }
 
+        public string Zip { get; set; }
+
+        public string Job { get; set; }
+
+        public string Gender { get; set; }
+
+        public DateTime Birthday { get; set; }
+        public string Race { get; set; }
+        public string Education { get; set; }
+        public string Degree { get; set; }
+        public string Major { get; set; }
+
 
     }
     public class MemberExt : R

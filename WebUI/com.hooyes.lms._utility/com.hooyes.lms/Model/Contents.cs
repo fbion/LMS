@@ -14,6 +14,7 @@ namespace com.hooyes.lms.Model
         public int Duration { get; set; }
         public string Url { get; set; }
         public string MIME { get; set; }
+        public int Sort { get; set; }
     }
     public class MyConents : Contents
     {

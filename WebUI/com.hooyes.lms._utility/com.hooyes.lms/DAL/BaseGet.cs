@@ -74,6 +74,10 @@ namespace com.hooyes.lms.DAL
                     m.Name = Convert.ToString(dr["Name"]);
                     m.Duration = Convert.ToInt32(dr["Duration"]);
                     m.Url = Convert.ToString(dr["Url"]);
+                    if (DBNull.Value != dr["MIME"])
+                        m.MIME = Convert.ToString(dr["MIME"]);
+                    if (DBNull.Value != dr["Sort"])
+                        m.Sort = Convert.ToInt32(dr["Sort"]);
                     l.Add(m);
                 }
                 dr.Close();
@@ -203,6 +207,10 @@ namespace com.hooyes.lms.DAL
                         m.Second = Convert.ToDecimal(dr["Second"]);
                     if (DBNull.Value != dr["Status"])
                         m.Status = Convert.ToInt32(dr["Status"]);
+                    if (DBNull.Value != dr["MIME"])
+                        m.MIME = Convert.ToString(dr["MIME"]);
+                    if (DBNull.Value != dr["Sort"])
+                        m.Sort = Convert.ToInt32(dr["Sort"]);
 
                     l.Add(m);
                 }
@@ -232,6 +240,7 @@ namespace com.hooyes.lms.DAL
                     var m = new Courses();
                     m.CID = Convert.ToInt32(dr["CID"]);
                     m.Name = Convert.ToString(dr["Name"]);
+                    m.CName = Convert.ToString(dr["CName"]);
                     //m.Second = Convert.ToInt32(dr["Second"]);
                     //m.Minutes = Convert.ToInt32(dr["Minutes"]);
                     //m.Status = Convert.ToInt32(dr["Status"]);
@@ -312,6 +321,8 @@ namespace com.hooyes.lms.DAL
                     m.Price = Convert.ToDecimal(dr["Price"]);
                     m.Name = Convert.ToString(dr["Name"]);
                     m.Memo = Convert.ToString(dr["Memo"]);
+                    //if (dr["Duration"] != DBNull.Value)
+                    //    m.Duration = Convert.ToInt32(dr["Duration"]);
                     m.MyID = Convert.ToInt32(dr["MyID"]);
                     l.Add(m);
                 }
@@ -1101,5 +1112,109 @@ namespace com.hooyes.lms.DAL
             }
             return m;
         }
+        public static Announcement Announcement(int RegionCode)
+        {
+            var m = new Announcement();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@RegionCode",RegionCode)
+                    
+                };
+                string SQL = "SELECT * FROM dbo.[Announcement] WHERE RegionCode=@RegionCode";
+                var dr = SqlHelper.ExecuteReader(SqlHelper.Local, CommandType.Text, SQL, param);
+                if (dr.Read())
+                {
+                    m.ID = Convert.ToInt32(dr["ID"]);
+                    m.RegionCode = Convert.ToInt32(dr["RegionCode"]);
+                    m.Content = Convert.ToString(dr["Content"]);
+                }
+                dr.Close();
+            }
+            catch (Exception ex)
+            {
+                log.Fatal("{0},{1}",ex.Message,ex.StackTrace);
+            }
+            return m;
+        }
+
+        #region 带有效期的卡
+        public static List<MyCards> MyCards(int MID)
+        {
+            var lt = new List<MyCards>();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@MID",MID)
+                };
+                string SQL = "SELECT * FROM My_Cards WHERE MID = @MID order by ID desc";
+
+                var dr = SqlHelper.ExecuteReader(SqlHelper.Local, CommandType.Text, SQL, param);
+                while (dr.Read())
+                {
+                    var m = new MyCards();
+                    m.ID = Convert.ToInt32(dr["ID"]);
+                    m.MID = Convert.ToInt32(dr["MID"]);
+                    if (DBNull.Value != dr["NO"])
+                        m.NO = Convert.ToString(dr["NO"]);
+                    m.SN = Convert.ToString(dr["SN"]);
+                    m.Amount = Convert.ToDecimal(dr["Amount"]);
+                    m.Surplus = Convert.ToDecimal(dr["Surplus"]);
+                    m.Status = Convert.ToInt32(dr["Status"]);
+                    if (DBNull.Value != dr["CreateDate"])
+                        m.CreateDate = Convert.ToDateTime(dr["CreateDate"]);
+                    if (DBNull.Value != dr["UpdateDate"])
+                        m.UpdateDate = Convert.ToDateTime(dr["UpdateDate"]);
+                    if (DBNull.Value != dr["ExpDate"])
+                        m.ExpDate = Convert.ToDateTime(dr["ExpDate"]);
+                    lt.Add(m);
+                }
+                dr.Close();
+            }
+            catch (Exception ex)
+            {
+                log.Fatal("{0},{1}",ex.Message,ex.StackTrace);
+            }
+            return lt;
+        }
+        #endregion
+
+        #region 交易记录
+        public static List<Transactions> Transactions(int MID)
+        {
+            var lt = new List<Transactions>();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@MID",MID)
+                };
+                string SQL = "SELECT * FROM Transactions WHERE MID = @MID order by ID Desc";
+
+                var dr = SqlHelper.ExecuteReader(SqlHelper.Local, CommandType.Text, SQL, param);
+                while (dr.Read())
+                {
+                    var m = new Transactions();
+                    m.ID = Convert.ToInt32(dr["ID"]);
+                    m.MID = Convert.ToInt32(dr["MID"]);
+                    m.Amount = Convert.ToDecimal(dr["Amount"]);
+                    m.Cate = Convert.ToInt32(dr["Cate"]);
+                    m.Source = Convert.ToString(dr["Source"]);
+                    m.Memo = Convert.ToString(dr["Memo"]);
+                    if (DBNull.Value != dr["CreateDate"])
+                        m.CreateDate = Convert.ToDateTime(dr["CreateDate"]);
+                    lt.Add(m);
+                }
+                dr.Close();
+            }
+            catch (Exception ex)
+            {
+                log.Fatal("{0},{1}", ex.Message, ex.StackTrace);
+            }
+            return lt;
+        }
+        #endregion
     }
 }

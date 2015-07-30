@@ -15,4 +15,18 @@ namespace com.hooyes.lms.Model
         public DateTime UpdateDate { get; set; }
         public DateTime ExpDate { get; set; }
     }
+
+    public class MyCards
+    {
+        public int ID { get; set; }
+        public int MID { get; set; }
+        public string NO { get; set; }
+        public string SN { get; set; }
+        public decimal Amount { get; set; }
+        public decimal Surplus { get; set; }
+        public int Status { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public DateTime ExpDate { get; set; }
+    }
 }

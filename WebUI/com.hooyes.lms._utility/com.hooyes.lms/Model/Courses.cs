@@ -13,6 +13,10 @@ namespace com.hooyes.lms.Model
         /// 0 行政事业类 1 企业类
         /// </summary>
         public int Type { get; set; }
+        public int PID { get; set; }
+        /// <summary>
+        /// Year == PID 过渡
+        /// </summary>
         public int Year { get; set; }
         /// <summary>
         /// 0 选修 1 必修

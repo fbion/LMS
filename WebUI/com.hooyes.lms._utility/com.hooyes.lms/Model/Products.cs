@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,6 +13,10 @@ namespace com.hooyes.lms.Model
         public int PID { get; set; }
         public int Year { get; set; }
         public decimal Price { get; set; }
+        public int Duration { get; set; }
+        public DateTime ExpireDate { get; set; } 
+        public int Level { get; set; }
+        public int Cate { get; set; }
         public string Name { get; set; }
         public string Memo { get; set; }
         /// <summary>
@@ -26,6 +30,7 @@ namespace com.hooyes.lms.Model
         public int PID { get; set; }
         public int MID { get; set; }
         public DateTime CreateDate { get; set; }
+        public DateTime ExpireDate { get; set; }
         public string Memo { get; set; }
     }
 }
