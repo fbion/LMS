@@ -1,8 +1,8 @@
 ﻿-- =============================================
--- Version:     1.0.0.3
+-- Version:     1.0.0.4
 -- Author:		hooyes
 -- Create date: 2013-09-14
--- Update date: 2015-03-30
+-- Update date: 2015-07-08
 -- Desc: 
 -- =============================================
 CREATE PROCEDURE [dbo].[Get_Products] @MID INT = 0, @PID INT = 0
@@ -12,6 +12,7 @@ AS
             P.Price ,
             p.Name ,
             p.Sort ,
+			[ExpireDate]=isnull(p.ExpireDate,'2100-01-01'),
             p.Memo ,
             MyID = ISNULL(myP.ID, 0)
     FROM    dbo.Products P
