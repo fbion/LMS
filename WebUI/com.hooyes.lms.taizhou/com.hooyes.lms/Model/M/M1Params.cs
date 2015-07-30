@@ -36,6 +36,12 @@ namespace com.hooyes.lms.Model.M
         public DateTime RegMaxDate { get; set; }
 
         /// <summary>
+        /// 缴费时间
+        /// </summary>
+        public DateTime PayMinDate { get; set; }
+        public DateTime PayMaxDate { get; set; }
+
+        /// <summary>
         /// 结业时间
         /// </summary>
         public DateTime GrMinDate { get; set; }

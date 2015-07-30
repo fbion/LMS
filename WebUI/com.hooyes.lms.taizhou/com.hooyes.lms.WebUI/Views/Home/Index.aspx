@@ -5,8 +5,8 @@
     string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
 %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=8" />
@@ -88,6 +88,9 @@
                                 泰州会计人员继续教育分为若干区域，请相应地区学员到当地指定的机构去购买学习卡，本网站不支持跨区域学习卡使用，请特别注意，
                                 以确保您的学习卡有效使用。
                             </p>
+                            <p>
+                                泰州会计人员继续教育暂定于2015年5月31日关闭，请未结业的学员尽快登录网站学习并结业，以确保正常年检。
+                            </p>
                         </li>
                         <li class="t">激活卡的使用</li>
                         <li class="c">
@@ -139,13 +142,15 @@
                     <form class="login_form" id="login_form" action="" onsubmit="return Login()" method="post">
 
                         <div class="loginInt" id="userName" style="margin-bottom: 0;">
-                            <input type="text" value="" placeholder="身份证号" class="loginInput" id="ID" name="ID" tabindex="1" />
+                            身份证号：<span class="login-tips"></span>
+                            <input type="text" value="" placeholder="" class="loginInput" id="ID" name="ID" tabindex="1" disabled="disabled" />
                         </div>
                         <div class="forgetPwdLine">
                             <%-- <a href="/index.php/Index/forget" target="_blank">忘记密码?</a>--%>
                         </div>
+                        姓名：<span class="login-tips"></span>
                         <div class="loginInt" id="passWord">
-                            <input type="text" value="" placeholder="姓名" class="loginInput" id="PWD" name="PWD" tabindex="2" />
+                            <input type="text" value="" placeholder="" class="loginInput" id="PWD" name="PWD" tabindex="2" disabled="disabled" />
                         </div>
                         <%-- <p style='font-size: 13px;'>
                             请输入<span style='color: red; font-size: 13px; font-weight: bold;'>
@@ -153,7 +158,9 @@
                             </span>和<span style='color: red; font-size: 13px; font-weight: bold;'> 姓名</span>登陆，选择好专区和年度再使用学习卡激活专区。
                         </p>--%>
                         <div class="loginBtn">
-                            <input type="submit" id="login_btn" value="登 录" />
+                            系统已于2015年5月31日关闭<br /><br />
+                            <input type="submit" id="login_btn" value="登 录" disabled="disabled" />
+                            
                             <%--<span class="lfBtnReg"><a title="该专区不允许学员自行注册">注 册</a></span>--%>
                         </div>
                         <div class="loginFormConf" style="margin-bottom: 5px;">
