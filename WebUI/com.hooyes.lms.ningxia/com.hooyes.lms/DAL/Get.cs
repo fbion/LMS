@@ -977,6 +977,27 @@ namespace com.hooyes.lms.DAL
             }
             return m;
         }
+        public static int Seed(int SeedID)
+        {
+            int m = 0;
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@Value",0),
+                    new SqlParameter("@ID",SeedID)
+                };
+                param[0].Direction = ParameterDirection.Output;
+                string SQL = "[Get_Seed]";
+                var dr = SqlHelper.ExecuteNonQuery(SqlHelper.Local, CommandType.StoredProcedure, SQL, param);
+                m = Convert.ToInt32(param[0].Value);
+            }
+            catch (Exception ex)
+            {
+                log.Fatal("{0}", ex.StackTrace);
+            }
+            return m;
+        }
 
     }
 }

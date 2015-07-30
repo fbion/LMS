@@ -34,7 +34,7 @@
         <div id="right">
             <div class="board">
                 <p>
-                    <span style="color: red; font-weight: bold; font-size: 12px;">通知：宁夏会计人员2014年网上继续教育已开通，欢迎会计人员报名学习。
+                    <span style="color: red; font-weight: bold; font-size: 12px;">通知：宁夏会计人员2015年网上继续教育已开通，欢迎会计人员报名学习。
                        <br /> 如以往年度已经注册过，请勿再行注册，直接使用身份证号码和姓名登录开始新年度的学习即可。
                     </span>
                 </p>
@@ -80,6 +80,451 @@
             </div>
             <!-- 历年课表 Begin-->
             <div class="lesson">
+                <div class="lesson2015">
+                    <h3>2015继续教育课表</h3>
+                    <table>
+                        <tbody><tr>
+
+                            <th>课程名称
+                            </th>
+                            <th>主讲老师
+                            </th>
+                            <th>课时
+                            </th>
+                        </tr>
+                        <!-- All -->
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                管理会计系列讲座第一讲
+                            </td>
+                            <td>
+                                楼继伟
+                            </td>
+                            <td>
+                                2.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                大数据、云计算对审计的挑战与对策
+                            </td>
+                            <td>
+                                秦荣生
+                            </td>
+                            <td>
+                                3.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                现代内部审计的新思维与新发展
+                            </td>
+                            <td>
+                                秦荣生
+                            </td>
+                            <td>
+                                4.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                企业内部控制流程梳理与风险识别
+                            </td>
+                            <td>
+                                张依林
+                            </td>
+                            <td>
+                                7.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                信息化环境下审计方式的创新与实践
+                            </td>
+                            <td>
+                                刘汝焯
+                            </td>
+                            <td>
+                                4.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                税收政策与纳税实务
+                            </td>
+                            <td>
+                                高允斌
+                            </td>
+                            <td>
+                                7.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                会计准则30号、37号变化讲解
+                            </td>
+                            <td>
+                                王志成
+                            </td>
+                            <td>
+                                3.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                企业激励机制设计与实践
+                            </td>
+                            <td>
+                                刘兵
+                            </td>
+                            <td>
+                                4.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                战略绩效管理工具：平衡计分卡
+                            </td>
+                            <td>
+                                贺颖奇
+                            </td>
+                            <td>
+                                7.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                事业单位会计处理实务
+                            </td>
+                            <td>
+                                王芳
+                            </td>
+                            <td>
+                                3.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                政府采购法
+                            </td>
+                            <td>
+                                陈少强
+                            </td>
+                            <td>
+                                4.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                预算法
+                            </td>
+                            <td>
+                                马蔡琛
+                            </td>
+                            <td>
+                                4.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                行政单位会计处理实务
+                            </td>
+                            <td>
+                                王芳
+                            </td>
+                            <td>
+                                2.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                企业会计准则解释1-6号
+                            </td>
+                            <td>
+                                林芳
+                            </td>
+                            <td>
+                                8.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                预算会计之新事业单位会计制度相关问题
+                            </td>
+                            <td>
+                                赵欣
+                            </td>
+                            <td>
+                                4.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                住房公积金会计核算办法
+                            </td>
+                            <td>
+                                张超
+                            </td>
+                            <td>
+                                2.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                营改增的背景内容及影响对策
+                            </td>
+                            <td>
+                                王冬生
+                            </td>
+                            <td>
+                                3.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                企业集团资金管理
+                            </td>
+                            <td>
+                                吕洪涵
+                            </td>
+                            <td>
+                                3.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                行政事业单位层面内部控制建设
+                            </td>
+                            <td>
+                                方周文
+                            </td>
+                            <td>
+                                3.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                行政事业单位内部控制评价
+                            </td>
+                            <td>
+                                唐庆艳
+                            </td>
+                            <td>
+                                2.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                审计准则问题解答1-6号
+                            </td>
+                            <td>
+                                李晓慧
+                            </td>
+                            <td>
+                                5.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                报表分析：价值和信用视角
+                            </td>
+                            <td>
+                                鲁桂华
+                            </td>
+                            <td>
+                                7.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                企业改制重组及上市辅导培训
+                            </td>
+                            <td>
+                                殷世江
+                            </td>
+                            <td>
+                                6.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                IPO审计的特殊考虑
+                            </td>
+                            <td>
+                                肖菲
+                            </td>
+                            <td>
+                                11.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                科学事业单位会计制度讲解
+                            </td>
+                            <td>
+                                杨辉
+                            </td>
+                            <td>
+                                3.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                中小学会计制度讲解
+                            </td>
+                            <td>
+                                聂兴凯
+                            </td>
+                            <td>
+                                6.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                政府与社会资本合作提供公共产品（PPP）研究
+                            </td>
+                            <td>
+                                王朝才
+                            </td>
+                            <td>
+                                3.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                语言表达艺术
+                            </td>
+                            <td>
+                                王煜
+                            </td>
+                            <td>
+                                3.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                建筑业营改增前期安排
+                            </td>
+                            <td>
+                                陈志坚
+                            </td>
+                            <td>
+                                4.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                企业会计准则33号——合并财务报表
+                            </td>
+                            <td>
+                                高志谦
+                            </td>
+                            <td>
+                                6.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                IPO否决原因与审核要点 
+                            </td>
+                            <td>
+                                殷世江
+                            </td>
+                            <td>
+                                6.5
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                行政事业单位运行经费管理与控制
+                            </td>
+                            <td>
+                                马洪范
+                            </td>
+                            <td>
+                                4.0
+                            </td>
+                        </tr>
+                        
+                        <tr>
+
+                            <td class="t_a_l">
+                                行政事业单位资金使用的绩效与评价
+                            </td>
+                            <td>
+                                马洪范
+                            </td>
+                            <td>
+                                4.0
+                            </td>
+                        </tr>
+                        
+                    </tbody></table>
+                </div>
                 <div class="lesson2014">
                     <h3>2014继续教育课表</h3>
                     <table>

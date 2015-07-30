@@ -1,10 +1,7 @@
 ﻿using com.hooyes.lms.Model;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 
 namespace com.hooyes.lms.DAL.M
 {
@@ -87,6 +84,67 @@ namespace com.hooyes.lms.DAL.M
                 m.Code = 0;
                 m.Value = Convert.ToInt32(param[0].Value);
                 m.Message = "success";
+            }
+            catch (Exception ex)
+            {
+                m.Code = 300;
+                m.Message = ex.Message;
+                log.Fatal(ex.Message);
+                log.FatalException(ex.Message, ex);
+            }
+
+            return m;
+        }
+        public static R Courses(Courses info)
+        {
+            var m = new R();
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@CID",info.CID),
+                    new SqlParameter("@CName",info.CName),
+                    new SqlParameter("@Name",info.Name),
+                    new SqlParameter("@Type",info.Type),
+                    new SqlParameter("@Year",info.Year),
+                    new SqlParameter("@Cate",info.Cate),
+                    new SqlParameter("@Sort",info.Sort),
+                    new SqlParameter("@Teacher",info.Teacher),
+                    new SqlParameter("@ActMinutes",info.ActMinutes),
+                    new SqlParameter("@Length",info.Length),
+                    new SqlParameter("@Tag",info.Tag),
+                    new SqlParameter("@Memo",info.Memo)
+                };
+                //param[0].Direction = ParameterDirection.InputOutput;
+                string SQL = @"INSERT INTO [Courses]
+                                           (  CID ,
+                                              CName ,
+                                              Name ,
+                                              Type ,
+                                              Year ,
+                                              Cate ,
+                                              Sort ,
+                                              Teacher ,
+                                              ActMinutes ,
+                                              Length ,
+                                              Tag ,
+                                              Memo)
+                                     VALUES
+                                           (  @CID,
+                                              @CName ,
+                                              @Name ,
+                                              @Type ,
+                                              @Year ,
+                                              @Cate ,
+                                              @Sort ,
+                                              @Teacher ,
+                                              @ActMinutes ,
+                                              @Length ,
+                                              @Tag ,
+                                              @Memo)";
+                var r = SqlHelper.ExecuteNonQuery(SqlHelper.Local, CommandType.Text, SQL, param);
+                m.Code = 0;
+                // m.Value = Convert.ToInt32(param[0].Value);
             }
             catch (Exception ex)
             {

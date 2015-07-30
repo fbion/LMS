@@ -5,7 +5,7 @@
     var ccid = Convert.ToInt32(ViewData["CCID"]);
     var Contents = (com.hooyes.lms.Model.Contents)ViewData["Contents"];
     var Courses = (com.hooyes.lms.Model.Courses)ViewData["Courses"];
-    var StartUrl = com.hooyes.lms.C.CDN + "/Content/" + Courses.CName + "/" + Contents.Url;
+    var StartUrl = com.hooyes.lms.C.APP + "/Content/x/" + Courses.CName + "/" + Contents.Url;
 %>
 <!DOCTYPE html>
 <html>
