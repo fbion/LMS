@@ -1,10 +1,10 @@
 ﻿-- DROP PROC [M_Task_MemberCredit]
 GO
 -- =============================================
--- Version:     1.0.0.9
+-- Version:     1.0.1.10
 -- Author:		hooyes
 -- Create date: 2012-04-25
--- Update date: 2014-08-01
+-- Update date: 2015-06-17
 -- Desc:  jx
 -- =============================================
 CREATE PROCEDURE [dbo].[M_Task_MemberCredit] @count INT = 100
@@ -15,7 +15,7 @@ AS
         @ID INT ,
         @score INT = 0 ,
         @int_order_id INT,
-		@Flag_Year int  = 2014
+		@Flag_Year int  = 2015
     DECLARE MCursor CURSOR LOCAL STATIC
     FOR
         SELECT TOP ( @count )
@@ -57,13 +57,13 @@ AS
                                     [MID] = @MID ,
                                     [OrderID] = 0 ,
                                     [Amount] = CASE WHEN @Year >= @Flag_Year
-                                                    THEN 44
-                                                    ELSE 60
+                                                    THEN 40
+                                                    ELSE 50
                                                END ,
                                     [Cash] = 0 ,
                                     [Credit] = CASE WHEN @Year >= @Flag_Year
-                                                    THEN 44
-                                                    ELSE 60
+                                                    THEN 40
+                                                    ELSE 50
                                                END ,
                                     [Status] = 10 ,
                                     [Tags] = ( SELECT   ID
@@ -93,6 +93,18 @@ AS
                                     AND [Year] = @Year
                                     AND Minutes >= 1080 ) 
                 BEGIN
+
+				  IF @Year = 2015 
+                        BEGIN
+                            EXECUTE [M_Update_Courses] @MID, 15002
+                            EXECUTE [M_Update_Courses] @MID, 15003
+                            EXECUTE [M_Update_Courses] @MID, 15004
+                            EXECUTE [M_Update_Courses] @MID, 15010
+                            EXECUTE [M_Update_Courses] @MID, 15032
+							EXECUTE [M_Update_Courses] @MID, 15033
+							EXECUTE [M_Update_Courses] @MID, 15034
+							EXECUTE [M_Update_Courses] @MID, 15007
+                        END          
   
                     IF @Year = 2014 
                         BEGIN
