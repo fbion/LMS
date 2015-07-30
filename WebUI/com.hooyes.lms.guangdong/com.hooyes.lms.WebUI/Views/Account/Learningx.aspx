@@ -8,6 +8,7 @@
         var DisplayYear = (int)ViewData["DisplayYear"];
         var Product = (com.hooyes.lms.Model.Products)ViewData["Product"];
         decimal ExamMin = 0;
+        decimal LearningLength = 0;
     %>
 
     <div id="main">
@@ -97,12 +98,14 @@
                             {
                                 ExamMin = Report.Minutes;
                             }
+
+                            LearningLength = ExamMin / 45;
                         %>
                         <tr style="">
-                            <td colspan="5">必修总学时长
+                            <td colspan="5">总学时长
                             </td>
                             <td>
-                                <% = ExamMin.ToString("0.#")%> 分钟
+                                <% = LearningLength.ToString("0.#")%> 学时
                             </td>
                         </tr>
                         <tr>
@@ -113,7 +116,7 @@
                                        if (Report.Score < 60)
                                        {
                                            // 考试及格后，不再显示考试按钮
-                                           if (ExamMin >= 1080)
+                                           if (LearningLength >= 24)
                                            { %>
                                    <a class="on" href="<%=com.hooyes.lms.C.APP %>/Account/Paper/<%=DisplayYear %>" target="_blank">[进入考试]</a>
                                    <%}
@@ -121,7 +124,7 @@
                                            { %>
                                    <script type="text/javascript">
                                        function msg_for_exam() {
-                                           alert("您需要完成至少1080分钟的学习后，才可以进入考试，\n请继续学习。");
+                                           alert("您需要完成至少24学时后，才可以进入考试，请继续学习。");
                                        }
                                    </script>
                                    <a class="off" onclick="msg_for_exam()">[进入考试]</a>
@@ -150,8 +153,8 @@
                                 <%} %>
                             </td>
                         </tr>
-                        <tr style="background-color: #f8f3f3;display:none">
-                            <td colspan="6" style="text-align: left">* 学满1080。</td>
+                        <tr style="background-color: #f8f3f3;">
+                            <td colspan="6" style="text-align: left">* 课程任选，学满24学时后可参加考试，考试合格分为60分。考试完请刷新本页查看最新成绩。</td>
                         </tr>
                     </table>
 
