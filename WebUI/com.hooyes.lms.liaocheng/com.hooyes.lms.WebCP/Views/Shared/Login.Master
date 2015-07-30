@@ -1,0 +1,43 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<%
+    string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
+    string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>管理员 -- 国家会计学院</title>
+    <link href="<% = CDN_Private %>/Css/Master.Common.css" rel="stylesheet" type="text/css" />
+    <link href="<% = CDN_Private %>/Css/Master.css" rel="stylesheet" type="text/css" />
+    <link href="<% = CDN_Private %>/favicon.ico" rel="Bookmark" />
+    <link href="<% = CDN_Private %>/favicon.ico" rel="Shortcut Icon" />
+    <script src="<% = CDN_Public %>/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="<% = CDN_Private %>/Scripts/config.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="logindiv">
+            <div id="loginA" class="loginA">
+                <div class="loginA-top">
+                    <img src="<% = CDN_Private %>/Img/m-login.jpg" />
+                </div>
+                <div class="loginA-bottom">
+                    <h1>Welcome</h1>
+                </div>
+            </div>
+            <div id="loginB" class="loginB">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>技术支持：<a href="http://www.nai.edu.cn" target="_blank">北京国家会计学院</a>
+            </span>
+        </div>
+    </div>
+
+</body>
+</html>

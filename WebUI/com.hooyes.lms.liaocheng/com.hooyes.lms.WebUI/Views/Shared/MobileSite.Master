@@ -1,0 +1,26 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<%
+    string CDN_Private = ConfigurationManager.AppSettings.Get("CDN_Private");
+    string CDN_Public = ConfigurationManager.AppSettings.Get("CDN_Public");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title><%=ConfigurationManager.AppSettings.Get("web_title") %> -- 北京国家会计学院</title>
+    <link href="<% = CDN_Private %>/Css/Mobile.css?t=201502101" rel="stylesheet" type="text/css" />
+    <script src="<% = CDN_Public %>/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="<% = CDN_Private %>/Scripts/mobile.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="header">
+            <div class="header-inner"></div>
+        </div>
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        <div class="footer">
+        </div>
+    </div>
+</body>
+</html>
